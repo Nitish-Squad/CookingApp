@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/miFeed"
+        android:title="Feed"
+        android:enabled="true"
+
+        android:icon="@drawable/instagram_home_outline_24"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/miCreate"
+        android:title="Create"
+        android:enabled="true"
+        android:icon="@drawable/instagram_new_post_filled_24"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/miProfile"
+        android:title="Profile"
+        android:enabled="true"
+        android:icon="@drawable/instagram_user_filled_24"
+        app:showAsAction="always"
+        />
+
+
+</menu>
