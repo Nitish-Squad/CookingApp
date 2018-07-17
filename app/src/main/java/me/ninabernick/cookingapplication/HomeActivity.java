@@ -27,8 +27,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        FragmentTransaction fragmentTransactionFeed = fragmentManager.beginTransaction();
-        fragmentTransactionFeed.replace(R.id.flFragmentContainer, feedFragment).commit();
+
 
         final Recipe.Query recipeQuery = new Recipe.Query();
 
@@ -89,6 +88,9 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
+
+        FragmentTransaction fragmentTransactionFeed = fragmentManager.beginTransaction();
+        fragmentTransactionFeed.replace(R.id.flFragmentContainer, feedFragment).commit();
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
 

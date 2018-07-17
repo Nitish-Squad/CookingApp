@@ -5,13 +5,20 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import me.ninabernick.cookingapplication.models.Recipe;
 
@@ -21,20 +28,61 @@ public class FeedFragment extends Fragment {
     ArrayList<Recipe> recipes;
     RecipeAdapter adapter;
     RecyclerView rvFeed;
-    DetailViewListener detailListener;
 
 
+
+
+    public void getRecipes(){
+        final Recipe.Query recipeQuery = new Recipe.Query();
+
+        // place to order the recipes in some manner (ex: rating, when created, etc)
+        //postsQuery.orderByDescending("createdAt");
+
+        recipeQuery.getTop();
+        recipeQuery.findInBackground(new FindCallback<Recipe>() {
+            @Override
+            public void done(List<Recipe> objects, ParseException e) {
+                if (e == null)
+                {
+                    Log.d("Number of recipes", Integer.toString(objects.size()));
+                    for (int i = 0; i < objects.size(); i ++){
+                        Recipe recipe = objects.get(i);
+                        recipes.add(recipe);
+                        adapter.notifyDataSetChanged();
+
+                        // code to update the adapter for the recycler view
+                        // recipeAdapter.notifyItemInserted(recipes.size() - 1);
+                    }
+
+                }
+                else{
+                    Log.d("MainActivity","Failed to get all the recipes.");
+                    e.printStackTrace();
+                }
+
+                String breakpoint = "only here so I can set a breakpoint";
+            }
+        });
+
+
+    }
 
     RecipeAdapter.RecipeListener recipeListener = new RecipeAdapter.RecipeListener() {
         @Override
         public void respond(Recipe recipe) {
-
+            RecipeDetailFragment detailFragment = RecipeDetailFragment.newInstance(recipe);
+            final FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.flFragmentContainer, detailFragment).commit();
         }
     };
 
-    public interface DetailViewListener {
-        void launchDetailView(Recipe recipe);
-    }
+
+
+
+
+
+
 
 
     // This event fires 1st, before creation of fragment or any views
@@ -55,6 +103,7 @@ public class FeedFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         recipes = new ArrayList<>();
+
 
         adapter = new RecipeAdapter(recipes, recipeListener);
 
@@ -77,9 +126,11 @@ public class FeedFragment extends Fragment {
         rvFeed = (RecyclerView) view.findViewById(R.id.rvFeed);
         rvFeed.setAdapter(adapter);
         rvFeed.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        for (int i = 0; i < 10; i++) {
-            adapter.add(new Recipe());
-        }
+        getRecipes();
+
+
+
+
 
 
     }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +26,12 @@ public class RecipeDetailFragment extends Fragment {
     private TextView tvTime;
     private TextView tvDescription;
     private ImageView ivImage;
+    private Recipe recipe;
 
     private ListView lvIngredientList;
     private ArrayList<String> steps;
+    private ArrayList<String> ingredients;
+    private ArrayAdapter<String> ingredientAdapter;
     private ArrayAdapter<String> stepAdapter;
 
     public static final String RECIPE_KEY = "recipe";
@@ -36,8 +40,8 @@ public class RecipeDetailFragment extends Fragment {
     public static RecipeDetailFragment newInstance(Recipe recipe) {
         RecipeDetailFragment detailFragment = new RecipeDetailFragment();
         Bundle args = new Bundle();
-        //args.putParcelable(RECIPE_KEY, recipe);
-        args.putString(RECIPE_KEY, recipe.getTitle());
+        args.putParcelable(RECIPE_KEY, recipe);
+
         detailFragment.setArguments(args);
         return detailFragment;
     }
@@ -61,8 +65,15 @@ public class RecipeDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //Recipe thisRecipe = getArguments().getParcelable(RECIPE_KEY);
         steps = new ArrayList<>();
+        ingredients = new ArrayList<>();
+        recipe = getArguments().getParcelable(RECIPE_KEY);
         //TODO- populate list of steps with data from recipe object
         //see guide on creating/using fragments for dynamically loading fragment in home activity
+        //incorrect implementation of steps
+        //steps.addAll(recipe.getSteps());
+        ingredients.addAll(recipe.getIngredients());
+
+
 
 
     }
@@ -71,7 +82,7 @@ public class RecipeDetailFragment extends Fragment {
     // either dynamically or via XML layout inflation.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_feed, parent, false);
+        return inflater.inflate(R.layout.fragment_recipe_detail, parent, false);
 
     }
 
@@ -86,10 +97,19 @@ public class RecipeDetailFragment extends Fragment {
         tvDescription = (TextView) view.findViewById(R.id.tvDescription);
         ivImage = (ImageView) view.findViewById(R.id.ivRecipeImage);
 
-        lvIngredientList = (ListView) view.findViewById(R.id.lvIngredients);
+        tvTitle.setText(recipe.getTitle());
+        tvTime.setText(recipe.getTime());
+        tvDescription.setText(recipe.getDescription());
 
-        stepAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, steps);
-        lvIngredientList.setAdapter(stepAdapter);
+
+        lvIngredientList = (ListView) view.findViewById(R.id.lvIngredients);
+        if (lvIngredientList == null) {
+            Log.d("ListView", "ListView null");
+        }
+
+        //stepAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, steps);
+        ingredientAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, ingredients);
+        lvIngredientList.setAdapter(ingredientAdapter);
 
 
 
