@@ -61,4 +61,13 @@
         android:layout_alignTop="@+id/lvIngredients"
         android:layout_marginRight="10dp"
         android:text="Description" />
+
+    <Button
+        android:id="@+id/btStartRecipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
+        android:text="Button" />
 </RelativeLayout>

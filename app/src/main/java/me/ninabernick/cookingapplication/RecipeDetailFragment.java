@@ -2,6 +2,7 @@ package me.ninabernick.cookingapplication;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ public class RecipeDetailFragment extends Fragment {
     private TextView tvDescription;
     private ImageView ivImage;
     private Recipe recipe;
+    private Button btStartRecipe;
 
     private ListView lvIngredientList;
     private ArrayList<String> steps;
@@ -96,6 +99,15 @@ public class RecipeDetailFragment extends Fragment {
         tvTime = (TextView) view.findViewById(R.id.tvTime);
         tvDescription = (TextView) view.findViewById(R.id.tvDescription);
         ivImage = (ImageView) view.findViewById(R.id.ivRecipeImage);
+        btStartRecipe = (Button) view.findViewById(R.id.btStartRecipe);
+        btStartRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), RecipeDetailsActivity.class);
+                i.putExtra("recipe", recipe);
+                startActivity(i);
+            }
+        });
 
         tvTitle.setText(recipe.getTitle());
         tvTime.setText(recipe.getTime());
