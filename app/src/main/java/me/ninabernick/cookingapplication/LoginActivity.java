@@ -1,33 +1,54 @@
 package me.ninabernick.cookingapplication;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.parse.LogInCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginButton loginButton;
     private ArrayList<String> permissions;
+    private String name;
+    private String email;
+    private String mUsername;
     //CallbackManager callbackManager = CallbackManager.Factory.create();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         permissions = new ArrayList<>();
+        permissions.add("public_profile");
+        permissions.add("user_friends");
 
 //        loginButton = (LoginButton) findViewById(R.id.login_button);
 //
@@ -57,8 +78,16 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
                 } else if (user.isNew()) {
                     Log.d("MyApp", "User signed up and logged in through Facebook!");
+
+                    //getUserDetailsFromFB();
+                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(i);
                 } else {
                     Log.d("MyApp", "User logged in through Facebook!");
+                    //getUserDetailsFromParse();
+                    getUserDetailsFromFB();
+                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(i);
                 }
             }
         });
@@ -69,4 +98,97 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
+
+    private void getUserDetailsFromFB() {
+
+        // Suggested by https://disqus.com/by/dominiquecanlas/
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "email,name,picture");
+
+        new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/me",
+                parameters,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    public void onCompleted(GraphResponse response) {
+                        /* handle the result */
+                        try {
+
+                            email = response.getJSONObject().getString("email");
+                            Log.d("email", email);
+
+                            //mEmailID.setText(email);
+
+                            name = response.getJSONObject().getString("name");
+                           // mUsername.setText(name);
+                            Log.d("name", name);
+
+                            JSONObject picture = response.getJSONObject().getJSONObject("picture");
+                            JSONObject data = picture.getJSONObject("data");
+
+                            //  Returns a 50x50 profile picture
+                            String pictureUrl = data.getString("url");
+
+                            //new ProfilePhotoAsync(pictureUrl).execute();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        ).executeAsync();
+
+    }
+
+//    private void getUserDetailsFromParse() {
+//        ParseUser parseUser = ParseUser.getCurrentUser();
+//
+////Fetch profile photo
+//        try {
+//            ParseFile parseFile = parseUser.getParseFile("profileThumb");
+//            byte[] data = parseFile.getData();
+//            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+//            //mProfileImage.setImageBitmap(bitmap);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        //mEmailID.setText(parseUser.getEmail());
+//        //mUsername.setText(parseUser.getUsername());
+//
+//        Toast.makeText(LoginActivity.this, "Welcome back " + mUsername.getText().toString(), Toast.LENGTH_SHORT).show();
+//
+//    }
+//
+//    private void saveNewUser() {
+//        final ParseUser parseUser = ParseUser.getCurrentUser();
+//        parseUser.setUsername(name);
+//        parseUser.setEmail(email);
+//
+////        Saving profile photo as a ParseFile
+//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//        Bitmap bitmap = ((BitmapDrawable) mProfileImage.getDrawable()).getBitmap();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+//        byte[] data = stream.toByteArray();
+//        String thumbName = parseUser.getUsername().replaceAll("\\s+", "");
+//        final ParseFile parseFile = new ParseFile(thumbName + "_thumb.jpg", data);
+//
+//        parseFile.saveInBackground(new SaveCallback() {
+//            @Override
+//            public void done(ParseException e) {
+//                parseUser.put("profileThumb", parseFile);
+//
+//                //Finally save all the user details
+//                parseUser.saveInBackground(new SaveCallback() {
+//                    @Override
+//                    public void done(ParseException e) {
+//                        Toast.makeText(LoginActivity.this, "New user:" + name + " Signed up", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//            }
+//        });
+//
+//    }
 }
