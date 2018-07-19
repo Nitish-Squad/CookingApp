@@ -29,6 +29,7 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,8 +41,9 @@ public class LoginActivity extends AppCompatActivity {
     private LoginButton loginButton;
     private ArrayList<String> permissions;
     private String name;
-    private String email;
-    private String mUsername;
+    private String profilePictureUrl;
+    //private String email;
+    //private String mUsername;
     //CallbackManager callbackManager = CallbackManager.Factory.create();
 
     public void onCreate(Bundle savedInstanceState) {
@@ -103,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Suggested by https://disqus.com/by/dominiquecanlas/
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "email,name,picture");
+        parameters.putString("fields", "name,picture,friends,id");
 
         new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
@@ -115,8 +117,8 @@ public class LoginActivity extends AppCompatActivity {
                         /* handle the result */
                         try {
 
-                            email = response.getJSONObject().getString("email");
-                            Log.d("email", email);
+                           // email = response.getJSONObject().getString("email");
+                            //Log.d("email", email);
 
                             //mEmailID.setText(email);
 
@@ -124,11 +126,21 @@ public class LoginActivity extends AppCompatActivity {
                            // mUsername.setText(name);
                             Log.d("name", name);
 
+                            String fbId = response.getJSONObject().getString("id");
+                            Log.d("id", String.format("facebook id: %s", fbId));
+                            ParseUser user = ParseUser.getCurrentUser();
+                            Log.d("id", String.format("Parse userId: %s", user.getObjectId()));
+
                             JSONObject picture = response.getJSONObject().getJSONObject("picture");
                             JSONObject data = picture.getJSONObject("data");
 
                             //  Returns a 50x50 profile picture
-                            String pictureUrl = data.getString("url");
+                            String profilePictureUrl = data.getString("url");
+                            Log.d("profile picture", profilePictureUrl);
+
+                            JSONObject friends = response.getJSONObject().getJSONObject("friends");
+                            JSONArray friendsData = friends.getJSONArray("data");
+                            Log.d("friends", friendsData.toString());
 
                             //new ProfilePhotoAsync(pictureUrl).execute();
 
@@ -140,6 +152,12 @@ public class LoginActivity extends AppCompatActivity {
         ).executeAsync();
 
     }
+
+    private void saveNewUser() {
+
+    }
+
+
 
 //    private void getUserDetailsFromParse() {
 //        ParseUser parseUser = ParseUser.getCurrentUser();
@@ -164,7 +182,7 @@ public class LoginActivity extends AppCompatActivity {
 //    private void saveNewUser() {
 //        final ParseUser parseUser = ParseUser.getCurrentUser();
 //        parseUser.setUsername(name);
-//        parseUser.setEmail(email);
+//        //parseUser.setEmail(email);
 //
 ////        Saving profile photo as a ParseFile
 //        ByteArrayOutputStream stream = new ByteArrayOutputStream();
