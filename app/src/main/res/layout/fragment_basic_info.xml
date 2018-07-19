@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BasicInfoFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <EditText
+        android:id="@+id/etTitle"
+        android:layout_width="276dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        android:ems="10"
+        android:hint="Title"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etDescription"
+        android:layout_width="277dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnTakePhoto"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="textPersonName" />
+
+    <ImageView
+        android:id="@+id/ivRecipeImage"
+        android:layout_width="179dp"
+        android:layout_height="171dp"
+        android:layout_below="@+id/etTitle"
+        android:layout_centerHorizontal="true"
+        android:src="@android:color/black" />
+
+    <Button
+        android:id="@+id/btnTakePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/ivRecipeImage"
+        android:layout_below="@+id/ivRecipeImage"
+        android:text="Take" />
+
+    <Button
+        android:id="@+id/btnChoosePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/etDescription"
+        android:layout_alignEnd="@+id/ivRecipeImage"
+        android:text="Choose" />
+
+    <EditText
+        android:id="@+id/etHours"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/etTitle"
+        android:layout_below="@+id/etDescription"
+        android:ems="10"
+        android:hint="Hours"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="Next" />
+
+    <EditText
+        android:id="@+id/etMinutes"
+        android:layout_width="71dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/etDescription"
+        android:layout_marginEnd="120dp"
+        android:ems="10"
+        android:hint="Minutes"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/tvHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/etHours"
+        android:layout_toEndOf="@+id/etHours"
+        android:text="hours" />
+
+    <TextView
+        android:id="@+id/tvMinutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/etHours"
+        android:layout_marginStart="-120dp"
+        android:layout_toEndOf="@+id/etMinutes"
+        android:text="minutes" />
+</RelativeLayout>

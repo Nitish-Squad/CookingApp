@@ -132,7 +132,11 @@ public class Recipe extends ParseObject {
         put ("time", time);
     }
 
-    public void setrecipImage(ParseFile file){
+    public void setIngredients(List<String> ingredients){
+        put("ingredients", ingredients);
+    }
+
+    public void setrecipeImage(ParseFile file){
         put("recipeImage", file);
     }
 
