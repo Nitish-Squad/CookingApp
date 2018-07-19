@@ -42,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
     private ArrayList<String> permissions;
     private String name;
     private String profilePictureUrl;
+    private String fbId;
+    private ArrayList<String> friendsList = new ArrayList<>();
     //private String email;
     //private String mUsername;
     //CallbackManager callbackManager = CallbackManager.Factory.create();
@@ -72,27 +74,32 @@ public class LoginActivity extends AppCompatActivity {
 //                        Log.d("Facebook Login", "Login Failed!");
 //                    }
 //                });
+        if (ParseUser.getCurrentUser() != null) {
+            Log.d("login", "user already logged in");
+            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(i);
+        }
+        else {
+            ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
+                @Override
+                public void done(ParseUser user, ParseException err) {
+                    if (user == null) {
+                        Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+                    } else if (user.isNew()) {
+                        Log.d("MyApp", "User signed up and logged in through Facebook!");
 
-        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException err) {
-                if (user == null) {
-                    Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
-                } else if (user.isNew()) {
-                    Log.d("MyApp", "User signed up and logged in through Facebook!");
+                        getUserDetailsFromFB();
 
-                    //getUserDetailsFromFB();
-                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(i);
-                } else {
-                    Log.d("MyApp", "User logged in through Facebook!");
-                    //getUserDetailsFromParse();
-                    getUserDetailsFromFB();
-                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(i);
+                    } else {
+                        Log.d("MyApp", "User logged in through Facebook!");
+                        //getUserDetailsFromParse();
+                        getUserDetailsFromFB();
+
+                    }
                 }
-            }
-        });
+            });
+        }
+
     }
 
     @Override
@@ -126,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                            // mUsername.setText(name);
                             Log.d("name", name);
 
-                            String fbId = response.getJSONObject().getString("id");
+                            fbId = response.getJSONObject().getString("id");
                             Log.d("id", String.format("facebook id: %s", fbId));
                             ParseUser user = ParseUser.getCurrentUser();
                             Log.d("id", String.format("Parse userId: %s", user.getObjectId()));
@@ -135,12 +142,17 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject data = picture.getJSONObject("data");
 
                             //  Returns a 50x50 profile picture
-                            String profilePictureUrl = data.getString("url");
+                            profilePictureUrl = data.getString("url");
                             Log.d("profile picture", profilePictureUrl);
 
                             JSONObject friends = response.getJSONObject().getJSONObject("friends");
                             JSONArray friendsData = friends.getJSONArray("data");
+                            for (int i = 0; i < friendsData.length(); i++) {
+                                String friend = friendsData.getJSONObject(i).getString("name");
+                                friendsList.add(friend);
+                            }
                             Log.d("friends", friendsData.toString());
+                            saveNewUser();
 
                             //new ProfilePhotoAsync(pictureUrl).execute();
 
@@ -154,7 +166,17 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void saveNewUser() {
-
+        ParseUser user = ParseUser.getCurrentUser();
+        user.put("name", name);
+        user.put("fbId", fbId);
+        user.put("friends", friendsList);
+        user.put("profileImageURL", profilePictureUrl);
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+            }
+        });
     }
 
 
