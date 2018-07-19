@@ -6,6 +6,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +35,9 @@ public class Recipe extends ParseObject {
     }
     public List<String> getIngredients(){
         return getList("ingredients");
+    }
+    public ParseUser getCreatedBy() {
+        return getParseUser("createdBy");
     }
 
     /*
@@ -119,6 +123,10 @@ public class Recipe extends ParseObject {
         return time;
     }
 
+
+
+
+
     // set methods, used for adding recipes
     public void setTitle(String title){
         put("title", title);
@@ -130,6 +138,10 @@ public class Recipe extends ParseObject {
 
     public void setTime(String time){
         put ("time", time);
+    }
+
+    public void setCreatedBy(ParseUser user) {
+        put("createdBy", user);
     }
 
     public void setrecipImage(ParseFile file){
