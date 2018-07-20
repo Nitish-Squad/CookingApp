@@ -30,6 +30,7 @@ public class RecipeDetailFragment extends Fragment {
     private ImageView ivImage;
     private Recipe recipe;
     private Button btStartRecipe;
+    private Button btStartMaps;
 
     private ListView lvIngredientList;
     private ArrayList<String> steps;
@@ -105,6 +106,15 @@ public class RecipeDetailFragment extends Fragment {
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(), RecipeDetailsActivity.class);
                 i.putExtra("recipe", recipe);
+                startActivity(i);
+            }
+        });
+
+        btStartMaps = (Button) view.findViewById(R.id.btStartMaps);
+        btStartMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), MapsActivity.class);
                 startActivity(i);
             }
         });

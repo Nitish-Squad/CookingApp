@@ -3,6 +3,7 @@ package me.ninabernick.cookingapplication;
 import android.app.Application;
 
 import com.parse.Parse;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
 
 import me.ninabernick.cookingapplication.models.Recipe;
@@ -25,5 +26,7 @@ public class CookingApp extends Application {
                 .build();
 
         Parse.initialize(configuration);
+
+        ParseFacebookUtils.initialize(getApplicationContext());
     }
 }

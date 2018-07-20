@@ -18,6 +18,8 @@ android {
     }
 }
 ext {
+    permissionDispatcherVersion = "3.2.0"
+    googlePlayVersion = "15.0.0"
     supportLibVersion = '27.1.1'  // variable that can be referenced to keep support libs consistent
 }
 
@@ -49,4 +51,17 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     // Glide v4 uses this new annotation processor -- see https://bumptech.github.io/glide/doc/generatedapi.html
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+
+    //facebook
+    implementation 'com.facebook.android:facebook-login:[4,5)'
+
+    implementation 'com.parse:parsefacebookutils-v4-android:1.10.7'
+
+    //Maps
+    implementation "com.android.support:support-v13:$supportLibVersion" // to remove lint error, found in .idea/libraries
+    implementation "com.google.android.gms:play-services-maps:$googlePlayVersion"
+    implementation "com.google.android.gms:play-services-location:$googlePlayVersion"
+    implementation "com.github.hotchemi:permissionsdispatcher:$permissionDispatcherVersion"
+    annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:$permissionDispatcherVersion"
+
 }
