@@ -44,7 +44,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         Recipe recipe = recipes.get(position);
         holder.tvTitle.setText(recipe.getTitle());
         holder.tvDescription.setText(recipe.getDescription());
-        holder.tvTime.setText(recipe.getTime());
+        //holder.tvTime.setText(recipe.getTime());
         Glide.with(context).load(recipe.getrecipeImage().getUrl()).into(holder.ivThumbnail);
 
     }
@@ -71,7 +71,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView ivThumbnail;
         public TextView tvTitle;
-        public TextView tvTime;
+        //public TextView tvTime;
         public TextView tvDescription;
         RecipeListener listener;
 
@@ -81,7 +81,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             listener = rListener;
             ivThumbnail = (ImageView) itemView.findViewById(R.id.ivImageThumbnail);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
-            tvTime = (TextView) itemView.findViewById(R.id.tvTime);
+            //tvTime = (TextView) itemView.findViewById(R.id.tvTime);
             tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
             itemView.setOnClickListener(this);
         }

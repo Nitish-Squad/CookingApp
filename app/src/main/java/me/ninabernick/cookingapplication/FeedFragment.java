@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -178,7 +179,7 @@ public class FeedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvFeed = (RecyclerView) view.findViewById(R.id.rvFeed);
         rvFeed.setAdapter(adapter);
-        rvFeed.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        rvFeed.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
         String feedType = getArguments().getString(FEED_TYPE);
         switch (feedType) {
             case HomeActivity.RECIPE_FEED:
