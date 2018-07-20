@@ -1,6 +1,5 @@
 package me.ninabernick.cookingapplication;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.SaveCallback;
@@ -162,6 +162,7 @@ public class CreateStepsFragment extends Fragment {
 
                 }
 
+                // naming isn't great here, it was just for ease of linking
                 HomeActivity createActivity = (HomeActivity) getActivity();
 
                 Recipe new_recipe = createActivity.recipe_to_add;
@@ -173,14 +174,14 @@ public class CreateStepsFragment extends Fragment {
                 new_recipe.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        // just do nothing
+                        Toast.makeText(getContext(), "Recipe Uploaded!", Toast.LENGTH_SHORT).show();
                     }
                 });
 
                 BasicInfoFragment fragment2 = new BasicInfoFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flContainer, fragment2);
+                fragmentTransaction.replace(R.id.flFragmentContainer, fragment2);
                 fragmentTransaction.commit();
 
 

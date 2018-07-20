@@ -137,7 +137,7 @@ public class BasicInfoFragment extends Fragment {
                 IngredientsFragment fragment2 = new IngredientsFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flContainer, fragment2);
+                fragmentTransaction.replace(R.id.flFragmentContainer, fragment2);
                 fragmentTransaction.commit();
             }
         });
