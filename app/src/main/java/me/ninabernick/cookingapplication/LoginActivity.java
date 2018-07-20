@@ -175,6 +175,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(i);
             }
         });
     }

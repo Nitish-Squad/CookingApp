@@ -80,4 +80,13 @@
         android:layout_marginBottom="36dp"
         android:text="Maps" />
 
+    <ImageView
+        android:id="@+id/ivSaveRecipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/ic_vector_heart_stroke" />
+
 </RelativeLayout>

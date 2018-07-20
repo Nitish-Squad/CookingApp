@@ -15,10 +15,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 
 import me.ninabernick.cookingapplication.models.Recipe;
+import me.ninabernick.cookingapplication.models.User;
 
 public class RecipeDetailFragment extends Fragment {
 
@@ -31,6 +37,7 @@ public class RecipeDetailFragment extends Fragment {
     private Recipe recipe;
     private Button btStartRecipe;
     private Button btStartMaps;
+    private ImageView ivSave;
 
     private ListView lvIngredientList;
     private ArrayList<String> steps;
@@ -119,6 +126,43 @@ public class RecipeDetailFragment extends Fragment {
             }
         });
 
+        ivSave = (ImageView) view.findViewById(R.id.ivSaveRecipe);
+        if (!hasSaved(ParseUser.getCurrentUser(), recipe)) {
+            ivSave.setImageResource(R.drawable.ic_vector_heart_stroke);
+        }
+        else {
+            ivSave.setImageResource(R.drawable.ic_vector_heart);
+        }
+        ivSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ParseUser user = ParseUser.getCurrentUser();
+                // check if recipe already saved
+                if (!hasSaved(user, recipe)) {
+                    // add this recipe to user's list of saved recipes
+                    user.add("savedRecipes", recipe.getObjectId());
+                    user.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            ivSave.setImageResource(R.drawable.ic_vector_heart);
+                            Toast.makeText(getContext(), "Saved to recipes!", Toast.LENGTH_LONG);
+                        }
+                    });
+                }
+                else {
+                    ivSave.setImageResource(R.drawable.ic_vector_heart_stroke);
+                    ArrayList<String> savedRecipes = new ArrayList<>();
+                    savedRecipes.addAll(user.<String>getList("savedRecipes"));
+                    savedRecipes.remove(recipe.getObjectId());
+                    user.remove("savedRecipes");
+                    user.put("savedRecipes", savedRecipes);
+                }
+                Log.d("saved recipes", user.get("savedRecipes").toString());
+
+
+            }
+        });
+
         tvTitle.setText(recipe.getTitle());
         tvTime.setText(recipe.getTime());
         tvDescription.setText(recipe.getDescription());
@@ -139,6 +183,19 @@ public class RecipeDetailFragment extends Fragment {
 
 
 
+
+    }
+
+    private boolean hasSaved(ParseUser user, Recipe recipe) {
+        ArrayList<String> savedRecipes = new ArrayList<>();
+        if (user.<String>getList("savedRecipes") != null) {
+            savedRecipes.addAll(user.<String>getList("savedRecipes"));
+        }
+
+        if (savedRecipes.contains(recipe.getObjectId())) {
+            return true;
+        }
+        else return false;
 
     }
 

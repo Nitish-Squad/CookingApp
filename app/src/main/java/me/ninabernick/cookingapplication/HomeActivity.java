@@ -17,11 +17,12 @@ import java.util.List;
 
 import me.ninabernick.cookingapplication.models.Recipe;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements ProfileFragment.ProfileListener{
 
     final FragmentManager fragmentManager = getSupportFragmentManager();
     Fragment feedFragment = new FeedFragment();
     Fragment RecipeDetailFragment;
+    Fragment profileFragment = new ProfileFragment();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,12 +104,19 @@ public class HomeActivity extends AppCompatActivity {
                                 FragmentTransaction fragmentTransactionFeed = fragmentManager.beginTransaction();
                                 fragmentTransactionFeed.replace(R.id.flFragmentContainer, feedFragment).commit();
                                 return true;
+<<<<<<< Updated upstream
                             case R.id.miCreate:
                                 BasicInfoFragment createfragment1 = new BasicInfoFragment();
                                 fragmentTransactionFeed = fragmentManager.beginTransaction();
                                 fragmentTransactionFeed.replace(R.id.flFragmentContainer, createfragment1).commit();
                                 return true;
                             //TODO-create profile fragment
+
+=======
+>>>>>>> Stashed changes
+                            case R.id.miProfile:
+                                FragmentTransaction fragmentTransactionProfile = fragmentManager.beginTransaction();
+                                fragmentTransactionProfile.replace(R.id.flFragmentContainer, profileFragment).commit();
 
                             default:
                                 return true;
@@ -119,4 +127,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void savedRecipesClicked() {
+        FragmentTransaction fragmentTransactionSavedRecipes = fragmentManager.beginTransaction();
+    }
+
+    @Override
+    public void createdRecipesClicked() {
+
+    }
 }
