@@ -31,6 +31,8 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        recipe_to_add = new Recipe();
+
 
 
         final Recipe.Query recipeQuery = new Recipe.Query();
