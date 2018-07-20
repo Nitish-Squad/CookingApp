@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.SaveCallback;
@@ -161,6 +162,7 @@ public class CreateStepsFragment extends Fragment {
 
                 }
 
+                // naming isn't great here, it was just for ease of linking
                 HomeActivity createActivity = (HomeActivity) getActivity();
 
                 Recipe new_recipe = createActivity.recipe_to_add;
@@ -172,7 +174,7 @@ public class CreateStepsFragment extends Fragment {
                 new_recipe.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        // just do nothing
+                        Toast.makeText(getContext(), "Recipe Uploaded!", Toast.LENGTH_SHORT).show();
                     }
                 });
 
