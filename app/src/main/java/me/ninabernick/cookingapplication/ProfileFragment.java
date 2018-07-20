@@ -6,8 +6,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +20,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.ninabernick.cookingapplication.models.Recipe;
 
-
+//adaptable to your profile or your friend's
 public class ProfileFragment extends Fragment {
 
 
@@ -30,22 +39,49 @@ public class ProfileFragment extends Fragment {
 
     private String profileImageUrl;
     private String name;
-    private ArrayList<String> friends;
+    private ArrayList<String> friends = new ArrayList<>();
     private ArrayList<String> savedRecipes;
+    private ArrayList<ParseUser> friendUsers = new ArrayList<>();
+    //needed for recycler view of friends
 
-    private ArrayList<String> createdRecipes;
+    FriendImageAdapter adapter;
+    FriendImageAdapter.FriendProfileListener friendListener = new FriendImageAdapter.FriendProfileListener() {
+        @Override
+        public void thumbnailClicked(ParseUser friend) {
+            ProfileFragment friendProfile = ProfileFragment.newInstance(friend);
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.flFragmentContainer, friendProfile).commit();
+        }
+    };
+
+
+
+    //private ArrayList<String> createdRecipes;
 
     private ImageView ivProfileImage;
     private TextView tvName;
     private TextView tvSavedRecipes;
     private TextView tvCreatedRecipes;
+    private RecyclerView rvFriends;
+
+
 
     public interface ProfileListener {
-        void savedRecipesClicked();
-        void createdRecipesClicked();
+        void savedRecipesClicked(ParseUser user);
+        void createdRecipesClicked(ParseUser user);
     }
 
 
+
+    public static ProfileFragment newInstance(ParseUser user) {
+        ProfileFragment profileFragment = new ProfileFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("user", user);
+
+        profileFragment.setArguments(args);
+        return profileFragment;
+    }
     // This event fires 1st, before creation of fragment or any views
     // The onAttach method is called when the Fragment instance is associated with an Activity.
     // This does not mean the Activity is fully initialized.
@@ -63,7 +99,12 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = ParseUser.getCurrentUser();
+        user = getArguments().getParcelable("user");
+        friends.clear();
+        friends.addAll(user.<String>getList("friends"));
+        findFriends();
+        adapter = new FriendImageAdapter(friendUsers, friendListener);
+
 
 
 
@@ -90,27 +131,35 @@ public class ProfileFragment extends Fragment {
         tvName = (TextView) view.findViewById(R.id.tvName);
         tvSavedRecipes = (TextView) view.findViewById(R.id.tvSavedRecipes);
         tvCreatedRecipes = (TextView) view.findViewById(R.id.tvCreatedRecipes);
-        name = user.getString("name");
-        friends = new ArrayList<>();
-        if (user.<String>getList("friends") != null) {
-            friends.addAll(user.<String>getList("friends"));
-        }
+        rvFriends = (RecyclerView) view.findViewById(R.id.rvFriends);
+        rvFriends.setAdapter(adapter);
+        rvFriends.setLayoutManager(new GridLayoutManager(view.getContext(),3 ));
+        Log.d("friends", friends.toString());
+
+
+
 
         savedRecipes = new ArrayList<>();
         if (user.<String>getList("savedRecipes") != null) {
             savedRecipes.addAll(user.<String>getList("savedRecipes"));
         }
 
-        profileImageUrl = user.getString("profileImageURL");
-
-        // TODO- query for recipes where createdBy = user id
-
+        name = user.getString("name");
         tvName.setText(name);
+
+        profileImageUrl = user.getString("profileImageURL");
         Glide.with(view).load(profileImageUrl).into(ivProfileImage);
         tvSavedRecipes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.savedRecipesClicked();
+                listener.savedRecipesClicked(user);
+                Log.d("saved recipes button", "saved recipes clicked");
+            }
+        });
+        tvCreatedRecipes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.createdRecipesClicked(user);
             }
         });
 
@@ -138,5 +187,21 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    public void findFriends() {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereContainedIn("name", friends);
+        query.findInBackground(new FindCallback<ParseUser>() {
+            public void done(List<ParseUser> objects, ParseException e) {
+                if (e == null) {
+                    friendUsers.clear();
+                    friendUsers.addAll(objects);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Log.d("friends", "query failed");
+                }
+            }
+        });
     }
 }

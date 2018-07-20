@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import me.ninabernick.cookingapplication.models.Recipe;
@@ -43,7 +45,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         holder.tvTitle.setText(recipe.getTitle());
         holder.tvDescription.setText(recipe.getDescription());
         holder.tvTime.setText(recipe.getTime());
-        //Glide.with(context).load(recipe.getrecipeImage().getUrl()).into(holder.ivThumbnail);
+        Glide.with(context).load(recipe.getrecipeImage().getUrl()).into(holder.ivThumbnail);
 
     }
 

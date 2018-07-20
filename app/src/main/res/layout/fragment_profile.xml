@@ -65,6 +65,11 @@
         android:layout_below="@+id/tvFriends"
         android:layout_above="@id/tvSavedRecipes">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvFriends"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             />
     </RelativeLayout>
 
 </RelativeLayout>

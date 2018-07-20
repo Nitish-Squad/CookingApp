@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -107,6 +108,7 @@ public class RecipeDetailFragment extends Fragment {
         tvTime = (TextView) view.findViewById(R.id.tvTime);
         tvDescription = (TextView) view.findViewById(R.id.tvDescription);
         ivImage = (ImageView) view.findViewById(R.id.ivRecipeImage);
+
         btStartRecipe = (Button) view.findViewById(R.id.btStartRecipe);
         btStartRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +127,7 @@ public class RecipeDetailFragment extends Fragment {
                 startActivity(i);
             }
         });
-
+        Glide.with(view.getContext()).load(recipe.getrecipeImage().getUrl()).into(ivImage);
         ivSave = (ImageView) view.findViewById(R.id.ivSaveRecipe);
         if (!hasSaved(ParseUser.getCurrentUser(), recipe)) {
             ivSave.setImageResource(R.drawable.ic_vector_heart_stroke);

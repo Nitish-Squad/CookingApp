@@ -43,7 +43,14 @@ public class SavedRecipeFragment extends Fragment {
             transaction.replace(R.id.flFragmentContainer, detailFragment).commit();
         }
     };
-
+    //determines whether it's saved recipes or created recipes
+    public static SavedRecipeFragment newInstance(ArrayList<Recipe> recipes) {
+        SavedRecipeFragment fragment = new SavedRecipeFragment();
+        Bundle args = new Bundle();
+        args.putParcelableArrayList("recipes", recipes);
+        fragment.setArguments(args);
+        return fragment;
+    }
     // This event fires 1st, before creation of fragment or any views
     // The onAttach method is called when the Fragment instance is associated with an Activity.
     // This does not mean the Activity is fully initialized.
@@ -99,20 +106,20 @@ public class SavedRecipeFragment extends Fragment {
         if (user.getList("savedRecipes") != null) {
             ArrayList<String> savedRecipes = new ArrayList<>();
             savedRecipes.addAll(user.<String>getList("savedRecipes"));
-            for (int i = 0; i < savedRecipes.size(); i++) {
-                ParseQuery<Recipe> query = ParseQuery.getQuery(Recipe.class);
-                query.whereContainedIn("objectId", savedRecipes);
-                query.findInBackground(new FindCallback<Recipe>() {
-                    @Override
-                    public void done(List<Recipe> objects, ParseException e) {
-                        recipes.addAll(objects);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
+
+            ParseQuery<Recipe> query = ParseQuery.getQuery(Recipe.class);
+            query.whereContainedIn("objectId", savedRecipes);
+            query.findInBackground(new FindCallback<Recipe>() {
+                @Override
+                public void done(List<Recipe> objects, ParseException e) {
+                    recipes.addAll(objects);
+                    adapter.notifyDataSetChanged();
+                }
+            });
 
 
 
-            }
+
         }
     }
 

@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +30,30 @@ public class FeedFragment extends Fragment {
     ArrayList<Recipe> recipes;
     RecipeAdapter adapter;
     RecyclerView rvFeed;
+    ParseUser user;
+    private static final String FEED_TYPE = "feed type";
 
 
 
+    RecipeAdapter.RecipeListener recipeListener = new RecipeAdapter.RecipeListener() {
+        @Override
+        public void respond(Recipe recipe) {
+            RecipeDetailFragment detailFragment = RecipeDetailFragment.newInstance(recipe);
+            final FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.flFragmentContainer, detailFragment).commit();
+        }
+    };
+
+    // key determines whether this is a recipe feed or a list of
+    public static FeedFragment newInstance(String key, ParseUser user) {
+        FeedFragment fragment = new FeedFragment();
+        Bundle args = new Bundle();
+        args.putString(FEED_TYPE, key);
+        args.putParcelable("user", user);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public void getRecipes(){
         final Recipe.Query recipeQuery = new Recipe.Query();
@@ -67,17 +90,46 @@ public class FeedFragment extends Fragment {
 
     }
 
-    RecipeAdapter.RecipeListener recipeListener = new RecipeAdapter.RecipeListener() {
-        @Override
-        public void respond(Recipe recipe) {
-            RecipeDetailFragment detailFragment = RecipeDetailFragment.newInstance(recipe);
-            final FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.flFragmentContainer, detailFragment).commit();
+
+    public void getSavedRecipes() {
+
+        if (user.getList("savedRecipes") != null) {
+            ArrayList<String> savedRecipes = new ArrayList<>();
+            savedRecipes.addAll(user.<String>getList("savedRecipes"));
+
+            ParseQuery<Recipe> query = ParseQuery.getQuery(Recipe.class);
+            query.whereContainedIn("objectId", savedRecipes);
+            query.findInBackground(new FindCallback<Recipe>() {
+                @Override
+                public void done(List<Recipe> objects, ParseException e) {
+                    recipes.addAll(objects);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+
+
+
         }
-    };
+    }
+
+    public void getRecipesCreated() {
 
 
+        //ArrayList<String> createdRecipes = new ArrayList<>();
+        //savedRecipes.addAll(user.<String>getList("savedRecipes"));
+
+        ParseQuery<Recipe> query = ParseQuery.getQuery(Recipe.class);
+        query.whereEqualTo("createdBy", user.getObjectId());
+        query.findInBackground(new FindCallback<Recipe>() {
+            @Override
+            public void done(List<Recipe> objects, ParseException e) {
+                recipes.addAll(objects);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+    }
 
 
 
@@ -106,6 +158,7 @@ public class FeedFragment extends Fragment {
 
 
         adapter = new RecipeAdapter(recipes, recipeListener);
+        user = getArguments().getParcelable("user");
 
 
     }
@@ -126,7 +179,20 @@ public class FeedFragment extends Fragment {
         rvFeed = (RecyclerView) view.findViewById(R.id.rvFeed);
         rvFeed.setAdapter(adapter);
         rvFeed.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        getRecipes();
+        String feedType = getArguments().getString(FEED_TYPE);
+        switch (feedType) {
+            case HomeActivity.RECIPE_FEED:
+                getRecipes();
+                break;
+            case HomeActivity.CREATED_RECIPES:
+                getRecipesCreated();
+                break;
+            case HomeActivity.SAVED_RECIPES:
+                getSavedRecipes();
+                break;
+            default:
+                break;
+        }
 
 
 

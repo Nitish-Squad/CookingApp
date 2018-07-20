@@ -124,13 +124,13 @@ public class LoginActivity extends AppCompatActivity {
                         /* handle the result */
                         try {
 
-                           // email = response.getJSONObject().getString("email");
+                            // email = response.getJSONObject().getString("email");
                             //Log.d("email", email);
 
                             //mEmailID.setText(email);
 
                             name = response.getJSONObject().getString("name");
-                           // mUsername.setText(name);
+                            // mUsername.setText(name);
                             Log.d("name", name);
 
                             fbId = response.getJSONObject().getString("id");

@@ -12,20 +12,29 @@ import android.view.MenuItem;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import me.ninabernick.cookingapplication.models.Recipe;
 
 public class HomeActivity extends AppCompatActivity implements ProfileFragment.ProfileListener{
 
+    public static final String SAVED_RECIPES = "savedRecipes";
+    public static final String CREATED_RECIPES = "createdRecipes";
+    public static final String RECIPE_FEED = "allRecipes";
+
     // recipe to be added
     public Recipe recipe_to_add;
 
     final FragmentManager fragmentManager = getSupportFragmentManager();
-    Fragment feedFragment = new FeedFragment();
+    Fragment feedFragment = FeedFragment.newInstance(RECIPE_FEED, ParseUser.getCurrentUser());
     Fragment RecipeDetailFragment;
-    Fragment profileFragment = new ProfileFragment();
+    Fragment profileFragment = ProfileFragment.newInstance(ParseUser.getCurrentUser());
+    Fragment savedRecipeFragment = FeedFragment.newInstance(SAVED_RECIPES, ParseUser.getCurrentUser());
+    Fragment createdRecipeFragment = FeedFragment.newInstance(CREATED_RECIPES, ParseUser.getCurrentUser());
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,12 +140,20 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
 
 
     @Override
-    public void savedRecipesClicked() {
+    public void savedRecipesClicked(ParseUser user) {
+        Fragment savedFragment = FeedFragment.newInstance(SAVED_RECIPES, user);
         FragmentTransaction fragmentTransactionSavedRecipes = fragmentManager.beginTransaction();
+        fragmentTransactionSavedRecipes.replace(R.id.flFragmentContainer, savedFragment).commit();
     }
 
     @Override
-    public void createdRecipesClicked() {
-
+    public void createdRecipesClicked(ParseUser user) {
+        Fragment createdFragment = FeedFragment.newInstance(CREATED_RECIPES, user);
+        FragmentTransaction fragmentTransactionSavedRecipes = fragmentManager.beginTransaction();
+        fragmentTransactionSavedRecipes.replace(R.id.flFragmentContainer, createdFragment).commit();
     }
+
+
+
+
 }
