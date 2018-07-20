@@ -35,7 +35,7 @@
         android:layout_marginBottom="30dp"
         android:drawableRight="@android:drawable/ic_menu_more"
         android:gravity="center"
-        android:text="Your Saved Recipes" />
+        android:text="Saved Recipes" />
 
     <TextView
         android:id="@+id/tvCreatedRecipes"
@@ -46,7 +46,7 @@
         android:layout_marginBottom="30dp"
         android:drawableRight="@android:drawable/ic_menu_more"
         android:gravity="center"
-        android:text="Your Created Recipes" />
+        android:text="Created Recipes" />
 
     <TextView
         android:id="@+id/tvFriends"
@@ -55,7 +55,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/ivProfileImage"
         android:layout_marginTop="20dp"
-        android:text="Your Friends" />
+        android:text="Friends" />
 
     <RelativeLayout
         android:layout_width="match_parent"

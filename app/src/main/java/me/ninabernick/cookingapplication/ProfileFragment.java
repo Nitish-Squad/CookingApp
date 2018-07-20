@@ -102,7 +102,7 @@ public class ProfileFragment extends Fragment {
         user = getArguments().getParcelable("user");
         friends.clear();
         friends.addAll(user.<String>getList("friends"));
-        findFriends();
+
         adapter = new FriendImageAdapter(friendUsers, friendListener);
 
 
@@ -135,6 +135,7 @@ public class ProfileFragment extends Fragment {
         rvFriends.setAdapter(adapter);
         rvFriends.setLayoutManager(new GridLayoutManager(view.getContext(),3 ));
         Log.d("friends", friends.toString());
+        findFriends();
 
 
 
