@@ -19,6 +19,9 @@ import me.ninabernick.cookingapplication.models.Recipe;
 
 public class HomeActivity extends AppCompatActivity implements ProfileFragment.ProfileListener{
 
+    // recipe to be added
+    public Recipe recipe_to_add;
+
     final FragmentManager fragmentManager = getSupportFragmentManager();
     Fragment feedFragment = new FeedFragment();
     Fragment RecipeDetailFragment;
@@ -104,16 +107,12 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
                                 FragmentTransaction fragmentTransactionFeed = fragmentManager.beginTransaction();
                                 fragmentTransactionFeed.replace(R.id.flFragmentContainer, feedFragment).commit();
                                 return true;
-<<<<<<< Updated upstream
                             case R.id.miCreate:
                                 BasicInfoFragment createfragment1 = new BasicInfoFragment();
                                 fragmentTransactionFeed = fragmentManager.beginTransaction();
                                 fragmentTransactionFeed.replace(R.id.flFragmentContainer, createfragment1).commit();
                                 return true;
                             //TODO-create profile fragment
-
-=======
->>>>>>> Stashed changes
                             case R.id.miProfile:
                                 FragmentTransaction fragmentTransactionProfile = fragmentManager.beginTransaction();
                                 fragmentTransactionProfile.replace(R.id.flFragmentContainer, profileFragment).commit();

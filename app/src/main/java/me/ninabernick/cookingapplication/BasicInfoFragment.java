@@ -114,7 +114,7 @@ public class BasicInfoFragment extends Fragment {
                 // TODO implement logic for switching to the next fragment and updating the overall
                 // new recipe method
 
-                CreateActivity createActivity = (CreateActivity) getActivity();
+                HomeActivity createActivity = (HomeActivity) getActivity();
 
                 Recipe new_recipe = createActivity.recipe_to_add;
 

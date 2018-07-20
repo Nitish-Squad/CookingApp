@@ -1,5 +1,6 @@
 package me.ninabernick.cookingapplication;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -161,7 +162,7 @@ public class CreateStepsFragment extends Fragment {
 
                 }
 
-                CreateActivity createActivity = (CreateActivity) getActivity();
+                HomeActivity createActivity = (HomeActivity) getActivity();
 
                 Recipe new_recipe = createActivity.recipe_to_add;
 

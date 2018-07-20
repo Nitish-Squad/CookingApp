@@ -86,7 +86,7 @@ public class IngredientsFragment extends Fragment {
                     ingredients.add((ingredients_array.get(i)).getText().toString());
                 }
 
-                CreateActivity createActivity = (CreateActivity) getActivity();
+                HomeActivity createActivity = (HomeActivity) getActivity();
 
                 Recipe new_recipe = createActivity.recipe_to_add;
 
