@@ -99,7 +99,7 @@ public class IngredientsFragment extends Fragment {
                 CreateStepsFragment fragment2 = new CreateStepsFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flContainer, fragment2);
+                fragmentTransaction.replace(R.id.flFragmentContainer, fragment2);
                 fragmentTransaction.commit();
             }
         });

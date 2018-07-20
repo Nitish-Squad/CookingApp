@@ -1,6 +1,5 @@
 package me.ninabernick.cookingapplication;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -180,7 +179,7 @@ public class CreateStepsFragment extends Fragment {
                 BasicInfoFragment fragment2 = new BasicInfoFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flContainer, fragment2);
+                fragmentTransaction.replace(R.id.flFragmentContainer, fragment2);
                 fragmentTransaction.commit();
 
 
