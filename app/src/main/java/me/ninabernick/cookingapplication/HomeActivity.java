@@ -103,7 +103,12 @@ public class HomeActivity extends AppCompatActivity {
                                 FragmentTransaction fragmentTransactionFeed = fragmentManager.beginTransaction();
                                 fragmentTransactionFeed.replace(R.id.flFragmentContainer, feedFragment).commit();
                                 return true;
-                            //TODO-create profile fragment and create fragment
+                            case R.id.miCreate:
+                                BasicInfoFragment createfragment1 = new BasicInfoFragment();
+                                fragmentTransactionFeed = fragmentManager.beginTransaction();
+                                fragmentTransactionFeed.replace(R.id.flFragmentContainer, createfragment1).commit();
+                                return true;
+                            //TODO-create profile fragment
 
                             default:
                                 return true;
