@@ -123,8 +123,8 @@ public class RecipeDetailFragment extends Fragment {
         btStartMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), MapsActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(getContext(), MapsFragment.class);
+                startActivity(intent);
             }
         });
         Glide.with(view.getContext()).load(recipe.getrecipeImage().getUrl()).into(ivImage);
