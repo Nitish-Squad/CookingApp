@@ -50,7 +50,34 @@ public class CountDownDialog extends DialogFragment {
                 int numberOfMinutes = ((total_seconds % 86400 ) % 3600 ) / 60;
                 int numberOfSeconds = ((total_seconds % 86400 ) % 3600 ) % 60;
 
-                counter.setText("" + numberOfHours+ ":" + numberOfMinutes + ":" + numberOfSeconds);
+                String hours;
+                String minutes;
+                String seconds;
+
+                if (numberOfHours == 0){
+                    hours = "";
+                }
+                else{
+                    hours = Integer.toString(numberOfHours) + ":";
+                    if (hours.length() == 2) {
+                        hours = "0" + hours;
+                    }
+                }
+
+                if (numberOfMinutes == 0){
+                    minutes = "";
+                }
+                else{
+                    minutes = Integer.toString(numberOfMinutes) + ":";
+                    if (minutes.length() == 2) {
+                        minutes = "0" + minutes;
+                    }
+                }
+
+                seconds = Integer.toString(numberOfSeconds);
+
+
+                counter.setText(hours + minutes + seconds);
 
                 // provides total number of seconds (ex: 3600 for an hour of time)
                 // counter.setText(""+((int)Math.round(l/1000.0)-1));
