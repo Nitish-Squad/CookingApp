@@ -108,21 +108,21 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
         }
 
-        Button btnRestaurant = (Button) findViewById(R.id.btnRestaurant);
-        btnRestaurant.setOnClickListener(new View.OnClickListener() {
-            String Restaurant = "restaurant";
+        Button btnSupermarket = (Button) findViewById(R.id.btnMarket);
+        btnSupermarket.setOnClickListener(new View.OnClickListener() {
+            String Supermarket = "supermarket";
             @Override
             public void onClick(View v) {
                 Log.d("onClick", "Button is Clicked");
                 mMap.clear();
-                String url = getUrl(latitude, longitude, Restaurant);
+                String url = getUrl(latitude, longitude, Supermarket);
                 Object[] DataTransfer = new Object[2];
                 DataTransfer[0] = mMap;
                 DataTransfer[1] = url;
                 Log.d("onClick", url);
                 GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
                 getNearbyPlacesData.execute(DataTransfer);
-                Toast.makeText(MapsFragment.this,"Nearby Restaurants", Toast.LENGTH_LONG).show();
+                Toast.makeText(MapsFragment.this,"Nearby Supermarkets", Toast.LENGTH_LONG).show();
             }
         });
 
