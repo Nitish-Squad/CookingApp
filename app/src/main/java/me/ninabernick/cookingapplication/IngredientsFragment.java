@@ -10,8 +10,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,8 +27,9 @@ public class IngredientsFragment extends Fragment {
     Button btnNext;
     LinearLayout ingredients;
     TextView tvTitle;
-    EditText etIngredient1;
-    ArrayList<EditText> ingredients_array;
+    AutoCompleteTextView etIngredient1;
+    ArrayList<AutoCompleteTextView> ingredients_array;
+    String ingredients_list;
 
     private OnFragmentInteractionListener mListener;
 
@@ -51,11 +53,35 @@ public class IngredientsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        /*
+         * This works, any ingredients listed below will be available to the user to autocomplete,
+         * however, it is NOT constraining. Other ingredients can still be written manually by the
+         * user. This is mainly so that people can include ingredients that might not be commonly
+         * known/creating an exhaustive list of ingredients might be hard.
+         */
+        final String [] ingredients_list =
+                {
+                        "Eggs",
+                        "Butter",
+                        "Milk",
+                        "Peanut Butter",
+                        "Jelly",
+                        "Bread",
+                        "Chicken",
+                        "Beef",
+                        "Salmon",
+                        "Salt",
+                        "Black Pepper"
+                };
+
         btnAddIngredient = (Button) view.findViewById(R.id.btnAdd);
         btnNext = (Button) view.findViewById(R.id.btnNext);
         ingredients = (LinearLayout) view.findViewById(R.id.steps);
         tvTitle = (TextView) view.findViewById(R.id.tvTitle);
-        etIngredient1 = (EditText) view.findViewById(R.id.etIngredient1);
+        etIngredient1 = (AutoCompleteTextView) view.findViewById(R.id.Ingredients1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, ingredients_list);
+        etIngredient1.setThreshold(3);
+        etIngredient1.setAdapter(adapter);
 
         ingredients_array = new ArrayList<>();
 
@@ -65,7 +91,12 @@ public class IngredientsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // logic for adding edit text boxes
-                EditText temp = new EditText(getContext());
+                AutoCompleteTextView temp = new AutoCompleteTextView(getContext());
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, ingredients_list);
+
+                temp.setThreshold(3);
+                temp.setAdapter(adapter);
 
                 temp.setHint("Ingredient");
 
