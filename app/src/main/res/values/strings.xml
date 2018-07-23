@@ -7,4 +7,18 @@
     <string name="IngredientHeader">Ingredients:</string>
     <string name="facebook_app_id">248125599315706</string>
     <string name="fb_login_protocol_scheme">fb248125599315706</string>
+
+
+    <string-array name="tags">
+        <item>breakfast</item>
+        <item>lunch</item>
+        <item>dinner</item>
+        <item>dessert</item>
+        <item>vegan</item>
+        <item>vegetarian</item>
+    </string-array>
+
+    //UI element text displays
+    <string name="filterbutton">Filter Recipes</string>
+
 </resources>

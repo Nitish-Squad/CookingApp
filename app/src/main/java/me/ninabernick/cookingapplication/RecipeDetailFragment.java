@@ -79,10 +79,7 @@ public class RecipeDetailFragment extends Fragment {
         steps = new ArrayList<>();
         ingredients = new ArrayList<>();
         recipe = getArguments().getParcelable(RECIPE_KEY);
-        //TODO- populate list of steps with data from recipe object
-        //see guide on creating/using fragments for dynamically loading fragment in home activity
-        //incorrect implementation of steps
-        //steps.addAll(recipe.getSteps());
+
         ingredients.addAll(recipe.getIngredients());
 
 

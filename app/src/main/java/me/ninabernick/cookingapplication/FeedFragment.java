@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -31,8 +32,12 @@ public class FeedFragment extends Fragment {
     ArrayList<Recipe> recipes;
     RecipeAdapter adapter;
     RecyclerView rvFeed;
+    TextView tvFilterRecipes;
     ParseUser user;
+    FilterFragment filter = new FilterFragment();
+    public static ArrayList<String> filters = new ArrayList<>();
     private static final String FEED_TYPE = "feed type";
+    private static final int DIALOG_REQUEST_CODE = 20;
 
 
 
@@ -46,6 +51,8 @@ public class FeedFragment extends Fragment {
         }
     };
 
+
+
     // key determines whether this is a recipe feed or a list of
     public static FeedFragment newInstance(String key, ParseUser user) {
         FeedFragment fragment = new FeedFragment();
@@ -58,9 +65,15 @@ public class FeedFragment extends Fragment {
 
     public void getRecipes(){
         final Recipe.Query recipeQuery = new Recipe.Query();
+        // make sure no duplicates
+        recipes.clear();
 
         // place to order the recipes in some manner (ex: rating, when created, etc)
         //postsQuery.orderByDescending("createdAt");
+        //check if the user has applied filters to their search
+        if (!filters.isEmpty()) {
+            recipeQuery.whereContainedIn("tags", filters);
+        }
 
         recipeQuery.getTop();
         recipeQuery.findInBackground(new FindCallback<Recipe>() {
@@ -84,7 +97,7 @@ public class FeedFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                String breakpoint = "only here so I can set a breakpoint";
+
             }
         });
 
@@ -177,6 +190,16 @@ public class FeedFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        tvFilterRecipes = (TextView) view.findViewById(R.id.tvFilterResults);
+        tvFilterRecipes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                filter.setTargetFragment(FeedFragment.this, DIALOG_REQUEST_CODE);
+                filter.show(ft, "dialog");
+            }
+        });
         rvFeed = (RecyclerView) view.findViewById(R.id.rvFeed);
         rvFeed.setAdapter(adapter);
         rvFeed.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
