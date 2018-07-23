@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("login", "user already logged in");
             Intent i = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(i);
+            finish();
         }
         else {
             ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
@@ -176,6 +177,7 @@ public class LoginActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(i);
+                finish();
             }
         });
     }

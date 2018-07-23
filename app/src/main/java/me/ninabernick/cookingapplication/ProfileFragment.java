@@ -102,7 +102,8 @@ public class ProfileFragment extends Fragment {
         user = getArguments().getParcelable("user");
         friends.clear();
         friends.addAll(user.<String>getList("friends"));
-
+        Log.d("onCreate", "onCreate called");
+        findFriends();
         adapter = new FriendImageAdapter(friendUsers, friendListener);
 
 
@@ -135,7 +136,7 @@ public class ProfileFragment extends Fragment {
         rvFriends.setAdapter(adapter);
         rvFriends.setLayoutManager(new GridLayoutManager(view.getContext(),3 ));
         Log.d("friends", friends.toString());
-        findFriends();
+
 
 
 
@@ -196,8 +197,8 @@ public class ProfileFragment extends Fragment {
         query.findInBackground(new FindCallback<ParseUser>() {
             public void done(List<ParseUser> objects, ParseException e) {
                 if (e == null) {
-                    friendUsers.clear();
-                    friendUsers.addAll(objects);
+                    adapter.clear();
+                    adapter.addAll(objects);
                     adapter.notifyDataSetChanged();
                 } else {
                     Log.d("friends", "query failed");

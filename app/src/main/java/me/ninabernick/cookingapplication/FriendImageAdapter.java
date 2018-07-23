@@ -61,6 +61,17 @@ public class FriendImageAdapter extends RecyclerView.Adapter<FriendImageAdapter.
         return friends.size();
     }
 
+    public void addAll(List<ParseUser> users) {
+        friends.addAll(users);
+        notifyDataSetChanged();
+
+    }
+
+    public void clear() {
+        friends.clear();
+        notifyDataSetChanged();
+    }
+
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
