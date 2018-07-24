@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.parse.ParseFile;
@@ -31,6 +32,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import me.ninabernick.cookingapplication.models.Recipe;
 
@@ -47,6 +49,10 @@ public class BasicInfoFragment extends Fragment {
     private Button btnTake;
     private Button btnChoose;
     private Button btnNext;
+    private EditText etTag1;
+    private ImageView ivAddTag;
+    private LinearLayout tags;
+    private ArrayList<EditText> tagList;
 
     // variables for camera operation
     public final String APP_TAG = "Cooking App";
@@ -87,6 +93,22 @@ public class BasicInfoFragment extends Fragment {
         btnTake = (Button) view.findViewById(R.id.btnTakePhoto);
         btnChoose = (Button) view.findViewById(R.id.btnChoosePhoto);
         btnNext = (Button) view.findViewById(R.id.btnNext);
+        // adding tags
+        etTag1 = (EditText) view.findViewById(R.id.etTag1);
+        tags = (LinearLayout) view.findViewById(R.id.tags);
+        ivAddTag = (ImageView) view.findViewById(R.id.ivAddTag);
+
+        tagList = new ArrayList<>();
+        tagList.add(etTag1);
+
+        ivAddTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText newTag = new EditText(getContext());
+                tags.addView(newTag);
+                tagList.add(newTag);
+            }
+        });
 
 
         btnTake.setOnClickListener(new View.OnClickListener(){
@@ -129,7 +151,15 @@ public class BasicInfoFragment extends Fragment {
 
                 new_recipe.setrecipeImage(new ParseFile(photoFile));
 
+                // store any tags added
+                for (int i = 0; i < tagList.size(); i++) {
+                    if (tagList.get(i).getText().toString() != null) {
+                        new_recipe.addTag(tagList.get(i).getText().toString());
+                    }
+                }
+
                 createActivity.recipe_to_add = new_recipe;
+                Log.d("tags", new_recipe.getTags().toString());
 
 
 

@@ -39,6 +39,9 @@ public class Recipe extends ParseObject {
     public ParseUser getCreatedBy() {
         return getParseUser("createdBy");
     }
+    public List<String> getTags(){
+        return getList("tags");
+    }
 
     /*
      * NOTE: The way that steps are stored here is as a list of strings, each of these strings
@@ -157,6 +160,14 @@ public class Recipe extends ParseObject {
 
     public void setSteps(List<String> steps){
         put("steps", steps);
+    }
+
+    public void addTag(String tag) {
+        add("tags", tag);
+    }
+
+    public void setTags(List<String> tags) {
+        put("tags", tags);
     }
 
     public static class Query extends ParseQuery<Recipe> {
