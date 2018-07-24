@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.ninabernick.cookingapplication.models.Recipe;
 
@@ -25,7 +26,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     }
 
     public RecipeAdapter(ArrayList<Recipe> recipeList, RecipeListener listener) {
-        recipes = recipeList;
+        recipes = new ArrayList<>();
+        recipes.addAll(recipeList);
         recipeListener = listener;
     }
 
@@ -58,7 +60,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
-    public void addAll(ArrayList<Recipe> newRecipes) {
+    public void addAll(List<Recipe> newRecipes) {
         recipes.addAll(newRecipes);
         notifyDataSetChanged();
     }
@@ -66,6 +68,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     public void add(Recipe recipe) {
         recipes.add(recipe);
         notifyDataSetChanged();
+    }
+
+    public void filter(String search) {
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

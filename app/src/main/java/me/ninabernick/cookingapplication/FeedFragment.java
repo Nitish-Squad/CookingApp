@@ -10,10 +10,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -29,12 +32,16 @@ import me.ninabernick.cookingapplication.models.Recipe;
 
 public class FeedFragment extends Fragment {
     FragmentActivity listener;
+    // note--adapter makes a copy of recipes, does not change it
     ArrayList<Recipe> recipes;
+    // make a new list of recipes so you don't have to query again when you get rid of the search
+    ArrayList<Recipe> filteredRecipes;
     RecipeAdapter adapter;
     RecyclerView rvFeed;
     TextView tvFilterRecipes;
     ParseUser user;
     FilterFragment filter = new FilterFragment();
+    EditText etSearch;
     public static ArrayList<String> filters = new ArrayList<>();
     private static final String FEED_TYPE = "feed type";
     private static final int DIALOG_REQUEST_CODE = 20;
@@ -85,11 +92,14 @@ public class FeedFragment extends Fragment {
                     for (int i = 0; i < objects.size(); i ++){
                         Recipe recipe = objects.get(i);
                         recipes.add(recipe);
-                        adapter.notifyDataSetChanged();
+
 
                         // code to update the adapter for the recycler view
                         // recipeAdapter.notifyItemInserted(recipes.size() - 1);
                     }
+                    adapter.clear();
+                    adapter.addAll(recipes);
+                    adapter.notifyDataSetChanged();
 
                 }
                 else{
@@ -104,7 +114,7 @@ public class FeedFragment extends Fragment {
 
     }
 
-
+    // always change adapter data set, not local "recipes" list
     public void getSavedRecipes() {
 
         if (user.getList("savedRecipes") != null) {
@@ -116,7 +126,8 @@ public class FeedFragment extends Fragment {
             query.findInBackground(new FindCallback<Recipe>() {
                 @Override
                 public void done(List<Recipe> objects, ParseException e) {
-                    recipes.addAll(objects);
+                    adapter.clear();
+                    adapter.addAll(objects);
                     adapter.notifyDataSetChanged();
                 }
             });
@@ -126,19 +137,16 @@ public class FeedFragment extends Fragment {
 
         }
     }
-
+    // always change adapter data set, not local "recipes" list
     public void getRecipesCreated() {
-
-
-        //ArrayList<String> createdRecipes = new ArrayList<>();
-        //savedRecipes.addAll(user.<String>getList("savedRecipes"));
 
         ParseQuery<Recipe> query = ParseQuery.getQuery(Recipe.class);
         query.whereEqualTo("createdBy", user.getObjectId());
         query.findInBackground(new FindCallback<Recipe>() {
             @Override
             public void done(List<Recipe> objects, ParseException e) {
-                recipes.addAll(objects);
+                adapter.clear();
+                adapter.addAll(objects);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -200,10 +208,12 @@ public class FeedFragment extends Fragment {
                 filter.show(ft, "dialog");
             }
         });
+        etSearch = (EditText) view.findViewById(R.id.etSearchRecipes);
         rvFeed = (RecyclerView) view.findViewById(R.id.rvFeed);
         rvFeed.setAdapter(adapter);
         rvFeed.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
         String feedType = getArguments().getString(FEED_TYPE);
+        // allows adaptation for home feed, created recipes, and saved recipes
         switch (feedType) {
             case HomeActivity.RECIPE_FEED:
                 getRecipes();
@@ -217,6 +227,43 @@ public class FeedFragment extends Fragment {
             default:
                 break;
         }
+
+        // implementation of search
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filteredRecipes = new ArrayList<>();
+                ArrayList<Recipe> temp = recipes;
+
+                String search = editable.toString();
+                if (search != "") {
+                    for (int i = 0; i < recipes.size(); i++) {
+                        if (recipes.get(i).getTitle().contains(search) || recipes.get(i).getDescription().contains(search)) {
+                            filteredRecipes.add(recipes.get(i));
+                        }
+                    }
+                    adapter.clear();
+                    adapter.addAll(filteredRecipes);
+                }
+                else {
+                    adapter.clear();
+                    adapter.addAll(recipes);
+                }
+
+
+
+            }
+        });
 
 
 

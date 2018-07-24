@@ -9,35 +9,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
 
         android:layout_centerHorizontal="true"
         android:text="Filter"
         android:textSize="24sp" />
 
-    <CheckBox
-        android:id="@+id/cbFriendRecipes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
-        android:text="Friends' Recipes" />
-
-    <TextView
-        android:id="@+id/tvTags"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="154dp"
-        android:text="Tags"
-        android:textSize="18sp" />
-
     <LinearLayout
         android:id="@+id/llTags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTags"
+        android:layout_below="@+id/tvFilter"
         android:layout_centerHorizontal="true"
         android:orientation="vertical"></LinearLayout>
     <Button
