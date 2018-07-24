@@ -19,6 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,6 +35,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import me.ninabernick.cookingapplication.models.Recipe;
 
@@ -49,10 +52,10 @@ public class BasicInfoFragment extends Fragment {
     private Button btnTake;
     private Button btnChoose;
     private Button btnNext;
-    private EditText etTag1;
+    private AutoCompleteTextView acTag1;
     private ImageView ivAddTag;
     private LinearLayout tags;
-    private ArrayList<EditText> tagList;
+    private ArrayList<AutoCompleteTextView> tagList;
 
     // variables for camera operation
     public final String APP_TAG = "Cooking App";
@@ -94,17 +97,26 @@ public class BasicInfoFragment extends Fragment {
         btnChoose = (Button) view.findViewById(R.id.btnChoosePhoto);
         btnNext = (Button) view.findViewById(R.id.btnNext);
         // adding tags
-        etTag1 = (EditText) view.findViewById(R.id.etTag1);
+        acTag1 = (AutoCompleteTextView) view.findViewById(R.id.acAddTag);
         tags = (LinearLayout) view.findViewById(R.id.tags);
         ivAddTag = (ImageView) view.findViewById(R.id.ivAddTag);
 
         tagList = new ArrayList<>();
-        tagList.add(etTag1);
+        tagList.add(acTag1);
+
+        // adapter for autocompleting tags
+
+        ArrayList<String> tagResources = new ArrayList<>();
+        tagResources.addAll(Arrays.asList(getResources().getStringArray(R.array.tags)));
+        final ArrayAdapter<String> tagAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, tagResources);
+        acTag1.setAdapter(tagAdapter);
 
         ivAddTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText newTag = new EditText(getContext());
+                AutoCompleteTextView newTag = new AutoCompleteTextView(getContext());
+                newTag.setAdapter(tagAdapter);
+                newTag.setHint("Add Tag (optional)");
                 tags.addView(newTag);
                 tagList.add(newTag);
             }

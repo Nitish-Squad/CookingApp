@@ -116,13 +116,11 @@
 
             android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/etTag1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@id/etHours"
-                    android:layout_below="@+id/etHours"
-                    android:hint="Add Tags (optional)" />
+            <AutoCompleteTextView
+                android:id="@+id/acAddTag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Add Tags (optional)" />
         </LinearLayout>
 
         <ImageView
