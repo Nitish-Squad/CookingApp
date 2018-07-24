@@ -205,11 +205,11 @@ public class CreateStepsFragment extends Fragment {
         Integer spinner_position = icon_spinner_array.get(position).getSelectedItemPosition();
         switch (spinner_position){
             case (0):
-                return "R.drawable.stove_top_icon";
+                return "stove_top_icon";
             case(1):
-                return "R.drawable.chicken_icon";
+                return "chicken_icon";
             case(2):
-                return"R.drawable.glove_icon";
+                return"glove_icon";
         }
 
         // this should never be reached, only here to solve error and indicate errors
