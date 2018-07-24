@@ -3,6 +3,7 @@ package me.ninabernick.cookingapplication;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,6 +92,12 @@ public class CountDownDialog extends DialogFragment {
             @Override
             public void onFinish() {
                 dismiss();
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), "cookingappid")
+                        .setSmallIcon(R.drawable.ic_launcher_round)
+                        .setContentTitle("Timer completed!")
+                        .setContentText("Timer is finished, go check on your recipe!")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setAutoCancel(true);
             }
         };
         gameTimer.start();
