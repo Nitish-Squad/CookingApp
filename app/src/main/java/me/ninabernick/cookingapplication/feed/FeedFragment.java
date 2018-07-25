@@ -57,7 +57,11 @@ public class FeedFragment extends Fragment {
             RecipeDetailFragment detailFragment = RecipeDetailFragment.newInstance(recipe);
             final FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.flFragmentContainer, detailFragment).commit();
+
+
+            transaction.replace(R.id.flFragmentContainer, detailFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         }
     };
 

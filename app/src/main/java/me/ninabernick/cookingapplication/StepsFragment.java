@@ -53,7 +53,7 @@ public class StepsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_steps, container, false);
+        final View view = inflater.inflate(R.layout.fragment_steps, container, false);
 
         TextView tvStepNumber = (TextView) view.findViewById(R.id.tvStepNumber);
         tvStepNumber.setText("Step " + stepnumber);
@@ -63,8 +63,7 @@ public class StepsFragment extends Fragment {
 
         ImageButton ivIcon = (ImageButton) view.findViewById(R.id.ivIcon);
 
-        int myID =
-                getResourceID(icon, "drawable", getApplicationContext());
+        int myID = getResourceID(icon, "drawable", getApplicationContext());
 
         ivIcon.setImageResource(myID);
 
@@ -111,6 +110,11 @@ public class StepsFragment extends Fragment {
                         intent.putExtra("video_extension", video_extension);
                         startActivity(intent);
                     }
+                // set it to false at the moment because the API Key is missing
+                if (false) {
+                    Intent intent = new Intent(getContext(), YoutubeVideoActivity.class);
+                    intent.putExtra("video_extension", video_extension);
+                    startActivity(intent);
                 }
             }
         });
@@ -126,10 +130,10 @@ public class StepsFragment extends Fragment {
         String regex = "(.)*(\\d)(.)*";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(step);
-        boolean isMatched = matcher.matches();
+        Boolean match_found = matcher.matches();
 
 
-        if (isMatched) {
+        if (match_found) {
             Scanner in = new Scanner(step).useDelimiter("[^0-9]+");
             int integer = in.nextInt();
 
@@ -223,8 +227,7 @@ public class StepsFragment extends Fragment {
         }
     }
 
-    protected final static int getResourceID
-            (final String resName, final String resType, final Context ctx)
+    protected final static int getResourceID (final String resName, final String resType, final Context ctx)
     {
         final int ResourceID =
                 ctx.getResources().getIdentifier(resName, resType,
