@@ -7,6 +7,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -44,6 +47,9 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
 
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +69,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -91,6 +96,8 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -189,15 +196,26 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
 
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
 
-        showStores();
 
-        //stop location updates
+        showStores();
+        loadStoreList();
+
+        /*//stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             Log.d("onLocationChanged", "Removing Location Updates");
         }
-        Log.d("onLocationChanged", "Exit");
 
+        Log.d("onLocationChanged", "Exit");*/
+
+    }
+
+    public void loadStoreList() {
+        Log.i("Latitute", "Latitute: " + latitude);
+        Log.i("Longitute", "Longitude: " + longitude);
+        StoreListFragment storeListFragment = StoreListFragment.newInstance(mMap, mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        fragmentTransaction.add(R.id.textContainer, storeListFragment);
+        fragmentTransaction.commit();
     }
 
     @Override
