@@ -1,17 +1,10 @@
 package me.ninabernick.cookingapplication.Location;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,10 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +26,7 @@ public class StoreListFragment extends Fragment{
     double latitude;
     double longitude;
     List<HashMap<String, String>> nearbyPlacesList = new ArrayList<>();
-    HashMap<String, String> h_map = new HashMap<String, String>;
+    HashMap<String, String> h_map = new HashMap<String, String>();
 
 
     StoreAdapter storeAdapter;

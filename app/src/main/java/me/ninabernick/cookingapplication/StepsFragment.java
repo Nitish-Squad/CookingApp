@@ -103,8 +103,6 @@ public class StepsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if (!finalValid_video_extension) {
-
                 // set it to false at the moment because the API Key is missing
                 if (false) {
                     Intent intent = new Intent(getContext(), YoutubeVideoActivity.class);
