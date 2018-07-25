@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FinishedRecipeActivity">
+
+
+    <TextView
+        android:id="@+id/tvCongratsMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="79dp"
+        android:text="@string/congrats_message"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/tvRatingMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvCongratsMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:text="@string/rating" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvRatingMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-20dp" />
+
+    <TextView
+        android:id="@+id/tvComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ratingBar"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="@string/leave_comment" />
+
+    <EditText
+        android:id="@+id/etComment"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvComment"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/tvLowRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etComment"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:text="@string/low_rating"
+        android:visibility="invisible"/>
+
+    <Button
+        android:id="@+id/btFindRestaurants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLowRating"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-20dp"
+        android:visibility="invisible"
+        android:text="Find Nearby Restaurants" />
+
+    <Button
+        android:id="@+id/btFinish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="Done" />
+
+</RelativeLayout>

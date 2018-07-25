@@ -20,5 +20,9 @@
 
     //UI element text displays
     <string name="filterbutton">Filter Recipes</string>
+    <string name="congrats_message">Congrats! You did it!</string>
+    <string name="rating">Rate this recipe:</string>
+    <string name="leave_comment">Leave a comment:</string>
+    <string name="low_rating">Uh oh! Need a back-up plan?</string>
 
 </resources>
