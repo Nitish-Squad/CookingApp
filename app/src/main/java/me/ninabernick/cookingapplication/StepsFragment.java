@@ -102,7 +102,7 @@ public class StepsFragment extends Fragment {
         ivIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (finalValid_video_extension) {
+                if (!finalValid_video_extension) {
                     Intent intent = new Intent(getContext(), YoutubeVideoActivity.class);
                     intent.putExtra("video_extension", video_extension);
                     startActivity(intent);

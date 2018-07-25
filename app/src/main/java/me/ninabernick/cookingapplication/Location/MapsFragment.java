@@ -47,9 +47,6 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
 
-    FragmentManager fragmentManager = getSupportFragmentManager();
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +66,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -213,9 +210,10 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
     public void loadStoreList() {
         Log.i("Latitute", "Latitute: " + latitude);
         Log.i("Longitute", "Longitude: " + longitude);
-        StoreListFragment storeListFragment = StoreListFragment.newInstance(mMap, mLastLocation.getLatitude(), mLastLocation.getLongitude());
-        fragmentTransaction.add(R.id.textContainer, storeListFragment);
-        fragmentTransaction.commit();
+        StoreListFragment storeListFragment = StoreListFragment.newInstance(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.textContainer, storeListFragment).commit();
     }
 
     @Override
