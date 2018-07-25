@@ -23,6 +23,6 @@
     <string name="channel_name">CookingAppChannel</string>
     <string name="channel_description">Channel for CookingApp Notifications</string>
     <string name="CHANNEL_ID">cooking_app_id</string>
-    <string name="youtube_api_key">AIzaSyBiwbeDtB0fhFScH5Ffb7Epwwf8dSiCzgk</string>
+    <string name="youtube_api_key">nothing</string>
 
 </resources>
