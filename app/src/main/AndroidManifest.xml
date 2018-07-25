@@ -61,7 +61,8 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapsFragment" />
+
+        <activity android:name=".Location.MapsFragment" />
 
         <uses-library
             android:name="com.google.android.maps"

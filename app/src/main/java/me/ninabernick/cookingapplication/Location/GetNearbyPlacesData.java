@@ -1,4 +1,4 @@
-package me.ninabernick.cookingapplication;
+package me.ninabernick.cookingapplication.Location;
 
 import android.os.AsyncTask;
 import android.util.Log;

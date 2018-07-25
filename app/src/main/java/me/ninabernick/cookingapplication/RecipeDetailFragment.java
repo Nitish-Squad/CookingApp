@@ -24,6 +24,7 @@ import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 
+import me.ninabernick.cookingapplication.Location.MapsFragment;
 import me.ninabernick.cookingapplication.models.Recipe;
 import me.ninabernick.cookingapplication.models.User;
 
@@ -124,6 +125,7 @@ public class RecipeDetailFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         Glide.with(view.getContext()).load(recipe.getrecipeImage().getUrl()).into(ivImage);
         ivSave = (ImageView) view.findViewById(R.id.ivSaveRecipe);
         if (!hasSaved(ParseUser.getCurrentUser(), recipe)) {
