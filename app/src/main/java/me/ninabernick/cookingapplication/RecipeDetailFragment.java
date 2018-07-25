@@ -13,18 +13,24 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.ninabernick.cookingapplication.Location.MapsFragment;
+import me.ninabernick.cookingapplication.models.Comment;
 import me.ninabernick.cookingapplication.models.Recipe;
 import me.ninabernick.cookingapplication.models.User;
 
@@ -40,12 +46,15 @@ public class RecipeDetailFragment extends Fragment {
     private Button btStartRecipe;
     private Button btStartMaps;
     private ImageView ivSave;
+    private RatingBar rbDisplayRating;
+    private LinearLayout llComments;
 
     private ListView lvIngredientList;
     private ArrayList<String> steps;
     private ArrayList<String> ingredients;
     private ArrayAdapter<String> ingredientAdapter;
     private ArrayAdapter<String> stepAdapter;
+    private ArrayList<Comment> comments;
 
     public static final String RECIPE_KEY = "recipe";
 
@@ -80,11 +89,9 @@ public class RecipeDetailFragment extends Fragment {
         steps = new ArrayList<>();
         ingredients = new ArrayList<>();
         recipe = getArguments().getParcelable(RECIPE_KEY);
+        comments = new ArrayList<>();
 
         ingredients.addAll(recipe.getIngredients());
-
-
-
 
     }
 
@@ -106,6 +113,9 @@ public class RecipeDetailFragment extends Fragment {
         tvTime = (TextView) view.findViewById(R.id.tvTime);
         tvDescription = (TextView) view.findViewById(R.id.tvDescription);
         ivImage = (ImageView) view.findViewById(R.id.ivRecipeImage);
+        llComments = (LinearLayout) view.findViewById(R.id.llComments);
+        rbDisplayRating = (RatingBar) view.findViewById(R.id.rbDisplayRating);
+        rbDisplayRating.setRating(recipe.getAverageRating());
 
         btStartRecipe = (Button) view.findViewById(R.id.btStartRecipe);
         btStartRecipe.setOnClickListener(new View.OnClickListener() {
@@ -169,21 +179,53 @@ public class RecipeDetailFragment extends Fragment {
         tvDescription.setText(recipe.getDescription());
 
 
+
+
         lvIngredientList = (ListView) view.findViewById(R.id.lvIngredients);
         if (lvIngredientList == null) {
             Log.d("ListView", "ListView null");
         }
 
-        //stepAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, steps);
+
         ingredientAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, ingredients);
         lvIngredientList.setAdapter(ingredientAdapter);
 
+        getTopComments(recipe, 3);
 
 
 
 
 
 
+
+
+    }
+
+    private void getTopComments(Recipe recipe, int numComments) {
+        List<String> commentIds = recipe.getComments();
+        if (commentIds == null) {
+            return;
+        }
+        ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
+        query.include("user");
+        query.whereContainedIn("objectId", commentIds);
+        query.orderByDescending("createdAt");
+        query.setLimit(numComments);
+        query.findInBackground(new FindCallback<Comment>() {
+            @Override
+            public void done(List<Comment> objects, ParseException e) {
+                if (e == null) {
+                    for (int i = 0; i < objects.size(); i++) {
+
+                        comments.add(objects.get(i));
+                        TextView newComment = new TextView(getContext());
+                        newComment.setText(String.format("%s: %s", objects.get(i).getUser().getString("name"), objects.get(i).getText()));
+                        llComments.addView(newComment);
+                    }
+
+                }
+            }
+        });
 
     }
 

@@ -60,7 +60,7 @@ public class FeedFragment extends Fragment {
 
 
 
-    // key determines whether this is a recipe feed or a list of
+    // key determines whether this is a recipe feed or a list of saved recipes, created recipes
     public static FeedFragment newInstance(String key, ParseUser user) {
         FeedFragment fragment = new FeedFragment();
         Bundle args = new Bundle();
@@ -76,7 +76,7 @@ public class FeedFragment extends Fragment {
         recipes.clear();
 
         // place to order the recipes in some manner (ex: rating, when created, etc)
-        //postsQuery.orderByDescending("createdAt");
+        recipeQuery.orderByDescending("createdAt");
         //check if the user has applied filters to their search
         if (!filters.isEmpty()) {
             recipeQuery.whereContainedIn("tags", filters);
@@ -88,14 +88,10 @@ public class FeedFragment extends Fragment {
             public void done(List<Recipe> objects, ParseException e) {
                 if (e == null)
                 {
-                    Log.d("Number of recipes", Integer.toString(objects.size()));
+
                     for (int i = 0; i < objects.size(); i ++){
                         Recipe recipe = objects.get(i);
                         recipes.add(recipe);
-
-
-                        // code to update the adapter for the recycler view
-                        // recipeAdapter.notifyItemInserted(recipes.size() - 1);
                     }
                     adapter.clear();
                     adapter.addAll(recipes);
@@ -103,7 +99,7 @@ public class FeedFragment extends Fragment {
 
                 }
                 else{
-                    Log.d("MainActivity","Failed to get all the recipes.");
+
                     e.printStackTrace();
                 }
 
@@ -185,15 +181,11 @@ public class FeedFragment extends Fragment {
 
     }
 
-    // The onCreateView method is called when Fragment should create its View object hierarchy,
-    // either dynamically or via XML layout inflation.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_feed, parent, false);
     }
 
-    // This event is triggered soon after onCreateView().
-    // onViewCreated() is only called if the view returned from onCreateView() is non-null.
     // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -264,27 +256,14 @@ public class FeedFragment extends Fragment {
 
             }
         });
-
-
-
-
-
-
     }
 
-    // This method is called when the fragment is no longer connected to the Activity
-    // Any references saved in onAttach should be nulled out here to prevent memory leaks.
     @Override
     public void onDetach() {
         super.onDetach();
         this.listener = null;
     }
 
-
-
-    // This method is called after the parent Activity's onCreate() method has completed.
-    // Accessing the view hierarchy of the parent activity must be done in the onActivityCreated.
-    // At this point, it is safe to search for activity View objects by their ID, for example.
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

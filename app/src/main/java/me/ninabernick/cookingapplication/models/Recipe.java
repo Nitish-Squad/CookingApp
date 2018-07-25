@@ -11,6 +11,7 @@ import com.parse.ParseUser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ParseClassName("Recipe")
@@ -57,6 +58,23 @@ public class Recipe extends ParseObject {
         return getList("ratings");
     }
 
+    // average of all ratings, use for display
+    public float getAverageRating() {
+        List<Integer> ratings = getRatings();
+        if (ratings == null) {
+            return 0;
+        }
+        else {
+            float sum = 0;
+            for (int i = 0; i < ratings.size(); i++) {
+                sum += ratings.get(i);
+            }
+            sum = (sum / ratings.size());
+            return sum;
+        }
+
+    }
+    //returns list of object ids
     public List<String> getComments(){
         return getList("comments");
     }
@@ -168,6 +186,18 @@ public class Recipe extends ParseObject {
 
     public void setTags(List<String> tags) {
         put("tags", tags);
+    }
+
+    public void setRatings(List<Integer> ratings) {
+        put("ratings", ratings);
+    }
+
+    public void addRating(Integer i) {
+        add("ratings", i);
+    }
+
+    public void addComment(Comment comment) {
+        add("comments", comment.getObjectId());
     }
 
     public static class Query extends ParseQuery<Recipe> {
