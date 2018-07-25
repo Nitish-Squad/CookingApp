@@ -1,9 +1,14 @@
 package me.ninabernick.cookingapplication;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,15 +96,43 @@ public class CountDownDialog extends DialogFragment {
 
             @Override
             public void onFinish() {
-                dismiss();
+                progress.setProgress(100);
+                counter.setText("Time's Up!\n Click Anywhere to Exit");
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                        CharSequence name = getString(R.string.channel_name);
+                        String description = getString(R.string.channel_description);
+                        int importance = NotificationManager.IMPORTANCE_HIGH;
+                        NotificationChannel channel = new NotificationChannel("cookingappid", name, importance);
+                        channel.setDescription(description);
+                        // Register the channel with the system; you can't change the importance
+                        // or other notification behaviors after this
+                        NotificationManager notificationManager = getContext().getSystemService(NotificationManager.class);
+                        notificationManager.createNotificationChannel(channel);
+                    }
+                }
+
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), "cookingappid")
-                        .setSmallIcon(R.drawable.ic_launcher_round)
-                        .setContentTitle("Timer completed!")
-                        .setContentText("Timer is finished, go check on your recipe!")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                        .setAutoCancel(true);
+                        .setSmallIcon(R.drawable.chicken_icon)
+                        .setContentTitle("Timer Complete")
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText("Step timer complete, ready to move onto the next step!"))
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setDefaults(Notification.DEFAULT_SOUND)
+                        .setDefaults(Notification.DEFAULT_VIBRATE);
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+
+                // notificationId is a unique int for each notification that you must define
+                notificationManager.notify(70987, mBuilder.build());
+
+
+                // dismiss();
             }
         };
         gameTimer.start();
     }
+
 }
