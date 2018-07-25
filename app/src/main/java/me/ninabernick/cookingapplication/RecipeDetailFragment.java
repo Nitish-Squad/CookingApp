@@ -192,13 +192,6 @@ public class RecipeDetailFragment extends Fragment {
 
         getTopComments(recipe, 3);
 
-
-
-
-
-
-
-
     }
 
     private void getTopComments(Recipe recipe, int numComments) {

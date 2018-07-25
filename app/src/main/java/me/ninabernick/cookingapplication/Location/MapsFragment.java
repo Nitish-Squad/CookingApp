@@ -96,6 +96,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
+
         //Initialize Google Play Services
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -109,25 +110,18 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
+    }
 
-        Button btnSupermarket = (Button) findViewById(R.id.btnMarket);
-        btnSupermarket.setOnClickListener(new View.OnClickListener() {
-            String Supermarket = "supermarket";
-            @Override
-            public void onClick(View v) {
-                Log.d("onClick", "Button is Clicked");
-                mMap.clear();
-                String url = getUrl(latitude, longitude, Supermarket);
-                Object[] DataTransfer = new Object[2];
-                DataTransfer[0] = mMap;
-                DataTransfer[1] = url;
-                Log.d("onClick", url);
-                GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
-                getNearbyPlacesData.execute(DataTransfer);
-                Toast.makeText(MapsFragment.this,"Nearby Supermarkets", Toast.LENGTH_LONG).show();
-            }
-        });
-
+    public void showStores() {
+        String Supermarket = "supermarket";
+        String url = getUrl(latitude, longitude, Supermarket);
+        Object[] DataTransfer = new Object[2];
+        DataTransfer[0] = mMap;
+        DataTransfer[1] = url;
+        Log.d("onClick", url);
+        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+        getNearbyPlacesData.execute(DataTransfer);
+        Toast.makeText(MapsFragment.this,"Nearby Supermarkets", Toast.LENGTH_LONG).show();
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -194,6 +188,8 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         Toast.makeText(MapsFragment.this,"Your Current Location", Toast.LENGTH_LONG).show();
 
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
+
+        showStores();
 
         //stop location updates
         if (mGoogleApiClient != null) {

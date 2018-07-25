@@ -20,16 +20,13 @@
 
     //UI element text displays
     <string name="filterbutton">Filter Recipes</string>
-<<<<<<< HEAD
     <string name="congrats_message">Congrats! You did it!</string>
     <string name="rating">Rate this recipe:</string>
     <string name="leave_comment">Leave a comment:</string>
     <string name="low_rating">Uh oh! Need a back-up plan?</string>
-=======
     <string name="channel_name">CookingAppChannel</string>
     <string name="channel_description">Channel for CookingApp Notifications</string>
     <string name="CHANNEL_ID">cooking_app_id</string>
     <string name="youtube_api_key">nothing</string>
->>>>>>> 092eba99986b016945681536716ad8e2056b2995
 
 </resources>
