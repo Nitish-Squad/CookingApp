@@ -1,17 +1,13 @@
-package me.ninabernick.cookingapplication;
+package me.ninabernick.cookingapplication.profile;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +24,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.ninabernick.cookingapplication.models.Recipe;
+import me.ninabernick.cookingapplication.R;
 
 //adaptable to your profile or your friend's
 public class ProfileFragment extends Fragment {

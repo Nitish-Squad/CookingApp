@@ -12,13 +12,13 @@ import android.view.MenuItem;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import me.ninabernick.cookingapplication.feed.FeedFragment;
 import me.ninabernick.cookingapplication.models.Recipe;
+import me.ninabernick.cookingapplication.profile.ProfileFragment;
 
 public class HomeActivity extends AppCompatActivity implements ProfileFragment.ProfileListener{
 

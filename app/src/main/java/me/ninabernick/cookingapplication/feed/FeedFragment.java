@@ -1,4 +1,4 @@
-package me.ninabernick.cookingapplication;
+package me.ninabernick.cookingapplication.feed;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +26,9 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.ninabernick.cookingapplication.HomeActivity;
+import me.ninabernick.cookingapplication.R;
+import me.ninabernick.cookingapplication.RecipeDetailFragment;
 import me.ninabernick.cookingapplication.models.Recipe;
 
 
@@ -43,6 +45,7 @@ public class FeedFragment extends Fragment {
     FilterFragment filter = new FilterFragment();
     EditText etSearch;
     public static ArrayList<String> filters = new ArrayList<>();
+    public static ArrayList<String> ingredientFilters = new ArrayList<>();
     private static final String FEED_TYPE = "feed type";
     private static final int DIALOG_REQUEST_CODE = 20;
 
@@ -80,6 +83,9 @@ public class FeedFragment extends Fragment {
         //check if the user has applied filters to their search
         if (!filters.isEmpty()) {
             recipeQuery.whereContainedIn("tags", filters);
+        }
+        if (!ingredientFilters.isEmpty()) {
+            recipeQuery.whereContainedIn("ingredients", ingredientFilters);
         }
 
         recipeQuery.getTop();
