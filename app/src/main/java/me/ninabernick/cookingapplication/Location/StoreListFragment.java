@@ -36,8 +36,6 @@ public class StoreListFragment extends Fragment{
     double latitude;
     double longitude;
     List<HashMap<String, String>> nearbyPlacesList = new ArrayList<>();
-    HashMap<String, String> h_map = new HashMap<String, String>;
-
 
     StoreAdapter storeAdapter;
     RecyclerView rvMyStores;
@@ -112,6 +110,7 @@ public class StoreListFragment extends Fragment{
             nearbyPlacesList = dataParser.parse(result);
             Log.d("GooglePlacesReadTask", "onPostExecute Exit");
 
+            storeAdapter = new StoreAdapter(nearbyPlacesList);
             storeAdapter.notifyDataSetChanged();
             Log.d("Adapter", "Set up Store Adapter");
 

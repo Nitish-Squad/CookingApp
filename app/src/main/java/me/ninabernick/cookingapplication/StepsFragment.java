@@ -105,11 +105,12 @@ public class StepsFragment extends Fragment {
 
                 if (!finalValid_video_extension) {
 
-                // set it to false at the moment because the API Key is missing
-                if (false) {
-                    Intent intent = new Intent(getContext(), YoutubeVideoActivity.class);
-                    intent.putExtra("video_extension", video_extension);
-                    startActivity(intent);
+                    // set it to false at the moment because the API Key is missing
+                    if (false) {
+                        Intent intent = new Intent(getContext(), YoutubeVideoActivity.class);
+                        intent.putExtra("video_extension", video_extension);
+                        startActivity(intent);
+                    }
                 }
             }
         });
