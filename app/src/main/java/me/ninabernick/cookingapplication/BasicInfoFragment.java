@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -54,7 +55,7 @@ public class BasicInfoFragment extends Fragment {
     private Button btnChoose;
     private Button btnNext;
     private AutoCompleteTextView acTag1;
-    private ImageView ivAddTag;
+    private ImageButton ivAddTag;
     private LinearLayout tags;
     private ArrayList<AutoCompleteTextView> tagList;
 
@@ -100,7 +101,7 @@ public class BasicInfoFragment extends Fragment {
         // adding tags
         acTag1 = (AutoCompleteTextView) view.findViewById(R.id.acAddTag);
         tags = (LinearLayout) view.findViewById(R.id.tags);
-        ivAddTag = (ImageView) view.findViewById(R.id.ivAddTag);
+        ivAddTag = (ImageButton) view.findViewById(R.id.ivAddTag);
 
         tagList = new ArrayList<>();
         tagList.add(acTag1);
