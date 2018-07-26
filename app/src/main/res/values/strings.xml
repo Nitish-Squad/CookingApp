@@ -43,6 +43,15 @@
         <item>Oil</item>
     </string-array>
 
+    <string-array name="units">
+        <item>cups</item>
+        <item>units</item>
+        <item>tbsp</item>
+        <item>tsp</item>
+        <item>lbs</item>
+        <item>oz</item>
+    </string-array>
+
     //UI element text displays
     <string name="filterbutton">Filter Recipes</string>
     <string name="ingredients_filter">Need to get rid of some ingredients?</string>

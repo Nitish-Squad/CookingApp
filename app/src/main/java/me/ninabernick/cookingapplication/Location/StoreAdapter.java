@@ -3,6 +3,7 @@ package me.ninabernick.cookingapplication.Location;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,15 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
 
         String placeName = store.get("place_name");
         String vicinity = store.get("vicinity");
+        Log.i("Store Adapter Test", "hi hi:" + placeName);
+        Log.i("Store Adapter Test", "blah blah: " + vicinity);
+
+        Log.i("Store Adapter Test", "hi hi:" + placeName);
+        Log.i("Store Adapter Test", "blah blah: " + vicinity);
+
+        Log.i("Store Adapter Test", placeName);
+        Log.i("Store Adapter Test", vicinity);
+
 
         viewHolder.tvName.setText(placeName);
         viewHolder.tvLocation.setText(vicinity);
@@ -56,14 +66,10 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.ivStoreImage)
-        public ImageView ivStoreImage;
-        @BindView(R.id.tvName)
-        public TextView tvName;
-        @BindView(R.id.tvRating)
-        public TextView tvRating;
-        @BindView(R.id.tvLocation)
-        public TextView tvLocation;
+        @BindView(R.id.ivStoreImage) public ImageView ivStoreImage;
+        @BindView(R.id.tvName) public TextView tvName;
+        @BindView(R.id.tvRating) public TextView tvRating;
+        @BindView(R.id.tvLocation) public TextView tvLocation;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

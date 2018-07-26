@@ -169,12 +169,13 @@ public class CreateStepsFragment extends Fragment {
 
                 new_recipe.setSteps(steps_list);
 
+
                 createActivity.recipe_to_add = new_recipe;
 
                 new_recipe.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        Toast.makeText(getContext(), "Recipe Uploaded!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "Recipe Uploaded!", Toast.LENGTH_SHORT).show();
                     }
                 });
 

@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -151,6 +152,7 @@ public class FeedFragment extends Fragment {
         query.findInBackground(new FindCallback<Recipe>() {
             @Override
             public void done(List<Recipe> objects, ParseException e) {
+                Log.d("created Recipes", objects.toString());
                 adapter.clear();
                 adapter.addAll(objects);
                 adapter.notifyDataSetChanged();

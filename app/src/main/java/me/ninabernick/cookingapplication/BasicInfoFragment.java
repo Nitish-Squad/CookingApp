@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -160,6 +161,8 @@ public class BasicInfoFragment extends Fragment {
                 total_time = etHours.getText().toString()+" hours " + etMinutes.getText().toString() + " minutes";
 
                 new_recipe.setTime(total_time);
+
+                new_recipe.setCreatedBy(ParseUser.getCurrentUser().getObjectId());
 
                 new_recipe.setrecipeImage(new ParseFile(photoFile));
 

@@ -37,8 +37,8 @@ public class Recipe extends ParseObject {
     public List<String> getIngredients(){
         return getList("ingredients");
     }
-    public ParseUser getCreatedBy() {
-        return getParseUser("createdBy");
+    public String getCreatedBy() {
+        return getString("createdBy");
     }
     public List<String> getTags(){
         return getList("tags");
@@ -148,6 +148,9 @@ public class Recipe extends ParseObject {
 
 
 
+
+
+
     // set methods, used for adding recipes
     public void setTitle(String title){
         put("title", title);
@@ -171,8 +174,8 @@ public class Recipe extends ParseObject {
     }
 
 
-    public void setCreatedBy(ParseUser user) {
-        put("createdBy", user);
+    public void setCreatedBy(String userId) {
+        put("createdBy", userId);
     }
 
 

@@ -26,6 +26,9 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +55,7 @@ public class RecipeDetailFragment extends Fragment {
     private ListView lvIngredientList;
     private ArrayList<String> steps;
     private ArrayList<String> ingredients;
+    private List<String> ingredientsList;
     private ArrayAdapter<String> ingredientAdapter;
     private ArrayAdapter<String> stepAdapter;
     private ArrayList<Comment> comments;
@@ -87,11 +91,14 @@ public class RecipeDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //Recipe thisRecipe = getArguments().getParcelable(RECIPE_KEY);
         steps = new ArrayList<>();
-        ingredients = new ArrayList<>();
+        //ingredients = new ArrayList<>();
         recipe = getArguments().getParcelable(RECIPE_KEY);
         comments = new ArrayList<>();
 
-        ingredients.addAll(recipe.getIngredients());
+        ingredientsList = recipe.getIngredients();
+
+
+        //ingredients.addAll(recipe.getIngredients());
 
     }
 
@@ -116,6 +123,7 @@ public class RecipeDetailFragment extends Fragment {
         llComments = (LinearLayout) view.findViewById(R.id.llComments);
         rbDisplayRating = (RatingBar) view.findViewById(R.id.rbDisplayRating);
         rbDisplayRating.setRating(recipe.getAverageRating());
+
 
         btStartRecipe = (Button) view.findViewById(R.id.btStartRecipe);
         btStartRecipe.setOnClickListener(new View.OnClickListener() {
@@ -186,8 +194,26 @@ public class RecipeDetailFragment extends Fragment {
             Log.d("ListView", "ListView null");
         }
 
+        // loop through ingredient list and parse JSON objects
+        ArrayList<String> parsedIngredients = new ArrayList<>();
+        for (int i = 0; i < ingredientsList.size(); i++) {
+            String text = "";
+            try {
+                JSONObject jsonIngredient = new JSONObject(ingredientsList.get(i));
+                text += jsonIngredient.getString("quantity");
+                text += " ";
+                text += jsonIngredient.getString("unit");
+                text += " ";
+                text += jsonIngredient.getString("name");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.d("ingredient", "json object not parsed");
+            }
+            parsedIngredients.add(text);
+        }
 
-        ingredientAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, ingredients);
+
+        ingredientAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, parsedIngredients);
         lvIngredientList.setAdapter(ingredientAdapter);
 
         getTopComments(recipe, 3);
