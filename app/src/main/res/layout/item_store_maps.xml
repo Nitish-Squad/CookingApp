@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/ivStoreImage"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="58dp"
+        android:layout_height="109dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="6dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,12 +18,13 @@
 
     <TextView
         android:id="@+id/tvName"
-        android:layout_width="212dp"
-        android:layout_height="39dp"
+        android:layout_width="222dp"
+        android:layout_height="44dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="Name"
+        android:hint = "Test"
         app:layout_constraintEnd_toStartOf="@+id/tvRating"
         app:layout_constraintStart_toEndOf="@+id/ivStoreImage"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,8 +45,8 @@
         android:id="@+id/tvRating"
         android:layout_width="92dp"
         android:layout_height="46dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:text="Rating"
         app:layout_constraintStart_toEndOf="@+id/tvName"
         app:layout_constraintTop_toTopOf="parent" />

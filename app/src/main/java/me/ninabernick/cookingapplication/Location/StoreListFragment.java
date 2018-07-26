@@ -48,10 +48,6 @@ public class StoreListFragment extends Fragment{
         latitude = getArguments().getDouble("Latitude", 0);
 
         storeAdapter = new StoreAdapter(nearbyPlacesList);
-        calltoNearbyList();
-
-
-
     }
 
     private String getUrl(double latitude, double longitude, String nearbyPlace) {
@@ -93,14 +89,14 @@ public class StoreListFragment extends Fragment{
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            Log.d("susala", url);
+            Log.d("Checking URL in StoreListFragment", url);
 
             Log.d("GooglePlacesReadTask", "onPostExecute Entered");
             DataParser dataParser = new DataParser();
-            nearbyPlacesList = dataParser.parse(result);
+            List<HashMap<String, String>> nearbyPlaces = dataParser.parse(result);
+            nearbyPlacesList.addAll(nearbyPlaces);
             Log.d("GooglePlacesReadTask", "onPostExecute Exit");
 
-            storeAdapter = new StoreAdapter(nearbyPlacesList);
             storeAdapter.notifyDataSetChanged();
             Log.d("Adapter", "Set up Store Adapter");
 

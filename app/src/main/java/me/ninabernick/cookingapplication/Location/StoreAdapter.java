@@ -44,8 +44,8 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
 
         String placeName = store.get("place_name");
         String vicinity = store.get("vicinity");
-        Log.i("Store Adapter Test", placeName);
-        Log.i("Store Adapter Test", vicinity);
+        Log.i("Store Adapter Test", "hi hi:" + placeName);
+        Log.i("Store Adapter Test", "blah blah: " + vicinity);
 
         viewHolder.tvName.setText(placeName);
         viewHolder.tvLocation.setText(vicinity);
