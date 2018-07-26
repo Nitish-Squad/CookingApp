@@ -167,6 +167,20 @@ public class BasicInfoFragment extends Fragment {
 
                 new_recipe.setrecipeImage(new ParseFile(photoFile));
 
+                int hours = 0;
+
+                if (etHours.getText().toString() != null){
+                    hours = Integer.valueOf(etHours.getText().toString());
+                }
+
+                int minutes = 0;
+
+                if (etMinutes.getText().toString() != null){
+                    minutes = Integer.valueOf(etMinutes.getText().toString());
+                }
+
+                new_recipe.setStandardTime((hours * 60) + minutes);
+
                 // store any tags added
                 for (int i = 0; i < tagList.size(); i++) {
                     if (tagList.get(i).getText().toString() != null) {

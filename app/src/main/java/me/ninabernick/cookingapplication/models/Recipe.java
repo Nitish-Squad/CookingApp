@@ -6,12 +6,10 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @ParseClassName("Recipe")
@@ -42,6 +40,10 @@ public class Recipe extends ParseObject {
     }
     public List<String> getTags(){
         return getList("tags");
+    }
+
+    public int getStandardTime() {
+        return getInt("recipe_time_standard");
     }
 
     /*
@@ -193,6 +195,10 @@ public class Recipe extends ParseObject {
 
     public void setRatings(List<Integer> ratings) {
         put("ratings", ratings);
+    }
+
+    public void setStandardTime(int time) {
+        put("recipe_time_standard", time);
     }
 
     public void addRating(Integer i) {
