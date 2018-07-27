@@ -218,7 +218,7 @@ public class Recipe extends ParseObject {
     }
 
     public void setTextIngredients(List<String> textIngredients) {
-        add("textIngredients", textIngredients);
+        put("textIngredients", textIngredients);
     }
 
     public static class Query extends ParseQuery<Recipe> {

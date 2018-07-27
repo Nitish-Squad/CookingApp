@@ -246,6 +246,7 @@ public class FeedFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         tvFilterRecipes = (TextView) view.findViewById(R.id.tvFilterResults);
         tvFilterRecipes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,6 +260,7 @@ public class FeedFragment extends Fragment {
         etSearch = (EditText) view.findViewById(R.id.etSearchRecipes);
         rvFeed = (RecyclerView) view.findViewById(R.id.rvFeed);
         rvFeed.setAdapter(adapter);
+        adapter.clear();
         rvFeed.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
 
         spSort = (Spinner) view.findViewById(R.id.spSort);
@@ -267,7 +269,22 @@ public class FeedFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String selectedItem = adapterView.getItemAtPosition(position).toString();
                 FeedFragment.SORT_METHOD = selectedItem;
-                getRecipes();
+                Log.d("spinner", "item selected");
+                // allows adaptation for home feed, created recipes, and saved recipes
+                String feedType = getArguments().getString(FEED_TYPE);
+                switch (feedType) {
+                    case HomeActivity.RECIPE_FEED:
+                        getRecipes();
+                        break;
+                    case HomeActivity.CREATED_RECIPES:
+                        getRecipesCreated();
+                        break;
+                    case HomeActivity.SAVED_RECIPES:
+                        getSavedRecipes();
+                        break;
+                    default:
+                        break;
+                }
             }
 
             @Override
@@ -277,21 +294,8 @@ public class FeedFragment extends Fragment {
         });
 
 
-        String feedType = getArguments().getString(FEED_TYPE);
-        // allows adaptation for home feed, created recipes, and saved recipes
-        switch (feedType) {
-            case HomeActivity.RECIPE_FEED:
-                getRecipes();
-                break;
-            case HomeActivity.CREATED_RECIPES:
-                getRecipesCreated();
-                break;
-            case HomeActivity.SAVED_RECIPES:
-                getSavedRecipes();
-                break;
-            default:
-                break;
-        }
+
+
 
         // implementation of search
         etSearch.addTextChangedListener(new TextWatcher() {
