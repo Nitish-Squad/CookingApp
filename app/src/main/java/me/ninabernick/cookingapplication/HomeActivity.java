@@ -16,6 +16,7 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+import me.ninabernick.cookingapplication.CreateRecipe.BasicInfoFragment;
 import me.ninabernick.cookingapplication.feed.FeedFragment;
 import me.ninabernick.cookingapplication.models.Recipe;
 import me.ninabernick.cookingapplication.profile.ProfileFragment;

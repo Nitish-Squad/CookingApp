@@ -1,6 +1,5 @@
-package me.ninabernick.cookingapplication;
+package me.ninabernick.cookingapplication.CreateRecipe;
 
-import android.database.DataSetObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,17 +16,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.ninabernick.cookingapplication.HomeActivity;
+import me.ninabernick.cookingapplication.R;
 import me.ninabernick.cookingapplication.models.Recipe;
 
 public class IngredientsFragment extends Fragment {
@@ -92,33 +90,98 @@ public class IngredientsFragment extends Fragment {
         ingredients = (LinearLayout) view.findViewById(R.id.steps);
         tvTitle = (TextView) view.findViewById(R.id.tvTitle);
 
-        // setup first ingredient data fields
-        etIngredient1 = (AutoCompleteTextView) view.findViewById(R.id.Ingredients1);
+
+
+        // set adapters for various autocompletes
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.ingredients));
-        etIngredient1.setThreshold(3);
-        etIngredient1.setAdapter(adapter);
-
-        etQuantity1 = (EditText) view.findViewById(R.id.etQuantity);
-
-        acUnit1 = (AutoCompleteTextView) view.findViewById(R.id.acUnit);
         final ArrayAdapter<String> unitAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.units));
-        acUnit1.setAdapter(unitAdapter);
+
+        // initialize all the lists
         ingredients_array = new ArrayList<>();
         ingredients_quantity_array = new ArrayList<>();
         ingredient_unit_array = new ArrayList<>();
 
-        ingredients_array.add(etIngredient1);
-        ingredients_quantity_array.add(etQuantity1);
-        ingredient_unit_array.add(acUnit1);
+        HomeActivity createActivity = (HomeActivity) getActivity();
+        Recipe recipe_to_edit = createActivity.recipe_to_add;
+
+        List<String> ingredient_holder = new ArrayList<String>();
+
+
+        if (recipe_to_edit.getIngredients() == null){
+            LinearLayout indivIngredient = new LinearLayout(getContext());
+            indivIngredient.setOrientation(LinearLayout.HORIZONTAL);
+            // logic for adding edit text boxes
+            AutoCompleteTextView temp = new AutoCompleteTextView(getContext());
+            temp.setThreshold(3);
+            temp.setAdapter(adapter);
+
+            temp.setHint(" Ingredient ");
+
+            indivIngredient.addView(temp);
+            ingredients_array.add(temp);
+            // add edit text quantity
+            EditText quantity = new EditText(getContext());
+            quantity.setHint(" Quantity ");
+            indivIngredient.addView(quantity);
+            ingredients_quantity_array.add(quantity);
+            // add spinner for unit
+            AutoCompleteTextView unit = new AutoCompleteTextView(getContext());
+            unit.setAdapter(unitAdapter);
+            unit.setHint(" Unit ");
+            indivIngredient.addView(unit);
+            ingredient_unit_array.add(unit);
+
+            // add horizontal layout to vertical layout
+            ingredients.addView(indivIngredient);
+        }
+        else{
+            ingredient_holder = recipe_to_edit.getIngredients();
+            for (int t = 0; t < ingredient_holder.size(); t++){
+
+                // grab ingredient JSONObject
+                try {
+                    JSONObject temp_ingredient = new JSONObject(ingredient_holder.get(t));
+
+                    LinearLayout indivIngredient = new LinearLayout(getContext());
+                    indivIngredient.setOrientation(LinearLayout.HORIZONTAL);
+
+                    // logic for adding edit text boxes
+                    AutoCompleteTextView temp = new AutoCompleteTextView(getContext());
+                    temp.setThreshold(3);
+                    temp.setAdapter(adapter);
+                    temp.setText(temp_ingredient.getString("name"));
+
+                    indivIngredient.addView(temp);
+                    ingredients_array.add(temp);
+                    // add edit text quantity
+                    EditText quantity = new EditText(getContext());
+                    quantity.setText(temp_ingredient.getString("quantity"));
+                    indivIngredient.addView(quantity);
+                    ingredients_quantity_array.add(quantity);
+
+                    // add autocomplete for unit
+                    AutoCompleteTextView unit = new AutoCompleteTextView(getContext());
+                    unit.setAdapter(unitAdapter);
+                    unit.setText(temp_ingredient.getString("unit"));
+                    indivIngredient.addView(unit);
+                    ingredient_unit_array.add(unit);
+
+                    // add horizontal layout to vertical layout
+                    ingredients.addView(indivIngredient);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }
 
         btnAddIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 LinearLayout indivIngredient = new LinearLayout(getContext());
                 indivIngredient.setOrientation(LinearLayout.HORIZONTAL);
-
-
 
                 // logic for adding edit text boxes
                 AutoCompleteTextView temp = new AutoCompleteTextView(getContext());
@@ -157,7 +220,6 @@ public class IngredientsFragment extends Fragment {
 
                 List<String> ingredients = new ArrayList<String>();
                 for(int i = 0; i < ingredients_array.size(); i++){
-                    //ingredients.add((ingredients_array.get(i)).getText().toString());
                     JSONObject json = new JSONObject();
                     try {
                         json.put("name", ingredients_array.get(i).getText().toString());

@@ -1,4 +1,4 @@
-package me.ninabernick.cookingapplication;
+package me.ninabernick.cookingapplication.CreateRecipe;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.io.File;
 
+import me.ninabernick.cookingapplication.R;
 import me.ninabernick.cookingapplication.models.Recipe;
 
 public class CreateActivity extends AppCompatActivity {

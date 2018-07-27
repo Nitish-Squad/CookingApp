@@ -1,4 +1,4 @@
-package me.ninabernick.cookingapplication;
+package me.ninabernick.cookingapplication.CreateRecipe;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.SaveCallback;
@@ -28,6 +27,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.ninabernick.cookingapplication.HomeActivity;
+import me.ninabernick.cookingapplication.R;
+import me.ninabernick.cookingapplication.SimpleImageArrayAdapter;
 import me.ninabernick.cookingapplication.models.Recipe;
 
 
