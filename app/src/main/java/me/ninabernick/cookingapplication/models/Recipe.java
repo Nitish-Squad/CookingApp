@@ -6,12 +6,10 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @ParseClassName("Recipe")
@@ -37,11 +35,21 @@ public class Recipe extends ParseObject {
     public List<String> getIngredients(){
         return getList("ingredients");
     }
-    public ParseUser getCreatedBy() {
-        return getParseUser("createdBy");
+    public List<String> getTextIngredients() {
+        return getList("textIngredients");
+    }
+    public String getCreatedBy() {
+        return getString("createdBy");
     }
     public List<String> getTags(){
         return getList("tags");
+    }
+    public Double getAverageRating() {
+        return getDouble("averageRating");
+    }
+
+    public int getStandardTime() {
+        return getInt("recipe_time_standard");
     }
 
     /*
@@ -59,19 +67,17 @@ public class Recipe extends ParseObject {
     }
 
     // average of all ratings, use for display
-    public float getAverageRating() {
+    public void updateAverageRating() {
         List<Integer> ratings = getRatings();
-        if (ratings == null) {
-            return 0;
-        }
-        else {
-            float sum = 0;
+        if (getRatings() != null) {
+            double sum = 0;
             for (int i = 0; i < ratings.size(); i++) {
                 sum += ratings.get(i);
             }
             sum = (sum / ratings.size());
-            return sum;
+            setAverageRating(sum);
         }
+
 
     }
     //returns list of object ids
@@ -148,6 +154,9 @@ public class Recipe extends ParseObject {
 
 
 
+
+
+
     // set methods, used for adding recipes
     public void setTitle(String title){
         put("title", title);
@@ -171,8 +180,8 @@ public class Recipe extends ParseObject {
     }
 
 
-    public void setCreatedBy(ParseUser user) {
-        put("createdBy", user);
+    public void setCreatedBy(String userId) {
+        put("createdBy", userId);
     }
 
 
@@ -192,12 +201,24 @@ public class Recipe extends ParseObject {
         put("ratings", ratings);
     }
 
+    public void setStandardTime(int time) {
+        put("recipe_time_standard", time);
+    }
+
     public void addRating(Integer i) {
         add("ratings", i);
     }
 
+    public void setAverageRating(Double rating) {
+        put("averageRating", rating);
+    }
+
     public void addComment(Comment comment) {
         add("comments", comment.getObjectId());
+    }
+
+    public void setTextIngredients(List<String> textIngredients) {
+        add("textIngredients", textIngredients);
     }
 
     public static class Query extends ParseQuery<Recipe> {

@@ -47,7 +47,9 @@ public class ProfileFragment extends Fragment {
             ProfileFragment friendProfile = ProfileFragment.newInstance(friend);
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.flFragmentContainer, friendProfile).commit();
+            transaction.replace(R.id.flFragmentContainer, friendProfile);
+            transaction.addToBackStack(null);
+            transaction.commit();
         }
     };
 

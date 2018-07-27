@@ -105,7 +105,8 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
         });
 
         FragmentTransaction fragmentTransactionFeed = fragmentManager.beginTransaction();
-        fragmentTransactionFeed.replace(R.id.flFragmentContainer, feedFragment).commit();
+        fragmentTransactionFeed.replace(R.id.flFragmentContainer, feedFragment);
+        fragmentTransactionFeed.commit();
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
 
@@ -116,19 +117,24 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
                         switch (item.getItemId()) {
                             case R.id.miFeed:
                                 FragmentTransaction fragmentTransactionFeed = fragmentManager.beginTransaction();
-                                fragmentTransactionFeed.replace(R.id.flFragmentContainer, feedFragment).commit();
+                                fragmentTransactionFeed.replace(R.id.flFragmentContainer, feedFragment);
+                                fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                fragmentTransactionFeed.commit();
                                 return true;
 
                             case R.id.miCreate:
                                 BasicInfoFragment createfragment1 = new BasicInfoFragment();
                                 fragmentTransactionFeed = fragmentManager.beginTransaction();
-                                fragmentTransactionFeed.replace(R.id.flFragmentContainer, createfragment1).commit();
+                                fragmentTransactionFeed.replace(R.id.flFragmentContainer, createfragment1);
+                                fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                fragmentTransactionFeed.commit();
                                 return true;
-                            //TODO-create profile fragment
 
                             case R.id.miProfile:
                                 FragmentTransaction fragmentTransactionProfile = fragmentManager.beginTransaction();
-                                fragmentTransactionProfile.replace(R.id.flFragmentContainer, profileFragment).commit();
+                                fragmentTransactionProfile.replace(R.id.flFragmentContainer, profileFragment);
+                                fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                fragmentTransactionProfile.commit();
 
                             default:
                                 return true;
@@ -143,14 +149,18 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
     public void savedRecipesClicked(ParseUser user) {
         Fragment savedFragment = FeedFragment.newInstance(SAVED_RECIPES, user);
         FragmentTransaction fragmentTransactionSavedRecipes = fragmentManager.beginTransaction();
-        fragmentTransactionSavedRecipes.replace(R.id.flFragmentContainer, savedFragment).commit();
+        fragmentTransactionSavedRecipes.replace(R.id.flFragmentContainer, savedFragment);
+        fragmentTransactionSavedRecipes.addToBackStack(null);
+        fragmentTransactionSavedRecipes.commit();
     }
 
     @Override
     public void createdRecipesClicked(ParseUser user) {
         Fragment createdFragment = FeedFragment.newInstance(CREATED_RECIPES, user);
         FragmentTransaction fragmentTransactionSavedRecipes = fragmentManager.beginTransaction();
-        fragmentTransactionSavedRecipes.replace(R.id.flFragmentContainer, createdFragment).commit();
+        fragmentTransactionSavedRecipes.replace(R.id.flFragmentContainer, createdFragment);
+        fragmentTransactionSavedRecipes.addToBackStack(null);
+        fragmentTransactionSavedRecipes.commit();
     }
 
 

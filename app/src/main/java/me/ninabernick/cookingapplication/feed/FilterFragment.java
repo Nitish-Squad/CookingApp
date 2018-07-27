@@ -34,6 +34,7 @@ public class FilterFragment extends DialogFragment {
     ImageView ivAddIngredient;
     LinearLayout ingredientsLayout;
     ArrayList<AutoCompleteTextView> selectedIngredients;
+    Spinner spSort;
 
 
 
@@ -76,6 +77,8 @@ public class FilterFragment extends DialogFragment {
 //        spinner.setAdapter(adapter);
 
 
+
+
         filter = (Button) view.findViewById(R.id.btFilter);
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,10 +88,11 @@ public class FilterFragment extends DialogFragment {
                 FeedFragment.filters.addAll(selectedTags);
                 FeedFragment.ingredientFilters.clear();
                 for (int i = 0; i < selectedIngredients.size(); i++) {
-                    if (selectedIngredients.get(i).getText().toString() != null) {
-                        FeedFragment.ingredientFilters.add(selectedIngredients.get(i).getText().toString());
-                        // controls for upper/lowercase; should be redundant if ingredients come from drop down
+                    if (!selectedIngredients.get(i).getText().toString().equals("")) {
                         FeedFragment.ingredientFilters.add(selectedIngredients.get(i).getText().toString().toLowerCase());
+                    }
+                    else {
+                        FeedFragment.ingredientFilters.clear();
                     }
                 }
 

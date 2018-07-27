@@ -22,18 +22,6 @@
 
 
             <TextView
-                android:id="@+id/tvRecipeTitle"
-                android:layout_width="355dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:text="TextView"
-                android:textStyle="bold"
-                tools:layout_editor_absoluteX="15dp"
-                tools:layout_editor_absoluteY="435dp" />
-
-            <TextView
                 android:id="@+id/tvSteps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,18 +42,43 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvSteps"
                 android:layout_marginLeft="10dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
                 android:orientation="vertical">
 
 
-                <AutoCompleteTextView
-                    android:id="@+id/Ingredients1"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/individualIngredient"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    >
 
-                </AutoCompleteTextView>
+                    <AutoCompleteTextView
+                        android:id="@+id/Ingredients1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
+                        android:hint="Ingredient">
 
+                    </AutoCompleteTextView>
+
+                    <EditText
+                        android:id="@+id/etQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Quantity"
+                        />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Unit" />
+
+                </LinearLayout>
             </LinearLayout>
+
 
             <Button
                 android:id="@+id/btnAdd"

@@ -23,11 +23,13 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -53,7 +55,7 @@ public class BasicInfoFragment extends Fragment {
     private Button btnChoose;
     private Button btnNext;
     private AutoCompleteTextView acTag1;
-    private ImageView ivAddTag;
+    private ImageButton ivAddTag;
     private LinearLayout tags;
     private ArrayList<AutoCompleteTextView> tagList;
 
@@ -99,7 +101,7 @@ public class BasicInfoFragment extends Fragment {
         // adding tags
         acTag1 = (AutoCompleteTextView) view.findViewById(R.id.acAddTag);
         tags = (LinearLayout) view.findViewById(R.id.tags);
-        ivAddTag = (ImageView) view.findViewById(R.id.ivAddTag);
+        ivAddTag = (ImageButton) view.findViewById(R.id.ivAddTag);
 
         tagList = new ArrayList<>();
         tagList.add(acTag1);
@@ -161,7 +163,25 @@ public class BasicInfoFragment extends Fragment {
 
                 new_recipe.setTime(total_time);
 
+                new_recipe.setCreatedBy(ParseUser.getCurrentUser().getObjectId());
+
                 new_recipe.setrecipeImage(new ParseFile(photoFile));
+
+                new_recipe.setAverageRating(0.0);
+
+                int hours = 0;
+
+                if (etHours.getText().toString() != null){
+                    hours = Integer.valueOf(etHours.getText().toString());
+                }
+
+                int minutes = 0;
+
+                if (etMinutes.getText().toString() != null){
+                    minutes = Integer.valueOf(etMinutes.getText().toString());
+                }
+
+                new_recipe.setStandardTime((hours * 60) + minutes);
 
                 // store any tags added
                 for (int i = 0; i < tagList.size(); i++) {
@@ -180,6 +200,7 @@ public class BasicInfoFragment extends Fragment {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.flFragmentContainer, fragment2);
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });

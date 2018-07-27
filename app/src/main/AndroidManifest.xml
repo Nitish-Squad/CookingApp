@@ -39,7 +39,9 @@
                 android:resource="@xml/fileprovider" />
         </provider>
 
-        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".HomeActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
         <activity android:name=".CreateActivity"></activity>
         <activity android:name=".RecipeDetailsActivity" />
         <activity android:name=".FinishedRecipeActivity"/>

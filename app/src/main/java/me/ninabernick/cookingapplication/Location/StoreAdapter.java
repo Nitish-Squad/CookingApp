@@ -68,6 +68,13 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
         //Glide.with(context).load(getPhotoUrl(mWidth, mHeight, mPhotoReference)).into(viewHolder.ivStoreImage);
 
 
+        Log.i("Store Adapter Test", "hi hi:" + placeName);
+        Log.i("Store Adapter Test", "blah blah: " + vicinity);
+
+        Log.i("Store Adapter Test", placeName);
+        Log.i("Store Adapter Test", vicinity);
+
+
     }
 
     @Override

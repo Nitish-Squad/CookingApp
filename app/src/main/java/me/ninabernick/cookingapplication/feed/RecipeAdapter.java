@@ -1,12 +1,14 @@
 package me.ninabernick.cookingapplication.feed;
 
 import android.content.Context;
+import android.media.Rating;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -47,7 +49,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         Recipe recipe = recipes.get(position);
         holder.tvTitle.setText(recipe.getTitle());
         holder.tvDescription.setText(recipe.getDescription());
-        //holder.tvTime.setText(recipe.getTime());
+        holder.tvTime.setText(recipe.getTime());
+        holder.rating.setRating(recipe.getAverageRating().floatValue());
         Glide.with(context).load(recipe.getrecipeImage().getUrl()).into(holder.ivThumbnail);
 
     }
@@ -71,15 +74,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
-    public void filter(String search) {
-
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView ivThumbnail;
         public TextView tvTitle;
-        //public TextView tvTime;
+        public TextView tvTime;
         public TextView tvDescription;
+        public RatingBar rating;
+
         RecipeListener listener;
 
 
@@ -88,8 +89,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             listener = rListener;
             ivThumbnail = (ImageView) itemView.findViewById(R.id.ivImageThumbnail);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
-            //tvTime = (TextView) itemView.findViewById(R.id.tvTime);
+            tvTime = (TextView) itemView.findViewById(R.id.tvTime);
             tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
+            rating = (RatingBar) itemView.findViewById(R.id.ratingBarFeed);
             itemView.setOnClickListener(this);
         }
 
