@@ -1,53 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.widget.RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:minWidth="50dp">
 
     <ImageView
         android:id="@+id/ivStoreImage"
         android:layout_width="58dp"
         android:layout_height="109dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="6dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         app:srcCompat="@android:color/background_dark" />
 
     <TextView
-        android:id="@+id/tvName"
-        android:layout_width="222dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Name"
-        android:hint = "Test"
-        app:layout_constraintEnd_toStartOf="@+id/tvRating"
-        app:layout_constraintStart_toEndOf="@+id/ivStoreImage"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/tvStoreName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/ivStoreImage"
+        android:text="Name" />
 
     <TextView
-        android:id="@+id/tvLocation"
-        android:layout_width="224dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="92dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
-        android:text="Locationj"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+        android:id="@+id/tvStoreLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_below="@+id/tvStoreName"
+        android:layout_toEndOf="@+id/ivStoreImage"
+        android:text="Location" />
 
     <TextView
-        android:id="@+id/tvRating"
-        android:layout_width="92dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Rating"
-        app:layout_constraintStart_toEndOf="@+id/tvName"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        android:id="@+id/tvStoreRating"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:text="Rating" />
+
+</android.widget.RelativeLayout>
