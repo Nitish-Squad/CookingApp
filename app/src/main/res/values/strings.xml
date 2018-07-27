@@ -10,6 +10,10 @@
 
     <string name="nutrition_api_key">9uCSn4GQdWwwUrPZgHmrFN8JvUvwL1Aea4mwFVbB</string>
 
+    <string name="DATE">Date Created (Recent to Old)</string>
+    <string name="TIME">Time (Low to High)</string>
+    <string name="RATING">Rating (High to Low)</string>
+
 
     <string-array name="tags">
         <item>breakfast</item>
@@ -21,9 +25,9 @@
     </string-array>
 
     <string-array name="sorting_methods">
-        <item>Date Created (Recent to Old)</item>
-        <item>Time (Low to High)</item>
-        <item>Rating (High to Low)</item>
+        <item>@string/DATE</item>
+        <item>@string/TIME</item>
+        <item>@string/RATING</item>
     </string-array>
 
     <string-array name="ingredients">

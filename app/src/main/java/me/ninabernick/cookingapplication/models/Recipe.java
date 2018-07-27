@@ -35,11 +35,17 @@ public class Recipe extends ParseObject {
     public List<String> getIngredients(){
         return getList("ingredients");
     }
+    public List<String> getTextIngredients() {
+        return getList("textIngredients");
+    }
     public String getCreatedBy() {
         return getString("createdBy");
     }
     public List<String> getTags(){
         return getList("tags");
+    }
+    public Double getAverageRating() {
+        return getDouble("averageRating");
     }
 
     public int getStandardTime() {
@@ -61,19 +67,17 @@ public class Recipe extends ParseObject {
     }
 
     // average of all ratings, use for display
-    public float getAverageRating() {
+    public void updateAverageRating() {
         List<Integer> ratings = getRatings();
-        if (ratings == null) {
-            return 0;
-        }
-        else {
-            float sum = 0;
+        if (getRatings() != null) {
+            double sum = 0;
             for (int i = 0; i < ratings.size(); i++) {
                 sum += ratings.get(i);
             }
             sum = (sum / ratings.size());
-            return sum;
+            setAverageRating(sum);
         }
+
 
     }
     //returns list of object ids
@@ -205,8 +209,16 @@ public class Recipe extends ParseObject {
         add("ratings", i);
     }
 
+    public void setAverageRating(Double rating) {
+        put("averageRating", rating);
+    }
+
     public void addComment(Comment comment) {
         add("comments", comment.getObjectId());
+    }
+
+    public void setTextIngredients(List<String> textIngredients) {
+        add("textIngredients", textIngredients);
     }
 
     public static class Query extends ParseQuery<Recipe> {

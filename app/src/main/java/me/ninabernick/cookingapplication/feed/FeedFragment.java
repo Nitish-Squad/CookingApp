@@ -16,7 +16,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -25,6 +28,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import me.ninabernick.cookingapplication.HomeActivity;
@@ -45,8 +50,14 @@ public class FeedFragment extends Fragment {
     ParseUser user;
     FilterFragment filter = new FilterFragment();
     EditText etSearch;
+    Spinner spSort;
+    public static final String DATE = "Date Created (Recent to Old)";
+    public static final String TIME = "Time (Low to High)";
+    public static final String RATING = "Rating (High to Low)";
+    public static String SORT_METHOD;
     public static ArrayList<String> filters = new ArrayList<>();
     public static ArrayList<String> ingredientFilters = new ArrayList<>();
+
     private static final String FEED_TYPE = "feed type";
     private static final int DIALOG_REQUEST_CODE = 20;
 
@@ -78,19 +89,36 @@ public class FeedFragment extends Fragment {
         return fragment;
     }
 
+
+
     public void getRecipes(){
         final Recipe.Query recipeQuery = new Recipe.Query();
         // make sure no duplicates
         recipes.clear();
+        adapter.clear();
 
-        // place to order the recipes in some manner (ex: rating, when created, etc)
-        recipeQuery.orderByDescending("createdAt");
         //check if the user has applied filters to their search
         if (!filters.isEmpty()) {
             recipeQuery.whereContainedIn("tags", filters);
         }
         if (!ingredientFilters.isEmpty()) {
-            recipeQuery.whereContainedIn("ingredients", ingredientFilters);
+            recipeQuery.whereContainedIn("textIngredients", ingredientFilters);
+        }
+
+         //order by sorting method
+        switch(SORT_METHOD) {
+            case DATE:
+                recipeQuery.orderByDescending("createdAt");
+                break;
+            case TIME:
+                recipeQuery.orderByAscending("recipe_time_standard");
+                break;
+            case RATING:
+                recipeQuery.orderByDescending("averageRating");
+                break;
+            default:
+                recipeQuery.orderByDescending("createdAt");
+                break;
         }
 
         recipeQuery.getTop();
@@ -104,6 +132,8 @@ public class FeedFragment extends Fragment {
                         Recipe recipe = objects.get(i);
                         recipes.add(recipe);
                     }
+
+                    
                     adapter.clear();
                     adapter.addAll(recipes);
                     adapter.notifyDataSetChanged();
@@ -121,6 +151,8 @@ public class FeedFragment extends Fragment {
 
     }
 
+
+
     // always change adapter data set, not local "recipes" list
     public void getSavedRecipes() {
 
@@ -129,6 +161,12 @@ public class FeedFragment extends Fragment {
             savedRecipes.addAll(user.<String>getList("savedRecipes"));
 
             ParseQuery<Recipe> query = ParseQuery.getQuery(Recipe.class);
+            if (!filters.isEmpty()) {
+                query.whereContainedIn("tags", filters);
+            }
+            if (!ingredientFilters.isEmpty()) {
+                query.whereContainedIn("textIngredients", ingredientFilters);
+            }
             query.whereContainedIn("objectId", savedRecipes);
             query.findInBackground(new FindCallback<Recipe>() {
                 @Override
@@ -148,6 +186,12 @@ public class FeedFragment extends Fragment {
     public void getRecipesCreated() {
 
         ParseQuery<Recipe> query = ParseQuery.getQuery(Recipe.class);
+        if (!filters.isEmpty()) {
+            query.whereContainedIn("tags", filters);
+        }
+        if (!ingredientFilters.isEmpty()) {
+            query.whereContainedIn("textIngredients", ingredientFilters);
+        }
         query.whereEqualTo("createdBy", user.getObjectId());
         query.findInBackground(new FindCallback<Recipe>() {
             @Override
@@ -186,7 +230,7 @@ public class FeedFragment extends Fragment {
         super.onCreate(savedInstanceState);
         recipes = new ArrayList<>();
 
-
+        SORT_METHOD = getResources().getString(R.string.DATE);
         adapter = new RecipeAdapter(recipes, recipeListener);
         user = getArguments().getParcelable("user");
 
@@ -216,6 +260,23 @@ public class FeedFragment extends Fragment {
         rvFeed = (RecyclerView) view.findViewById(R.id.rvFeed);
         rvFeed.setAdapter(adapter);
         rvFeed.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
+
+        spSort = (Spinner) view.findViewById(R.id.spSort);
+        spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                String selectedItem = adapterView.getItemAtPosition(position).toString();
+                FeedFragment.SORT_METHOD = selectedItem;
+                getRecipes();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
         String feedType = getArguments().getString(FEED_TYPE);
         // allows adaptation for home feed, created recipes, and saved recipes
         switch (feedType) {
@@ -252,8 +313,15 @@ public class FeedFragment extends Fragment {
                 String search = editable.toString();
                 if (search != "") {
                     for (int i = 0; i < recipes.size(); i++) {
+                        Log.d("text ingredients", recipes.get(i).getTextIngredients().toString());
                         if (recipes.get(i).getTitle().contains(search) || recipes.get(i).getDescription().contains(search)) {
                             filteredRecipes.add(recipes.get(i));
+                        }
+                        // have to test indiv. ingredients in arraylist for contains
+                        for (String s : recipes.get(i).getTextIngredients()) {
+                            if (s.contains(search) && !filteredRecipes.contains(recipes.get(i))) {
+                                filteredRecipes.add(recipes.get(i));
+                            }
                         }
                     }
                     adapter.clear();

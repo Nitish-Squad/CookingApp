@@ -167,6 +167,8 @@ public class BasicInfoFragment extends Fragment {
 
                 new_recipe.setrecipeImage(new ParseFile(photoFile));
 
+                new_recipe.setAverageRating(0.0);
+
                 int hours = 0;
 
                 if (etHours.getText().toString() != null){
