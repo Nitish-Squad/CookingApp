@@ -122,7 +122,7 @@ public class RecipeDetailFragment extends Fragment {
         ivImage = (ImageView) view.findViewById(R.id.ivRecipeImage);
         llComments = (LinearLayout) view.findViewById(R.id.llComments);
         rbDisplayRating = (RatingBar) view.findViewById(R.id.rbDisplayRating);
-        rbDisplayRating.setRating(recipe.getAverageRating());
+        rbDisplayRating.setRating(recipe.getAverageRating().floatValue());
 
 
         btStartRecipe = (Button) view.findViewById(R.id.btStartRecipe);

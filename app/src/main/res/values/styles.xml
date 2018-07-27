@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="PriceRatingBar" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/pricecustom_ratingbar</item>
+        <item name="colorControlNormal">#c51162</item>
+        <item name="colorControlActivated">#c51162</item>
+    </style>
+
 </resources>

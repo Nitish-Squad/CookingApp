@@ -4,31 +4,36 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.maps.GoogleMap;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
 import me.ninabernick.cookingapplication.R;
 
-public class StoreListFragment extends Fragment{
+public class StoreListFragment extends Fragment {
 
     GoogleMap mMap;
     double latitude;
     double longitude;
-    List<HashMap<String, String>> nearbyPlacesList = new ArrayList<>();
+    List<HashMap<String, String>> nearbyPlacesList;
 
     StoreAdapter storeAdapter;
     RecyclerView rvMyStores;
+    BottomNavigationView bottomNavigationView;
 
     public static StoreListFragment newInstance(Double latitude, Double longitude) {
         StoreListFragment storeListFragment = new StoreListFragment();
@@ -47,7 +52,9 @@ public class StoreListFragment extends Fragment{
         longitude = getArguments().getDouble("Longitude", 0);
         latitude = getArguments().getDouble("Latitude", 0);
 
-        storeAdapter = new StoreAdapter(nearbyPlacesList);
+        nearbyPlacesList = new ArrayList<>();
+        storeAdapter = new StoreAdapter(nearbyPlacesList, getFragmentManager());
+        Log.i("On Create Called", "On Create Called");
     }
 
     private String getUrl(double latitude, double longitude, String nearbyPlace) {
@@ -94,12 +101,18 @@ public class StoreListFragment extends Fragment{
             Log.d("GooglePlacesReadTask", "onPostExecute Entered");
             DataParser dataParser = new DataParser();
             List<HashMap<String, String>> nearbyPlaces = dataParser.parse(result);
+
             nearbyPlacesList.addAll(nearbyPlaces);
             Log.d("GooglePlacesReadTask", "onPostExecute Exit");
+<<<<<<< HEAD
+=======
 
             storeAdapter = new StoreAdapter(nearbyPlacesList);
+>>>>>>> 32cf9c04e9027a91c83a1f52cb3bab41066ab8a4
             storeAdapter.notifyDataSetChanged();
-            Log.d("Adapter", "Set up Store Adapter");
+
+
+            Log.d("Adapter", "Not Different Data Set");
 
         }
     }
@@ -113,11 +126,31 @@ public class StoreListFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         rvMyStores = view.findViewById(R.id.rvMyStores);
         rvMyStores.setLayoutManager(new LinearLayoutManager(getContext()));
         rvMyStores.setHasFixedSize(true);
         rvMyStores.setAdapter(storeAdapter);
         calltoNearbyList();
+
+        bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.top_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.distance:
+                        calltoNearbyList();
+                        return true;
+                    case R.id.rating:
+                        //sortListRating();
+                        return true;
+                    case R.id.price:
+                        return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     public void calltoNearbyList() {
@@ -129,4 +162,15 @@ public class StoreListFragment extends Fragment{
         getStoreList getStorelistData = new getStoreList();
         getStorelistData.execute(DataTransfer);
     }
+
+    /*public void sortListRating() {
+        Collections.sort(nearbyPlacesList, new Comparator<HashMap<String, String>>() {
+
+            public int compare(HashMap<String, String> obj1, HashMap<String, String> obj2) {
+                return Integer.valueOf(Integer.getInteger(obj2.get("rating"))).compareTo(Integer.getInteger(obj1.get("rating")));
+            }
+        });
+        storeAdapter.notifyDataSetChanged();
+    }*/
 }
+

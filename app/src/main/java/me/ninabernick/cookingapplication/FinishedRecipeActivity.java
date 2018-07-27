@@ -57,6 +57,7 @@ public class FinishedRecipeActivity extends AppCompatActivity{
                 int rating = (int)ratingBar.getRating();
                 if (rating != 0) {
                     recipe.addRating(rating);
+                    recipe.updateAverageRating();
                 }
                 if (etLeaveComment.getText() != null) {
                     Comment comment = new Comment();

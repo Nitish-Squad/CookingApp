@@ -114,6 +114,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
+
     }
 
     public void showStores() {
@@ -194,16 +195,17 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
 
 
-        showStores();
         loadStoreList();
+        showStores();
+        Log.i("This is updated", "Stores Updated");
 
-        /*//stop location updates
+        //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             Log.d("onLocationChanged", "Removing Location Updates");
         }
 
-        Log.d("onLocationChanged", "Exit");*/
+        Log.d("onLocationChanged", "Exit");
 
     }
 
@@ -214,6 +216,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.textContainer, storeListFragment).commit();
+        Log.i("On Create Called from MapsActivity", "On Create Called from Maps Activity");
     }
 
     @Override

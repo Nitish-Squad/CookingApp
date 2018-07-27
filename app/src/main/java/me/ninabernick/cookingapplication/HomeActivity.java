@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -40,70 +42,72 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
 
         recipe_to_add = new Recipe();
 
 
 
-        final Recipe.Query recipeQuery = new Recipe.Query();
-
-        // place to order the recipes in some manner (ex: rating, when created, etc)
-        //postsQuery.orderByDescending("createdAt");
-
-        recipeQuery.getTop();
-        recipeQuery.findInBackground(new FindCallback<Recipe>() {
-            @Override
-            public void done(List<Recipe> objects, ParseException e) {
-                if (e == null)
-                {
-                    Recipe recipe = objects.get(0);
-
-
-
-
-                    Integer test_int = recipe.getNumberofSteps();
-
-
-                    // code used to add steps to the sample recipe on the Parse Server
-
-                    /*try {
-                        json.put("text","Put both slices together");
-                    } catch (JSONException e1) {
-                        e1.printStackTrace();
-                    }
-
-                    try {
-                        json.put("icon","TBD");
-                    } catch (JSONException e2) {
-                        Log.d("MainActivity","Failed to save icon value");
-                        e2.printStackTrace();
-                    }
-
-                    try {
-                        json.put("time","One minute");
-                    } catch (JSONException e3) {
-                        Log.d("MainActivity","Failed to save time value");
-                        e3.printStackTrace();
-                    }
-
-                    String step = json.toString();
-
-                    tvTest.setText(step);
-
-                    recipe.add("steps",step);
-                    recipe.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            // just do nothing
-                        }
-                    });*/
-                }
-                else{
-                    Log.d("MainActivity","Failed to get all the recipes.");
-                    e.printStackTrace();
-                }
-            }
-        });
+//        final Recipe.Query recipeQuery = new Recipe.Query();
+//
+//        // place to order the recipes in some manner (ex: rating, when created, etc)
+//        //postsQuery.orderByDescending("createdAt");
+//
+//        recipeQuery.getTop();
+//        recipeQuery.findInBackground(new FindCallback<Recipe>() {
+//            @Override
+//            public void done(List<Recipe> objects, ParseException e) {
+//                if (e == null)
+//                {
+//                    Recipe recipe = objects.get(0);
+//
+//
+//
+//
+//                    Integer test_int = recipe.getNumberofSteps();
+//
+//
+//                    // code used to add steps to the sample recipe on the Parse Server
+//
+//                    /*try {
+//                        json.put("text","Put both slices together");
+//                    } catch (JSONException e1) {
+//                        e1.printStackTrace();
+//                    }
+//
+//                    try {
+//                        json.put("icon","TBD");
+//                    } catch (JSONException e2) {
+//                        Log.d("MainActivity","Failed to save icon value");
+//                        e2.printStackTrace();
+//                    }
+//
+//                    try {
+//                        json.put("time","One minute");
+//                    } catch (JSONException e3) {
+//                        Log.d("MainActivity","Failed to save time value");
+//                        e3.printStackTrace();
+//                    }
+//
+//                    String step = json.toString();
+//
+//                    tvTest.setText(step);
+//
+//                    recipe.add("steps",step);
+//                    recipe.saveInBackground(new SaveCallback() {
+//                        @Override
+//                        public void done(ParseException e) {
+//                            // just do nothing
+//                        }
+//                    });*/
+//                }
+//                else{
+//                    Log.d("MainActivity","Failed to get all the recipes.");
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
         FragmentTransaction fragmentTransactionFeed = fragmentManager.beginTransaction();
         fragmentTransactionFeed.replace(R.id.flFragmentContainer, feedFragment);

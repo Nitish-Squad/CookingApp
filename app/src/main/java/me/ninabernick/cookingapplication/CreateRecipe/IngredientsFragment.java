@@ -64,26 +64,6 @@ public class IngredientsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*
-         * This works, any ingredients listed below will be available to the user to autocomplete,
-         * however, it is NOT constraining. Other ingredients can still be written manually by the
-         * user. This is mainly so that people can include ingredients that might not be commonly
-         * known/creating an exhaustive list of ingredients might be hard.
-         */
-        final String [] ingredients_list =
-                {
-                        "Eggs",
-                        "Butter",
-                        "Milk",
-                        "Peanut Butter",
-                        "Jelly",
-                        "Bread",
-                        "Chicken",
-                        "Beef",
-                        "Salmon",
-                        "Salt",
-                        "Black Pepper"
-                };
 
         btnAddIngredient = (Button) view.findViewById(R.id.btnAdd);
         btnNext = (Button) view.findViewById(R.id.btnNext);
@@ -217,12 +197,15 @@ public class IngredientsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // logic to save ingredients in the array
-
+                ArrayList<String> textIngredients = new ArrayList<>();
                 List<String> ingredients = new ArrayList<String>();
                 for(int i = 0; i < ingredients_array.size(); i++){
+                    // add to text-only ingredient list used for querying
+                    textIngredients.add(ingredients_array.get(i).getText().toString().toLowerCase());
                     JSONObject json = new JSONObject();
                     try {
-                        json.put("name", ingredients_array.get(i).getText().toString());
+                        // standardize all ingredients to lowercase for querying
+                        json.put("name", ingredients_array.get(i).getText().toString().toLowerCase());
                     } catch (JSONException e) {
                         Log.d("Ingredient Creation", "failed to set ingredient name");
                     }
@@ -246,6 +229,7 @@ public class IngredientsFragment extends Fragment {
                 Recipe new_recipe = createActivity.recipe_to_add;
 
                 new_recipe.setIngredients(ingredients);
+                new_recipe.setTextIngredients(textIngredients);
 
                 createActivity.recipe_to_add = new_recipe;
 
