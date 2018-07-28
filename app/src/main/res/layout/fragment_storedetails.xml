@@ -42,14 +42,54 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:numStars="5"
+        android:stepSize="0.1"
         tools:layout_editor_absoluteX="174dp"
         tools:layout_editor_absoluteY="130dp" />
 
-<!--    <RatingBar android:id="@+id/ratingBar1"
-        style="@android:style/PriceRatingBar"
+    <RatingBar
+        android:id="@+id/rbDisplayPrice"
+        style="@style/PriceRatingBar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="174dp"
+        android:layout_marginTop="6dp"
+        android:numStars="5"
+        android:stepSize="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rbDisplayRating" />
 
-    </RatingBar>-->
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="174dp"
+        android:layout_height="30dp"
+        android:text="Address"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="236dp" />
+
+    <TextView
+        android:id="@+id/tvPhoneNumber"
+        android:layout_width="183dp"
+        android:layout_height="30dp"
+        android:text="Phone Number"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="274dp" />
+
+    <TextView
+        android:id="@+id/tvOpenNow"
+        android:layout_width="192dp"
+        android:layout_height="47dp"
+        android:text="OpenNow"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="320dp" />
+
+    <TextView
+        android:id="@+id/tvWeekdayText"
+        android:layout_width="194dp"
+        android:layout_height="56dp"
+        android:text="Weekday Text"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="377dp" />
+
 
 </android.support.constraint.ConstraintLayout>

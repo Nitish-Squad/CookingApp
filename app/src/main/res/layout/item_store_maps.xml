@@ -39,4 +39,21 @@
         android:layout_alignParentTop="true"
         android:text="Rating" />
 
+    <TextView
+        android:id="@+id/tvWebsite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvStoreLocation"
+        android:layout_toEndOf="@+id/ivStoreImage"
+        android:text="TextView"
+        tools:text="Website" />
+
+    <TextView
+        android:id="@+id/tvPhoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvWebsite"
+        android:layout_toEndOf="@+id/ivStoreImage"
+        android:text="PhoneNumber" />
+
 </android.widget.RelativeLayout>
