@@ -1,14 +1,18 @@
 package me.ninabernick.cookingapplication.Location;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -22,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,6 +46,10 @@ public class StoreDetailsFragment extends Fragment {
     String gmurl;
     String open_now;
     String pricelevel;
+    String firstphotoreference;
+    String secondphotoreference;
+    String thirdphotoreference;
+    String fourthphotoreference;
 
     public static StoreDetailsFragment newInstance(String id) {
         StoreDetailsFragment storeDetailsFragment = new StoreDetailsFragment();
@@ -112,6 +121,10 @@ public class StoreDetailsFragment extends Fragment {
             gmurl = nearbyPlace.get("gmurl");
             open_now = nearbyPlace.get("open_now");
             pricelevel = nearbyPlace.get("pricelevel");
+            firstphotoreference = nearbyPlace.get("firstphotoreference");
+            secondphotoreference = nearbyPlace.get("secondphotoreference");
+            thirdphotoreference = nearbyPlace.get("thirdphotoreference");
+            fourthphotoreference = nearbyPlace.get("fourthphotoreference");
 
             Log.i("Check Info One", "Check Info One " + name + ", " + vicinity + ", " + formatted_phone + ", "
                     + formatted_address + ", " + website + ", " + open_now + ", " + rating + ", " + Float.parseFloat(rating) + ", " + pricelevel + ", " + Float.parseFloat(pricelevel));
@@ -145,26 +158,57 @@ public class StoreDetailsFragment extends Fragment {
         tvStoreName.setText(name);
 
         TextView tvStoreLocation = view.findViewById(R.id.tvStoreLocation);
-        tvStoreLocation.setText(vicinity);
+        tvStoreLocation.setText(formatted_address);
 
         TextView tvPhoneNumber = view.findViewById(R.id.tvPhoneNumber);
         tvPhoneNumber.setText(formatted_phone);
 
-        TextView tvAddress = view.findViewById(R.id.tvAddress);
-        tvAddress.setText(formatted_address);
-
-       /* TextView tvWebsite = view.findViewById(R.id.tvWebsite);
-        tvWebsite.setText(website);*/
-
-        TextView tvOpenNow = view.findViewById(R.id.tvOpenNow);
-        tvOpenNow.setText(open_now);
+        TextView tvWebsite = view.findViewById(R.id.tvWebsite);
+        tvWebsite.setText(Html.fromHtml(website));
 
         RatingBar ratingBar = view.findViewById(R.id.rbDisplayRating);
         ratingBar.setRating(Float.parseFloat(rating));
 
         RatingBar priceBar = view.findViewById(R.id.rbDisplayPrice);
         priceBar.setRating((float) (Float.parseFloat(pricelevel) * 1.25));
+
+        new DownloadImageTask((ImageView) view.findViewById(R.id.ivStorePicture)).execute(photourl(firstphotoreference));
+        new DownloadImageTask((ImageView) view.findViewById(R.id.ivStorePicture2)).execute(photourl(secondphotoreference));
+        new DownloadImageTask((ImageView) view.findViewById(R.id.ivStorePicture3)).execute(photourl(thirdphotoreference));
+        //new DownloadImageTask((ImageView) view.findViewById(R.id.ivStorePicture4)).execute(photourl(fourthphotoreference));
     }
 
+    public String photourl(String photoreference) {
+        StringBuilder photosb = new StringBuilder("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400");
+        photosb.append("&photoreference=" + photoreference);
+        photosb.append("&key=AIzaSyD_gosGg3qBnX2WOj6-fglzL49kTMO-KuY");
+        Log.i("checking photo url", "checking photo url: " + photosb.toString());
+        return photosb.toString();
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
 }
 
