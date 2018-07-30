@@ -6,10 +6,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -38,9 +44,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.ninabernick.cookingapplication.CreateRecipe.BasicInfoFragment;
 import me.ninabernick.cookingapplication.Location.MapsFragment;
+import me.ninabernick.cookingapplication.feed.FeedFragment;
 import me.ninabernick.cookingapplication.models.Comment;
 import me.ninabernick.cookingapplication.models.Recipe;
+
+import me.ninabernick.cookingapplication.models.User;
+import me.ninabernick.cookingapplication.profile.ProfileFragment;
+
 
 public class RecipeDetailFragment extends Fragment {
 
@@ -122,6 +134,29 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        HomeActivity.bottomNavigationView.getMenu().clear();
+        HomeActivity.bottomNavigationView.inflateMenu(R.menu.menu_bottom_navigation_recipe_details);
+        HomeActivity.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.miMaps:
+                        Intent intent = new Intent(getContext(), MapsFragment.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.miStartRecipe:
+                        Intent i = new Intent(getContext(), RecipeDetailsActivity.class);
+                        i.putExtra("recipe", recipe);
+                        startActivity(i);
+                        return true;
+                    default:
+                        return true;
+                }
+            }
+        });
+
+
         tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         tvTime = (TextView) view.findViewById(R.id.tvTime);
         tvDescription = (TextView) view.findViewById(R.id.tvDescription);
@@ -131,25 +166,6 @@ public class RecipeDetailFragment extends Fragment {
         rbDisplayRating.setRating(recipe.getAverageRating().floatValue());
         ivShare = (ImageView) view.findViewById(R.id.fb_share_button);
 
-
-        btStartRecipe = (Button) view.findViewById(R.id.btStartRecipe);
-        btStartRecipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), RecipeDetailsActivity.class);
-                i.putExtra("recipe", recipe);
-                startActivity(i);
-            }
-        });
-
-        btStartMaps = (Button) view.findViewById(R.id.btStartMaps);
-        btStartMaps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), MapsFragment.class);
-                startActivity(intent);
-            }
-        });
 
         Glide.with(view.getContext()).load(recipe.getrecipeImage().getUrl()).into(ivImage);
         ivSave = (ImageView) view.findViewById(R.id.ivSaveRecipe);
@@ -248,6 +264,63 @@ public class RecipeDetailFragment extends Fragment {
 
         getTopComments(recipe, 3);
 
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(getView() == null){
+            return;
+        }
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                    HomeActivity.bottomNavigationView.getMenu().clear();
+                    HomeActivity.bottomNavigationView.setOnNavigationItemSelectedListener(
+                            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                                @Override
+                                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                                    FragmentManager fragmentManager = getFragmentManager();
+                                    Fragment feedFragment = FeedFragment.newInstance(HomeActivity.RECIPE_FEED, ParseUser.getCurrentUser());
+                                    Fragment profileFragment = ProfileFragment.newInstance(ParseUser.getCurrentUser());
+                                    switch (item.getItemId()) {
+                                        case R.id.miFeed:
+                                            FragmentTransaction fragmentTransactionFeed = fragmentManager.beginTransaction();
+                                            fragmentTransactionFeed.replace(R.id.flFragmentContainer, feedFragment);
+                                            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                            fragmentTransactionFeed.commit();
+                                            return true;
+
+                                        case R.id.miCreate:
+                                            BasicInfoFragment createfragment1 = new BasicInfoFragment();
+                                            fragmentTransactionFeed = fragmentManager.beginTransaction();
+                                            fragmentTransactionFeed.replace(R.id.flFragmentContainer, createfragment1);
+                                            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                            fragmentTransactionFeed.commit();
+                                            return true;
+
+                                        case R.id.miProfile:
+                                            FragmentTransaction fragmentTransactionProfile = fragmentManager.beginTransaction();
+                                            fragmentTransactionProfile.replace(R.id.flFragmentContainer, profileFragment);
+                                            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                            fragmentTransactionProfile.commit();
+
+                                        default:
+                                            return true;
+                                    }
+                                }
+                            });
+                    // handle back button's click listener
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void getTopComments(Recipe recipe, int numComments) {

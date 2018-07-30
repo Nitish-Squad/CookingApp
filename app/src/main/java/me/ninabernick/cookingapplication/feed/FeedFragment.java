@@ -12,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,10 +67,15 @@ public class FeedFragment extends Fragment {
 
     RecipeAdapter.RecipeListener recipeListener = new RecipeAdapter.RecipeListener() {
         @Override
-        public void respond(Recipe recipe) {
+        public void respond(Recipe recipe, View view) {
+            Transition changeTransform = TransitionInflater.from(getContext()).
+                    inflateTransition(R.transition.change_image_transform);
             RecipeDetailFragment detailFragment = RecipeDetailFragment.newInstance(recipe);
+            detailFragment.setSharedElementEnterTransition(changeTransform);
+
             final FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.addSharedElement(view, getResources().getString(R.string.RECIPE_IMAGE));
 
 
             transaction.replace(R.id.flFragmentContainer, detailFragment);
@@ -260,6 +267,7 @@ public class FeedFragment extends Fragment {
         etSearch = (EditText) view.findViewById(R.id.etSearchRecipes);
         rvFeed = (RecyclerView) view.findViewById(R.id.rvFeed);
         rvFeed.setAdapter(adapter);
+
         adapter.clear();
         rvFeed.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
 

@@ -103,6 +103,12 @@ public class StoreListFragment extends Fragment {
             nearbyPlacesList.addAll(nearbyPlaces);
             Log.d("GooglePlacesReadTask", "onPostExecute Exit");
 
+<<<<<<< Updated upstream
+=======
+
+
+
+>>>>>>> Stashed changes
             storeAdapter.notifyDataSetChanged();
 
             Log.d("Adapter", "Not Different Data Set");

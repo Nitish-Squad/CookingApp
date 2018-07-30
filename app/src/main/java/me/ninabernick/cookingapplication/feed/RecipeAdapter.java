@@ -25,7 +25,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     RecipeListener recipeListener;
 
     public interface RecipeListener {
-        void respond(Recipe recipe);
+        void respond(Recipe recipe, View view);
     }
 
     public RecipeAdapter(ArrayList<Recipe> recipeList, RecipeListener listener) {
@@ -97,7 +97,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
         @Override
         public void onClick(View view) {
-            listener.respond(recipes.get(getAdapterPosition()));
+            listener.respond(recipes.get(getAdapterPosition()), view.findViewById(R.id.ivImageThumbnail));
         }
     }
 }

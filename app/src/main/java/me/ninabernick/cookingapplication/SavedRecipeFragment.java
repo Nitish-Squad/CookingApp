@@ -34,7 +34,7 @@ public class SavedRecipeFragment extends Fragment {
 
     RecipeAdapter.RecipeListener recipeListener = new RecipeAdapter.RecipeListener() {
         @Override
-        public void respond(Recipe recipe) {
+        public void respond(Recipe recipe, View view) {
             RecipeDetailFragment detailFragment = RecipeDetailFragment.newInstance(recipe);
             final FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
