@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -21,13 +23,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 
 import me.ninabernick.cookingapplication.R;
 
 public class StoreDetailsFragment extends Fragment {
 
     String id;
-    StringBuilder sb;
+    HashMap<String, String> nearbyPlace;
 
     String name;
     String vicinity;
@@ -36,7 +39,6 @@ public class StoreDetailsFragment extends Fragment {
     String formatted_address;
     String website;
     String gmurl;
-    String weekday_text;
     String open_now;
     String pricelevel;
 
@@ -52,19 +54,71 @@ public class StoreDetailsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         id = getArguments().getString("id");
-        Log.i("Check id", "Check ID: " + id);
-
-        populateData();
     }
 
-    public void populateData() {
-        sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/details/json?");
-        sb.append("placeid="+ id);
-        sb.append("&key=AIzaSyD_gosGg3qBnX2WOj6-fglzL49kTMO-KuY");
-        Log.i("This is the Url", "This is the Url" + sb.toString());
 
-        PlacesTask placesTask = new PlacesTask();
-        placesTask.execute(sb.toString());
+    private String getUrl(String id) {
+
+        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/details/json?");
+        googlePlacesUrl.append("placeid="+ id);
+        googlePlacesUrl.append("&key=" + "AIzaSyD_gosGg3qBnX2WOj6-fglzL49kTMO-KuY");
+        Log.d("getUrl", googlePlacesUrl.toString());
+        return (googlePlacesUrl.toString());
+    }
+
+
+    private class PlacesTask extends AsyncTask<Object, Integer, String> {
+
+        String googlePlacesData;
+        View view;
+        String url;
+
+        // Invoked by execute() method of this object
+        @Override
+        protected String doInBackground(Object... params) {
+            try{
+                Log.i("Places Tag Launched", "Places Tag Launched");
+                DownloadUrl downloadUrl = new DownloadUrl();
+
+                view = (View) params[0];
+                url = (String) params[1];
+
+                googlePlacesData = downloadUrl.readUrl(url);
+                Log.i("This is googlePlacesData", "Google Places Data: " + googlePlacesData);
+
+                Log.d("GooglePlacesReadTask", "doInBackground Exit");
+            }catch(Exception e){
+                Log.d("Background Task",e.toString());
+            }
+            return googlePlacesData;
+        }
+
+        @Override
+        protected void onPostExecute(String result){
+
+            Log.i("Got to onPostExecute", "Got to onPostExecute");
+            DataParserPlaceDetails placeDetailsJsonParser = new DataParserPlaceDetails();
+
+            Log.i("This is nearbyPlace", "nearbyPlace: " + nearbyPlace);
+            nearbyPlace = placeDetailsJsonParser.parse(result);
+            Log.i("This is nearbyPlace", "nearbyPlace: " + nearbyPlace);
+
+            name = nearbyPlace.get("name");
+            vicinity = nearbyPlace.get("vicinity");
+            rating = nearbyPlace.get("rating");
+            formatted_phone = nearbyPlace.get("formatted_phone");
+            formatted_address = nearbyPlace.get("formatted_address");
+            website = nearbyPlace.get("website");
+            gmurl = nearbyPlace.get("gmurl");
+            open_now = nearbyPlace.get("open_now");
+            pricelevel = nearbyPlace.get("pricelevel");
+
+            Log.i("Check Info One", "Check Info One " + name + ", " + vicinity + ", " + formatted_phone + ", "
+                    + formatted_address + ", " + website + ", " + open_now + ", " + rating + ", " + Float.parseFloat(rating) + ", " + pricelevel + ", " + Float.parseFloat(pricelevel));
+
+            setViewHolders(view);
+
+        }
     }
 
     @Override
@@ -77,11 +131,16 @@ public class StoreDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.i("Check Info Two", "Check Info Two " + name + ", " + vicinity + ", " + formatted_phone + ", "
-                + formatted_address + ", " + website + ", " + weekday_text + ", " + open_now + ", ");
+        String url = getUrl(id);
+        Object[] DataTransfer = new Object[2];
+        DataTransfer[0] = view;
+        DataTransfer[1] = url;
+        PlacesTask placesTask = new PlacesTask();
+        placesTask.execute(DataTransfer);
 
-        // + rating + ", " + Float.parseFloat(rating) + ", " + pricelevel + ", " + Float.parseFloat(pricelevel)
+    }
 
+    public void setViewHolders(View view) {
         TextView tvStoreName = view.findViewById(R.id.tvStoreName);
         tvStoreName.setText(name);
 
@@ -94,11 +153,8 @@ public class StoreDetailsFragment extends Fragment {
         TextView tvAddress = view.findViewById(R.id.tvAddress);
         tvAddress.setText(formatted_address);
 
-        TextView tvWebsite = view.findViewById(R.id.tvWebsite);
-        tvWebsite.setText(website);
-
-        TextView tvWeekdayText = view.findViewById(R.id.tvWeekdayText);
-        tvWeekdayText.setText(weekday_text);
+       /* TextView tvWebsite = view.findViewById(R.id.tvWebsite);
+        tvWebsite.setText(website);*/
 
         TextView tvOpenNow = view.findViewById(R.id.tvOpenNow);
         tvOpenNow.setText(open_now);
@@ -110,95 +166,5 @@ public class StoreDetailsFragment extends Fragment {
         priceBar.setRating((float) (Float.parseFloat(pricelevel) * 1.25));
     }
 
-    private class PlacesTask extends AsyncTask<String, Integer, String> {
-
-        String data = null;
-
-        // Invoked by execute() method of this object
-        @Override
-        protected String doInBackground(String... url) {
-            try{
-                data = downloadUrl(url[0]);
-            }catch(Exception e){
-                Log.d("Background Task",e.toString());
-            }
-            return data;
-        }
-
-        @Override
-        protected void onPostExecute(String result){
-            ParserTask parserTask = new ParserTask();
-            parserTask.execute(result);
-        }
-    }
-
-    private class ParserTask extends AsyncTask<String, Integer, HashMap<String, String>> {
-
-        JSONObject jObject;
-
-        @Override
-        protected HashMap<String, String> doInBackground(String... jsonData) {
-
-            HashMap<String, String> hPlaceDetails = null;
-            DataParserPlaceDetails placeDetailsJsonParser = new DataParserPlaceDetails();
-
-            try {
-                jObject = new JSONObject(jsonData[0]);
-                hPlaceDetails = placeDetailsJsonParser.parse(jObject);
-
-            } catch (Exception e) {
-                Log.d("Exception", e.toString());
-            }
-            return hPlaceDetails;
-        }
-
-        @Override
-        protected void onPostExecute(HashMap<String, String> hPlaceDetails) {
-
-            name = hPlaceDetails.get("name");
-            vicinity = hPlaceDetails.get("vicinity");
-            rating = hPlaceDetails.get("rating");
-            formatted_phone = hPlaceDetails.get("formatted_phone");
-            formatted_address = hPlaceDetails.get("formatted_address");
-            website = hPlaceDetails.get("website");
-            gmurl = hPlaceDetails.get("gmurl");
-            weekday_text = hPlaceDetails.get("weekday_text");
-            open_now = hPlaceDetails.get("open_now");
-            pricelevel = hPlaceDetails.get("pricelevel");
-
-            Log.i("Check Info One", "Check Info One " + name + ", " + vicinity + ", " + formatted_phone + ", "
-                    + formatted_address + ", " + website + ", " + weekday_text + ", " + open_now + ", " + rating + ", "
-                    + Float.parseFloat(rating) + ", " + pricelevel + ", " + Float.parseFloat(pricelevel));
-
-        }
-    }
-
-    private String downloadUrl(String strUrl) throws IOException {
-        String data = "";
-        InputStream iStream = null;
-        HttpURLConnection urlConnection = null;
-        try{
-            URL url = new URL(strUrl);
-            // Creating an http connection to communicate with url
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.connect();
-            iStream = urlConnection.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-            StringBuffer sb = new StringBuffer();
-            String line = "";
-            while( ( line = br.readLine()) != null){
-                sb.append(line);
-            }
-            data = sb.toString();
-            br.close();
-        }catch(Exception e){
-            Log.d("Exception while downloading url", e.toString());
-        }finally{
-            iStream.close();
-            urlConnection.disconnect();
-        }
-        Log.i("Real Url", data);
-        return data;
-    }
 }
 

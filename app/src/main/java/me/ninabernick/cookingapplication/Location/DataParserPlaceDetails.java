@@ -12,12 +12,15 @@ import java.util.List;
 
 public class DataParserPlaceDetails {
 
-    public HashMap<String,String> parse(JSONObject jObject){
+    public HashMap<String,String> parse(String jsonData){
 
         JSONObject jPlaceDetails = null;
+        JSONObject jsonObject;
+
         try {
             /** Retrieves all the elements in the 'places' array */
-            jPlaceDetails = jObject.getJSONObject("result");
+            jsonObject = new JSONObject((String) jsonData);
+            jPlaceDetails = jsonObject.getJSONObject("result");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -55,14 +58,11 @@ public class DataParserPlaceDetails {
             if(!jPlaceDetails.isNull("formatted_address")) {
                 formatted_address = jPlaceDetails.getString("formatted_address");
             }
-            if(!jPlaceDetails.isNull("formatted_phone")) {
-                formatted_phone = jPlaceDetails.getString("formatted_phone");
+            if(!jPlaceDetails.isNull("formatted_phone_number")) {
+                formatted_phone = jPlaceDetails.getString("formatted_phone_number");
             }
             if(!jPlaceDetails.isNull("website")) {
                 website = jPlaceDetails.getString("website");
-            }
-            if(!jPlaceDetails.isNull("weekday_text")) {
-                weekday_text = jPlaceDetails.getString("weekday_text");
             }
             if(!jPlaceDetails.isNull("url")) {
                 gmurl = jPlaceDetails.getString("url");

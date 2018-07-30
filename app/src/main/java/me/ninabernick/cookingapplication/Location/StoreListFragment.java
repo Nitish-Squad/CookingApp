@@ -81,7 +81,9 @@ public class StoreListFragment extends Fragment {
                 mMap = (GoogleMap) params[0];
                 url = (String) params[1];
                 DownloadUrl downloadUrl = new DownloadUrl();
+                Log.i("This is url", "Google Places url: " + url);
                 googlePlacesData = downloadUrl.readUrl(url);
+                Log.i("This is googlePlacesData", "Google Places Data: " + googlePlacesData);
                 Log.d("GooglePlacesReadTask", "doInBackground Exit");
 
             } catch (Exception e) {
