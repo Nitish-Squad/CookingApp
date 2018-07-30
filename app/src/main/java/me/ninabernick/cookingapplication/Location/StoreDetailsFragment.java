@@ -138,41 +138,6 @@ public class StoreDetailsFragment extends Fragment {
         PlacesTask placesTask = new PlacesTask();
         placesTask.execute(DataTransfer);
 
-
-        // Array of references of the photos
-        Photo[] photos = mPlace.mPhotos;
-        // Setting Photos count
-        mTVPhotosCount.setText("Photos available : " + photos.length);
-
-        // Setting the vicinity of the place
-        mTVVicinity.setText(mPlace.mVicinity);
-
-        // Creating an array of ImageDownloadTask to download photos
-        ImageDownloadTask[] imageDownloadTask = new ImageDownloadTask[photos.length];
-
-        int width = (int)(mMetrics.widthPixels*3)/4;
-        int height = (int)(mMetrics.heightPixels*1)/2;
-
-        String url = "https://maps.googleapis.com/maps/api/place/photo?";
-        String key = "key=YOUR_BROWSER_KEY";
-        String sensor = "sensor=true";
-        String maxWidth="maxwidth=" + width;
-        String maxHeight = "maxheight=" + height;
-        url = url + "&" + key + "&" + sensor + "&" + maxWidth + "&" + maxHeight;
-
-        // Traversing through all the photoreferences
-        for(int i=0;i<photos.length;i++){
-            // Creating a task to download i-th photo
-            imageDownloadTask[i] = new ImageDownloadTask();
-
-            String photoReference = "photoreference="+photos[i].mPhotoReference;
-
-            // URL for downloading the photo from Google Services
-            url = url + "&" + photoReference;
-
-            // Downloading i-th photo from the above url
-            imageDownloadTask[i].execute(url);
-        }
     }
 
     public void setViewHolders(View view) {
