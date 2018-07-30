@@ -1,24 +1,14 @@
 package me.ninabernick.cookingapplication;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,12 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.facebook.share.model.SharePhoto;
-import com.facebook.share.model.SharePhotoContent;
-import com.facebook.share.widget.ShareDialog;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -45,14 +31,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.ninabernick.cookingapplication.CreateRecipe.BasicInfoFragment;
 import me.ninabernick.cookingapplication.Location.MapsFragment;
-import me.ninabernick.cookingapplication.feed.FeedFragment;
+import me.ninabernick.cookingapplication.ShareRecipe.ShareRecipeDialog;
 import me.ninabernick.cookingapplication.models.Comment;
 import me.ninabernick.cookingapplication.models.Recipe;
-
-import me.ninabernick.cookingapplication.models.User;
-import me.ninabernick.cookingapplication.profile.ProfileFragment;
 
 
 public class RecipeDetailViewActivity extends AppCompatActivity {
@@ -193,25 +175,13 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
         ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ParseFile parseFile = recipe.getParseFile("recipeImage");
-                byte[] data = new byte[0];
-                try {
-                    data = parseFile.getData();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length);
-                SharePhoto photo = new SharePhoto.Builder()
-                        .setBitmap(image)
-                        .build();
-                SharePhotoContent content = new SharePhotoContent.Builder()
-                        .addPhoto(photo)
-                        .build();
-
-                ShareDialog.show(RecipeDetailViewActivity.this, content);
+                ShareRecipeDialog shareRecipeDialog = new ShareRecipeDialog();
+                shareRecipeDialog.show(getSupportFragmentManager(), "fragment_share_recipe");
 
             }
         });
+
+
 
         tvTitle.setText(recipe.getTitle());
         tvTime.setText(recipe.getTime());
@@ -253,6 +223,7 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
         //ingredients.addAll(recipe.getIngredients());
 
     }
+
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
@@ -483,6 +454,10 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public Recipe getRecipeShown(){
+        return recipe;
     }
 
     private boolean hasSaved(ParseUser user, Recipe recipe) {

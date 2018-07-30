@@ -71,13 +71,10 @@
     <string name="low_rating">Uh oh! Need a back-up plan?</string>
 
 
-
     <string name="channel_name">CookingAppChannel</string>
     <string name="channel_description">Channel for CookingApp Notifications</string>
     <string name="CHANNEL_ID">cooking_app_id</string>
     <string name="youtube_api_key">nothing</string>
-
-
 
 
 </resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchFragment">
+    <EditText
+        android:id="@+id/etSearchRecipes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="Search Recipes"
+        android:textSize="20sp"/>
+
+    <ImageView
+        android:id="@+id/ivSearchIcon"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+
+
+        android:layout_alignTop="@+id/etSearchRecipes"
+        android:layout_toStartOf="@+id/etSearchRecipes"
+        android:src="@android:drawable/ic_search_category_default" />
+
+    <TextView
+        android:id="@+id/tvTrending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider"
+
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="Trending Now:"
+        android:textSize="20sp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tvTrending"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-10dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvTrendingRecipes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/etSearchRecipes"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="?android:attr/listDivider" />
+
+
+</RelativeLayout>

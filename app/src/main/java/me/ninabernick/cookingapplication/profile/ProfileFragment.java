@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.ninabernick.cookingapplication.R;
+import me.ninabernick.cookingapplication.models.Recipe;
 
 //adaptable to your profile or your friend's
 public class ProfileFragment extends Fragment {
@@ -36,7 +40,7 @@ public class ProfileFragment extends Fragment {
     private String profileImageUrl;
     private String name;
     private ArrayList<String> friends = new ArrayList<>();
-    private ArrayList<String> savedRecipes;
+    private ArrayList<String> savedRecipesText;
     private ArrayList<ParseUser> friendUsers = new ArrayList<>();
     //needed for recycler view of friends
 
@@ -59,6 +63,14 @@ public class ProfileFragment extends Fragment {
     private TextView tvSavedRecipes;
     private TextView tvCreatedRecipes;
     private RecyclerView rvFriends;
+    private RecyclerView rvSavedRecipes;
+    private ArrayList<Recipe> savedRecipes;
+
+    private RecyclerView rvCreatedRecipes;
+    private ArrayList<Recipe> createdRecipes;
+    private RecipeImageAdapter savedRecipeAdapter;
+    private RecipeImageAdapter createdRecipeAdapter;
+
 
 
 
@@ -96,6 +108,11 @@ public class ProfileFragment extends Fragment {
         Log.d("onCreate", "onCreate called");
         findFriends();
         adapter = new FriendImageAdapter(friendUsers, friendListener);
+        savedRecipes = new ArrayList<>();
+        savedRecipeAdapter = new RecipeImageAdapter(savedRecipes);
+        createdRecipes = new ArrayList<>();
+        createdRecipeAdapter = new RecipeImageAdapter(createdRecipes);
+
     }
 
     @Override
@@ -113,18 +130,19 @@ public class ProfileFragment extends Fragment {
         tvCreatedRecipes = (TextView) view.findViewById(R.id.tvCreatedRecipes);
         rvFriends = (RecyclerView) view.findViewById(R.id.rvFriends);
         rvFriends.setAdapter(adapter);
-        rvFriends.setLayoutManager(new GridLayoutManager(view.getContext(),3 ));
+        rvFriends.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        savedRecipes = new ArrayList<>();
+        savedRecipesText = new ArrayList<>();
         if (user.<String>getList("savedRecipes") != null) {
-            savedRecipes.addAll(user.<String>getList("savedRecipes"));
+            savedRecipesText.addAll(user.<String>getList("savedRecipes"));
         }
 
         name = user.getString("name");
+
         tvName.setText(name);
 
         profileImageUrl = user.getString("profileImageURL");
-        Glide.with(view).load(profileImageUrl).into(ivProfileImage);
+        Glide.with(view).load(profileImageUrl).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(ivProfileImage);
         tvSavedRecipes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,6 +155,15 @@ public class ProfileFragment extends Fragment {
                 listener.createdRecipesClicked(user);
             }
         });
+
+        rvSavedRecipes = (RecyclerView) view.findViewById(R.id.rvSavedRecipes);
+        rvSavedRecipes.setAdapter(savedRecipeAdapter);
+        rvSavedRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        getSavedRecipes();
+        rvCreatedRecipes = (RecyclerView) view.findViewById(R.id.rvCreatedRecipes);
+        rvCreatedRecipes.setAdapter(createdRecipeAdapter);
+        rvCreatedRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        getRecipesCreated();
     }
 
 
@@ -166,5 +193,41 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void getSavedRecipes() {
+
+        if (user.getList("savedRecipes") != null) {
+            final ArrayList<String> mySavedRecipes = new ArrayList<>();
+            mySavedRecipes.addAll(user.<String>getList("savedRecipes"));
+
+            ParseQuery<Recipe> query = ParseQuery.getQuery(Recipe.class);
+            query.whereContainedIn("objectId", mySavedRecipes);
+            query.findInBackground(new FindCallback<Recipe>() {
+                @Override
+                public void done(List<Recipe> objects, ParseException e) {
+                    Log.d("Saved Recipes", String.format("%d",objects.size()));
+                    savedRecipes.clear();
+                    savedRecipes.addAll(objects);
+                    savedRecipeAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+    }
+
+    public void getRecipesCreated() {
+
+        ParseQuery<Recipe> query = ParseQuery.getQuery(Recipe.class);
+        query.whereEqualTo("createdBy", user.getObjectId());
+        query.findInBackground(new FindCallback<Recipe>() {
+            @Override
+            public void done(List<Recipe> objects, ParseException e) {
+                createdRecipes.clear();
+                createdRecipes.addAll(objects);
+                createdRecipeAdapter.notifyDataSetChanged();
+
+            }
+        });
+
     }
 }

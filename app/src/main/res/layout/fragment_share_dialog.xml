@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ShareRecipe.ShareDialog">
+
+
+    <TextView
+        android:id="@+id/tvShareTitle"
+        android:layout_width="225dp"
+        android:layout_height="34dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="SHARE"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/RecyclerView"
+        android:layout_width="215dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvShareTitle"
+        android:layout_below="@+id/tvShareTitle"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="-1dp" />
+
+    <Button
+        android:id="@+id/fb_share"
+        android:layout_width="224dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/RecyclerView"
+        android:layout_centerHorizontal="true"
+        android:text="Share to Facebook" />
+
+</RelativeLayout>
