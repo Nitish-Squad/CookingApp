@@ -52,7 +52,7 @@ public class StoreListFragment extends Fragment {
 
         nearbyPlacesList = new ArrayList<>();
         storeAdapter = new StoreAdapter(nearbyPlacesList, getFragmentManager());
-        Log.i("On Create Called", "On Create Called");
+
     }
 
     private String getUrl(double latitude, double longitude, String nearbyPlace) {
@@ -105,7 +105,6 @@ public class StoreListFragment extends Fragment {
 
             storeAdapter.notifyDataSetChanged();
 
-
             Log.d("Adapter", "Not Different Data Set");
 
         }
@@ -144,7 +143,6 @@ public class StoreListFragment extends Fragment {
                 return false;
             }
         });
-
     }
 
     public void calltoNearbyList() {

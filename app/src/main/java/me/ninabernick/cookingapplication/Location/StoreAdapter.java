@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.parceler.Parcels;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.List;
@@ -56,8 +57,9 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
         String rating = store.get("rating");
         String phonenumber = store.get("formatted_phone_number");
         String price_level =  store.get("price_level");
+        String website = store.get("website");
 
-        Log.i("Store Adapter Test", "Store Rating: " + rating);
+        Log.i("Store Adapter Test", "Store Website: " + website);
         Log.i("Store Adapter Test", "Store Phonenumber: " + phonenumber);
         Log.i("Store Adapter Test", "Store price_level: " + price_level);
 
@@ -65,15 +67,9 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
         viewHolder.tvStoreName.setText(placeName);
         viewHolder.tvStoreLocation.setText(vicinity);
         viewHolder.tvStoreRating.setText(rating);
+        viewHolder.tvPhonenumber.setText(phonenumber);
+        viewHolder.tvWebsite.setText(website);
         //Glide.with(context).load(getPhotoUrl(mWidth, mHeight, mPhotoReference)).into(viewHolder.ivStoreImage);
-
-
-        Log.i("Store Adapter Test", "hi hi:" + placeName);
-        Log.i("Store Adapter Test", "blah blah: " + vicinity);
-
-        Log.i("Store Adapter Test", placeName);
-        Log.i("Store Adapter Test", vicinity);
-
 
     }
 
@@ -88,6 +84,8 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
         @BindView(R.id.tvStoreName) public TextView tvStoreName;
         @BindView(R.id.tvStoreRating) public TextView tvStoreRating;
         @BindView(R.id.tvStoreLocation) public TextView tvStoreLocation;
+        @BindView(R.id.tvWebsite) public TextView tvWebsite;
+        @BindView(R.id.tvPhoneNumber) public TextView tvPhonenumber;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -102,13 +100,14 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
             if (position != RecyclerView.NO_POSITION) {
 
                 HashMap<String, String> store = nearbyPlacesList.get(position);
+                String id = store.get("id");
                 String placeName = store.get("place_name");
                 String vicinity = store.get("vicinity");
                 String rating = store.get("rating");
                 String phonenumber = store.get("formatted_phone_number");
                 String price_level =  store.get("price_level");
 
-                StoreDetailsFragment storeDetailsFragment = StoreDetailsFragment.newInstance(placeName, vicinity, phonenumber, price_level, rating);
+                StoreDetailsFragment storeDetailsFragment = StoreDetailsFragment.newInstance(id);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.textContainer, storeDetailsFragment);
                 fragmentTransaction.addToBackStack(null);
