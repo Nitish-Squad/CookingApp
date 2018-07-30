@@ -12,6 +12,8 @@
         <item name="android:progressDrawable">@drawable/pricecustom_ratingbar</item>
         <item name="colorControlNormal">#c51162</item>
         <item name="colorControlActivated">#c51162</item>
+        <item name="android:minHeight">30dip</item>
+        <item name="android:maxHeight">30dip</item>
     </style>
 
 </resources>
