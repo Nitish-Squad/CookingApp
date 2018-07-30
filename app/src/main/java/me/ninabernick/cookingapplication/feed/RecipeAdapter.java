@@ -1,12 +1,14 @@
 package me.ninabernick.cookingapplication.feed;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Rating;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -17,21 +19,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.ninabernick.cookingapplication.R;
+import me.ninabernick.cookingapplication.RecipeDetailViewActivity;
 import me.ninabernick.cookingapplication.models.Recipe;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder>{
     Context context;
     private ArrayList<Recipe> recipes;
-    RecipeListener recipeListener;
+//    RecipeListener recipeListener;
 
     public interface RecipeListener {
-        void respond(Recipe recipe);
+        void respond(Recipe recipe, View view);
     }
 
-    public RecipeAdapter(ArrayList<Recipe> recipeList, RecipeListener listener) {
+    public RecipeAdapter(ArrayList<Recipe> recipeList) {
         recipes = new ArrayList<>();
         recipes.addAll(recipeList);
-        recipeListener = listener;
+//        recipeListener = listener;
     }
 
     @NonNull
@@ -40,7 +43,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View recipeView = inflater.inflate(R.layout.item_recipe, parent, false);
-        ViewHolder viewHolder = new ViewHolder(recipeView, recipeListener);
+        ViewHolder viewHolder = new ViewHolder(recipeView);
         return viewHolder;
     }
 
@@ -84,9 +87,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         RecipeListener listener;
 
 
-        public ViewHolder(View itemView, RecipeListener rListener) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            listener = rListener;
+//            listener = rListener;
             ivThumbnail = (ImageView) itemView.findViewById(R.id.ivImageThumbnail);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvTime = (TextView) itemView.findViewById(R.id.tvTime);
@@ -97,7 +100,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
         @Override
         public void onClick(View view) {
-            listener.respond(recipes.get(getAdapterPosition()));
+            if (getAdapterPosition() != RecyclerView.NO_POSITION) {
+                Intent i = new Intent(view.getContext(), RecipeDetailViewActivity.class);
+                i.putExtra("recipe", recipes.get(getAdapterPosition()));
+                view.getContext().startActivity(i);
+            }
+
         }
     }
 }

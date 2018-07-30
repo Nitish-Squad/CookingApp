@@ -31,16 +31,16 @@ public class SavedRecipeFragment extends Fragment {
     private RecipeAdapter adapter;
     private RecyclerView rvFeed;
 
-
-    RecipeAdapter.RecipeListener recipeListener = new RecipeAdapter.RecipeListener() {
-        @Override
-        public void respond(Recipe recipe) {
-            RecipeDetailFragment detailFragment = RecipeDetailFragment.newInstance(recipe);
-            final FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.flFragmentContainer, detailFragment).commit();
-        }
-    };
+//
+//    RecipeAdapter.RecipeListener recipeListener = new RecipeAdapter.RecipeListener() {
+//        @Override
+//        public void respond(Recipe recipe, View view) {
+//            RecipeDetailFragment detailFragment = RecipeDetailFragment.newInstance(recipe);
+//            final FragmentManager fragmentManager = getFragmentManager();
+//            FragmentTransaction transaction = fragmentManager.beginTransaction();
+//            transaction.replace(R.id.flFragmentContainer, detailFragment).commit();
+//        }
+//    };
     //determines whether it's saved recipes or created recipes
     public static SavedRecipeFragment newInstance(ArrayList<Recipe> recipes) {
         SavedRecipeFragment fragment = new SavedRecipeFragment();
@@ -69,7 +69,7 @@ public class SavedRecipeFragment extends Fragment {
         recipes = new ArrayList<>();
 
 
-        adapter = new RecipeAdapter(recipes, recipeListener);
+        adapter = new RecipeAdapter(recipes);
 
 
     }

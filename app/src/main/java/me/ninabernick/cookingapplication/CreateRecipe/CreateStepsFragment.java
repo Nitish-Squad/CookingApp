@@ -172,7 +172,7 @@ public class CreateStepsFragment extends Fragment {
                 new_recipe.setSteps(steps_list);
 
 
-                createActivity.recipe_to_add = new_recipe;
+                createActivity.recipe_to_add = new Recipe();
 
                 new_recipe.saveInBackground(new SaveCallback() {
                     @Override

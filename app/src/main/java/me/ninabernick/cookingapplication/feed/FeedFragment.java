@@ -12,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +36,7 @@ import java.util.List;
 
 import me.ninabernick.cookingapplication.HomeActivity;
 import me.ninabernick.cookingapplication.R;
-import me.ninabernick.cookingapplication.RecipeDetailFragment;
+
 import me.ninabernick.cookingapplication.models.Recipe;
 
 
@@ -62,20 +64,25 @@ public class FeedFragment extends Fragment {
     private static final int DIALOG_REQUEST_CODE = 20;
 
 
-
-    RecipeAdapter.RecipeListener recipeListener = new RecipeAdapter.RecipeListener() {
-        @Override
-        public void respond(Recipe recipe) {
-            RecipeDetailFragment detailFragment = RecipeDetailFragment.newInstance(recipe);
-            final FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-
-            transaction.replace(R.id.flFragmentContainer, detailFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        }
-    };
+//
+//    RecipeAdapter.RecipeListener recipeListener = new RecipeAdapter.RecipeListener() {
+//        @Override
+//        public void respond(Recipe recipe, View view) {
+//            Transition changeTransform = TransitionInflater.from(getContext()).
+//                    inflateTransition(R.transition.change_image_transform);
+//            RecipeDetailFragment detailFragment = RecipeDetailFragment.newInstance(recipe);
+//            detailFragment.setSharedElementEnterTransition(changeTransform);
+//
+//            final FragmentManager fragmentManager = getFragmentManager();
+//            FragmentTransaction transaction = fragmentManager.beginTransaction();
+//            transaction.addSharedElement(view, getResources().getString(R.string.RECIPE_IMAGE));
+//
+//
+//            transaction.replace(R.id.flFragmentContainer, detailFragment);
+//            transaction.addToBackStack(null);
+//            transaction.commit();
+//        }
+//    };
 
 
 
@@ -231,7 +238,7 @@ public class FeedFragment extends Fragment {
         recipes = new ArrayList<>();
 
         SORT_METHOD = getResources().getString(R.string.DATE);
-        adapter = new RecipeAdapter(recipes, recipeListener);
+        adapter = new RecipeAdapter(recipes);
         user = getArguments().getParcelable("user");
 
 
@@ -260,6 +267,7 @@ public class FeedFragment extends Fragment {
         etSearch = (EditText) view.findViewById(R.id.etSearchRecipes);
         rvFeed = (RecyclerView) view.findViewById(R.id.rvFeed);
         rvFeed.setAdapter(adapter);
+
         adapter.clear();
         rvFeed.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
 
