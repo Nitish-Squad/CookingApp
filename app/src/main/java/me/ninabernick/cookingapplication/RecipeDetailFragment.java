@@ -3,6 +3,8 @@ package me.ninabernick.cookingapplication;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -20,8 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -35,7 +41,6 @@ import java.util.List;
 import me.ninabernick.cookingapplication.Location.MapsFragment;
 import me.ninabernick.cookingapplication.models.Comment;
 import me.ninabernick.cookingapplication.models.Recipe;
-import me.ninabernick.cookingapplication.models.User;
 
 public class RecipeDetailFragment extends Fragment {
 
@@ -51,6 +56,7 @@ public class RecipeDetailFragment extends Fragment {
     private ImageView ivSave;
     private RatingBar rbDisplayRating;
     private LinearLayout llComments;
+    private ImageView ivShare;
 
     private ListView lvIngredientList;
     private ArrayList<String> steps;
@@ -123,6 +129,7 @@ public class RecipeDetailFragment extends Fragment {
         llComments = (LinearLayout) view.findViewById(R.id.llComments);
         rbDisplayRating = (RatingBar) view.findViewById(R.id.rbDisplayRating);
         rbDisplayRating.setRating(recipe.getAverageRating().floatValue());
+        ivShare = (ImageView) view.findViewById(R.id.fb_share_button);
 
 
         btStartRecipe = (Button) view.findViewById(R.id.btStartRecipe);
@@ -178,6 +185,29 @@ public class RecipeDetailFragment extends Fragment {
                 }
                 Log.d("saved recipes", user.get("savedRecipes").toString());
 
+
+            }
+        });
+
+        ivShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ParseFile parseFile = recipe.getParseFile("recipeImage");
+                byte[] data = new byte[0];
+                try {
+                    data = parseFile.getData();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length);
+                SharePhoto photo = new SharePhoto.Builder()
+                        .setBitmap(image)
+                        .build();
+                SharePhotoContent content = new SharePhotoContent.Builder()
+                        .addPhoto(photo)
+                        .build();
+
+                ShareDialog.show(getActivity(), content);
 
             }
         });

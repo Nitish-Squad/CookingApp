@@ -39,6 +39,10 @@
                 android:resource="@xml/fileprovider" />
         </provider>
 
+        <provider android:authorities="com.facebook.app.FacebookContentProvider248125599315706"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+
         <activity android:name=".HomeActivity"
             android:windowSoftInputMode="adjustPan">
         </activity>

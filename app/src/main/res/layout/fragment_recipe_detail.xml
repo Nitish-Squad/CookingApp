@@ -121,4 +121,12 @@
         android:layout_marginTop="10dp"
         android:text="Comments" />
 
+    <ImageView
+        android:id="@+id/fb_share_button"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@+id/tvTime"
+        android:layout_toEndOf="@+id/tvTitle"
+        android:src="@drawable/share_4" />
+
 </RelativeLayout>

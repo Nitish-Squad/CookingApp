@@ -17,8 +17,6 @@ import android.view.ViewGroup;
 import com.google.android.gms.maps.GoogleMap;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -104,11 +102,7 @@ public class StoreListFragment extends Fragment {
 
             nearbyPlacesList.addAll(nearbyPlaces);
             Log.d("GooglePlacesReadTask", "onPostExecute Exit");
-<<<<<<< HEAD
-=======
 
-            storeAdapter = new StoreAdapter(nearbyPlacesList);
->>>>>>> 32cf9c04e9027a91c83a1f52cb3bab41066ab8a4
             storeAdapter.notifyDataSetChanged();
 
 
