@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+
 import com.bumptech.glide.request.RequestOptions;
 import com.parse.ParseUser;
 
@@ -57,7 +58,6 @@ public class FriendImageAdapter extends RecyclerView.Adapter<FriendImageAdapter.
         String firstName = name.substring(0, index);
        viewHolder.tvName.setText(firstName);
        Glide.with(context).load(friend.getString("profileImageURL")).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(viewHolder.ivProfileThumb);
-
     }
 
     @Override
