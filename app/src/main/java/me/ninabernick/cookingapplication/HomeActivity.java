@@ -37,6 +37,7 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
     Fragment feedFragment = FeedFragment.newInstance(RECIPE_FEED, ParseUser.getCurrentUser());
     Fragment RecipeDetailFragment;
     Fragment profileFragment = ProfileFragment.newInstance(ParseUser.getCurrentUser());
+    Fragment searchFragment = new SearchFragment();
     Fragment savedRecipeFragment = FeedFragment.newInstance(SAVED_RECIPES, ParseUser.getCurrentUser());
     Fragment createdRecipeFragment = FeedFragment.newInstance(CREATED_RECIPES, ParseUser.getCurrentUser());
     public static BottomNavigationView bottomNavigationView;
@@ -82,6 +83,13 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
                                 fragmentTransactionProfile.replace(R.id.flFragmentContainer, profileFragment);
                                 fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                                 fragmentTransactionProfile.commit();
+                                return true;
+                            case R.id.miSearch:
+                                FragmentTransaction fragmentTransactionSearch = fragmentManager.beginTransaction();
+                                fragmentTransactionSearch.replace(R.id.flFragmentContainer, searchFragment);
+                                fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                fragmentTransactionSearch.commit();
+                                return true;
 
                             default:
                                 return true;

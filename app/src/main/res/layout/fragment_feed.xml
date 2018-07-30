@@ -23,29 +23,7 @@
 
         android:layout_margin="10dp"
         android:text="Filter Recipes"
-        android:textSize="14sp" />
-
-    <EditText
-        android:id="@+id/etSearchRecipes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        android:hint="Search Recipes"
-        android:textSize="10sp"/>
-
-    <ImageView
-        android:id="@+id/ivSearchIcon"
-        android:layout_width="27dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/tvFilterResults"
-        android:layout_alignTop="@+id/tvFilterResults"
-        android:layout_marginBottom="0dp"
-        android:layout_toStartOf="@+id/etSearchRecipes"
-        android:src="@android:drawable/ic_search_category_default" />
+        android:textSize="18sp" />
 
     <Spinner
         android:id="@+id/spSort"
@@ -53,9 +31,10 @@
         android:layout_height="wrap_content"
 
         android:layout_alignTop="@+id/tvFilterResults"
-        android:layout_toRightOf="@id/tvFilterResults"
         android:layout_toLeftOf="@id/ivSearchIcon"
+        android:layout_toRightOf="@id/tvFilterResults"
 
-        android:entries="@array/sorting_methods"/>
+
+        android:entries="@array/sorting_methods" />
 
 </RelativeLayout>

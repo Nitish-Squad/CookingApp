@@ -51,7 +51,7 @@ public class FeedFragment extends Fragment {
     TextView tvFilterRecipes;
     ParseUser user;
     FilterFragment filter = new FilterFragment();
-    EditText etSearch;
+
     Spinner spSort;
     public static final String DATE = "Date Created (Recent to Old)";
     public static final String TIME = "Time (Low to High)";
@@ -62,28 +62,6 @@ public class FeedFragment extends Fragment {
 
     private static final String FEED_TYPE = "feed type";
     private static final int DIALOG_REQUEST_CODE = 20;
-
-
-//
-//    RecipeAdapter.RecipeListener recipeListener = new RecipeAdapter.RecipeListener() {
-//        @Override
-//        public void respond(Recipe recipe, View view) {
-//            Transition changeTransform = TransitionInflater.from(getContext()).
-//                    inflateTransition(R.transition.change_image_transform);
-//            RecipeDetailFragment detailFragment = RecipeDetailFragment.newInstance(recipe);
-//            detailFragment.setSharedElementEnterTransition(changeTransform);
-//
-//            final FragmentManager fragmentManager = getFragmentManager();
-//            FragmentTransaction transaction = fragmentManager.beginTransaction();
-//            transaction.addSharedElement(view, getResources().getString(R.string.RECIPE_IMAGE));
-//
-//
-//            transaction.replace(R.id.flFragmentContainer, detailFragment);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        }
-//    };
-
 
 
     // key determines whether this is a recipe feed or a list of saved recipes, created recipes
@@ -264,7 +242,7 @@ public class FeedFragment extends Fragment {
                 filter.show(ft, "dialog");
             }
         });
-        etSearch = (EditText) view.findViewById(R.id.etSearchRecipes);
+
         rvFeed = (RecyclerView) view.findViewById(R.id.rvFeed);
         rvFeed.setAdapter(adapter);
 
@@ -297,54 +275,6 @@ public class FeedFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
-
-
-
-        // implementation of search
-        etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                filteredRecipes = new ArrayList<>();
-                ArrayList<Recipe> temp = recipes;
-
-                String search = editable.toString();
-                if (search != "") {
-                    for (int i = 0; i < recipes.size(); i++) {
-                        Log.d("text ingredients", recipes.get(i).getTextIngredients().toString());
-                        if (recipes.get(i).getTitle().contains(search) || recipes.get(i).getDescription().contains(search)) {
-                            filteredRecipes.add(recipes.get(i));
-                        }
-                        // have to test indiv. ingredients in arraylist for contains
-                        for (String s : recipes.get(i).getTextIngredients()) {
-                            if (s.contains(search) && !filteredRecipes.contains(recipes.get(i))) {
-                                filteredRecipes.add(recipes.get(i));
-                            }
-                        }
-                    }
-                    adapter.clear();
-                    adapter.addAll(filteredRecipes);
-                }
-                else {
-                    adapter.clear();
-                    adapter.addAll(recipes);
-                }
-
-
 
             }
         });

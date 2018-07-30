@@ -45,6 +45,7 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:${supportLibVersion}"
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'jp.wasabeef:glide-transformations:3.3.0'
     // Glide v4 uses this new annotation processor -- see https://bumptech.github.io/glide/doc/generatedapi.html
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     //facebook
@@ -59,7 +60,6 @@ dependencies {
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:$permissionDispatcherVersion"
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
 
-
     //Butterknife
     implementation 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
@@ -67,7 +67,6 @@ dependencies {
     //Parcelable
     implementation 'org.parceler:parceler-api:1.1.6'
     annotationProcessor 'org.parceler:parceler:1.1.6'
-
 
 
 }

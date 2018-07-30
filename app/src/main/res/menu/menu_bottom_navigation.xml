@@ -10,6 +10,13 @@
         android:icon="@drawable/instagram_home_outline_24"
         app:showAsAction="always" />
     <item
+        android:id="@+id/miSearch"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_search_category_default"
+        android:title="Search"
+        android:iconTint="@android:color/black"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/miCreate"
         android:title="Create"
         android:enabled="true"
