@@ -49,6 +49,7 @@
         <activity android:name=".CreateRecipe.CreateActivity"></activity>
         <activity android:name=".RecipeDetailsActivity" />
         <activity android:name=".FinishedRecipeActivity"/>
+        <activity android:name=".RecipeDetailViewActivity"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
