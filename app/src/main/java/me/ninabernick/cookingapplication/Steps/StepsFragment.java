@@ -1,4 +1,4 @@
-package me.ninabernick.cookingapplication;
+package me.ninabernick.cookingapplication.Steps;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +20,10 @@ import java.lang.reflect.Field;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import me.ninabernick.cookingapplication.CountDownDialog;
+import me.ninabernick.cookingapplication.R;
+import me.ninabernick.cookingapplication.YoutubeVideoActivity;
 
 import static com.parse.Parse.getApplicationContext;
 
