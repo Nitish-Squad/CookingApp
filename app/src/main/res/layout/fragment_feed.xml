@@ -13,26 +13,35 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_margin="10dp"
-        android:layout_below="@id/tvFilterResults" />
+        android:layout_below="@id/tvFilterByTag" />
 
     <TextView
-        android:id="@+id/tvFilterResults"
+        android:id="@+id/tvFilterByTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
 
         android:layout_margin="10dp"
-        android:text="Filter Recipes"
-        android:textSize="18sp" />
+        android:text="Filter By Tags"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvFilterByIngredient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tvFilterByTag"
+        android:layout_toEndOf="@id/tvFilterByTag"
+        android:text="Filter By Ingredient"
+        android:textSize="14sp"/>
 
     <Spinner
         android:id="@+id/spSort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_alignTop="@+id/tvFilterResults"
-        android:layout_toLeftOf="@id/ivSearchIcon"
-        android:layout_toRightOf="@id/tvFilterResults"
+        android:layout_alignTop="@+id/tvFilterByTag"
+
+        android:layout_toEndOf="@id/tvFilterByIngredient"
 
 
         android:entries="@array/sorting_methods" />

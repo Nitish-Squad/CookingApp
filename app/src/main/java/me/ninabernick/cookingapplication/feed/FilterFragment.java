@@ -28,13 +28,11 @@ import me.ninabernick.cookingapplication.feed.FeedFragment;
 public class FilterFragment extends DialogFragment {
     ArrayList<String> tags;
     ArrayList<String> selectedTags;
+    ArrayList<CheckBox> cbTags;
     LinearLayout tagsLayout;
     Button filter;
-    AutoCompleteTextView acIngredientFilter;
-    ImageView ivAddIngredient;
-    LinearLayout ingredientsLayout;
-    ArrayList<AutoCompleteTextView> selectedIngredients;
-    Spinner spSort;
+    Button btClear;
+
 
 
 
@@ -54,6 +52,7 @@ public class FilterFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         tags = new ArrayList<>();
         selectedTags = new ArrayList<>();
+        cbTags = new ArrayList<>();
         tags.addAll(Arrays.asList(getResources().getStringArray(R.array.tags)));
         Log.d("tags", tags.toString());
 
@@ -69,32 +68,13 @@ public class FilterFragment extends DialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setCancelable(true);
-        // set drop down list of ingredients
-//        Spinner spinner = (Spinner) view.findViewById(R.id.spIngredients);
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-//                R.array.ingredients, android.R.layout.simple_spinner_item);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner.setAdapter(adapter);
-
-
-
 
         filter = (Button) view.findViewById(R.id.btFilter);
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("filters selected", selectedTags.toString());
                 FeedFragment.filters.clear();
                 FeedFragment.filters.addAll(selectedTags);
-                FeedFragment.ingredientFilters.clear();
-                for (int i = 0; i < selectedIngredients.size(); i++) {
-                    if (!selectedIngredients.get(i).getText().toString().equals("")) {
-                        FeedFragment.ingredientFilters.add(selectedIngredients.get(i).getText().toString().toLowerCase());
-                    }
-                    else {
-                        FeedFragment.ingredientFilters.clear();
-                    }
-                }
 
                 FeedFragment feed = (FeedFragment) getTargetFragment();
                 if (feed != null) {
@@ -123,35 +103,29 @@ public class FilterFragment extends DialogFragment {
                     }
                 }
             });
+            cbTags.add(cb);
             tagsLayout.addView(cb);
         }
 
-        selectedIngredients = new ArrayList<>();
-
-        // adapter for autocomplete text views
-        final ArrayAdapter<String> ingredientAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.ingredients));
-        acIngredientFilter = view.findViewById(R.id.acIngredient);
-        acIngredientFilter.setAdapter(ingredientAdapter);
-        selectedIngredients.add(acIngredientFilter);
-        ingredientsLayout = (LinearLayout) view.findViewById(R.id.llIngredientFilters);
-
-        ivAddIngredient = view.findViewById(R.id.ivAddIngredient);
-        ivAddIngredient.setOnClickListener(new View.OnClickListener() {
+        btClear = (Button) view.findViewById(R.id.btClear);
+        btClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AutoCompleteTextView newIngredient = new AutoCompleteTextView(getContext());
-                newIngredient.setGravity(View.TEXT_ALIGNMENT_CENTER);
-                newIngredient.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                newIngredient.setAdapter(ingredientAdapter);
-                ingredientsLayout.addView(newIngredient);
-                selectedIngredients.add(newIngredient);
+                for (int i = 0; i < cbTags.size(); i++) {
+                    CheckBox cb = cbTags.get(i);
+                    if (cb.isChecked()) {
+                        cb.setChecked(false);
+                    }
+
+                }
+                selectedTags.clear();
+                FeedFragment.filters.clear();
+                FeedFragment feed = (FeedFragment) getTargetFragment();
+                if (feed != null) {
+                    feed.getRecipes();
+                }
+                dismiss();
             }
         });
-
-
-
     }
-
-
-
 }

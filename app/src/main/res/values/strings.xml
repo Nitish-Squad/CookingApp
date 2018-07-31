@@ -35,20 +35,20 @@
     </string-array>
 
     <string-array name="ingredients">
-        <item>Milk</item>
-        <item>Eggs</item>
-        <item>Flour</item>
-        <item>Butter</item>
-        <item>Sugar</item>
-        <item>Bread</item>
-        <item>Peanut butter</item>
-        <item>Vanilla</item>
-        <item>Tomato Sauce</item>
-        <item>Yogurt</item>
-        <item>Cheese</item>
-        <item>Oats</item>
-        <item>Baking soda</item>
-        <item>Oil</item>
+        <item>milk</item>
+        <item>eggs</item>
+        <item>flour</item>
+        <item>butter</item>
+        <item>sugar</item>
+        <item>bread</item>
+        <item>peanut butter</item>
+        <item>vanilla</item>
+        <item>tomato sauce</item>
+        <item>yogurt</item>
+        <item>cheese</item>
+        <item>oats</item>
+        <item>baking soda</item>
+        <item>oil</item>
     </string-array>
 
     <string-array name="units">

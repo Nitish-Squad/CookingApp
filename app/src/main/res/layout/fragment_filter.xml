@@ -27,57 +27,17 @@
         android:id="@+id/btFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivAddIngredient"
+        android:layout_below="@+id/llTags"
         android:layout_centerHorizontal="true"
         android:text="@string/filterbutton" />
 
-    <TextView
-        android:id="@+id/tvIngredientsFilter"
+    <Button
+        android:id="@+id/btClear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/llTags"
+        android:layout_below="@+id/btFilter"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:text="@string/ingredients_filter"
-        android:textSize="24sp" />
-
-    <ScrollView
-        android:id="@+id/svIngredients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvIngredientsFilter"
-        android:layout_centerHorizontal="true">
-
-        <LinearLayout
-            android:id="@+id/llIngredientFilters"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <AutoCompleteTextView
-                android:id="@+id/acIngredient"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/ingredients_filter_prompt"
-                android:gravity="center"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-
-
-    </ScrollView>
-
-    <ImageView
-        android:id="@+id/ivAddIngredient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_below="@id/svIngredients"
-        android:layout_centerHorizontal="true"
-
-        android:src="@android:drawable/ic_menu_add"
-        android:tint="@android:color/black" />
+        android:text="Clear Filters" />
 
 
 </RelativeLayout>
