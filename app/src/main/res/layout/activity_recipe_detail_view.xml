@@ -110,7 +110,7 @@
         android:layout_height="35dp"
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/ivSaveRecipe"
-        android:src="@drawable/ic_vector_heart_stroke"/>
+        android:src="@drawable/share_4"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"

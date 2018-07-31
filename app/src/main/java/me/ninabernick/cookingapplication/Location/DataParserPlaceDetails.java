@@ -44,6 +44,10 @@ public class DataParserPlaceDetails {
         String weekday_text = "-NA-";
         String open_now = "true";
         String pricelevel = "0";
+        String firstphotoreference = "-NA-";
+        String secondphotoreference = "-NA-";
+        String thirdphotoreference = "-NA-";
+        String fourthphotoreference = "-NA-";
 
         try {
             if(!jPlaceDetails.isNull("name")){
@@ -74,6 +78,32 @@ public class DataParserPlaceDetails {
                 pricelevel = String.valueOf(jPlaceDetails.getString("price_level"));
             }
 
+            if(!jPlaceDetails.isNull("photos")){
+                JSONArray photos = jPlaceDetails.getJSONArray("photos");
+                firstphotoreference = ((JSONObject)photos.get(1)).getString("photo_reference");
+                secondphotoreference = ((JSONObject)photos.get(2)).getString("photo_reference");
+                thirdphotoreference = ((JSONObject)photos.get(3)).getString("photo_reference");
+                fourthphotoreference = ((JSONObject)photos.get(4)).getString("photo_reference");
+
+                /*JSONArray mPhotos = new Photo[photos.length()];
+                for(int i=0;i<photos.length();i++){
+                    mPhotos[i] = new Photo();
+                    place.mPhotos[i].mWidth = ((JSONObject)photos.get(i)).getInt("width");
+                    place.mPhotos[i].mHeight = ((JSONObject)photos.get(i)).getInt("height");
+                    place.mPhotos[i].mPhotoReference = ((JSONObject)photos.get(i)).getString("photo_reference");
+                    JSONArray attributions = ((JSONObject)photos.get(i)).getJSONArray("html_attributions");
+                    place.mPhotos[i].mAttributions = new Attribution[attributions.length()];
+                    for(int j=0;j<attributions.length();j++){
+                        place.mPhotos[i].mAttributions[j] = new Attribution();
+                        place.mPhotos[i].mAttributions[j].mHtmlAttribution = attributions.getString(j);
+                    }
+                }*/
+            }
+
+            hPlaceDetails.put("firstphotoreference", firstphotoreference);
+            hPlaceDetails.put("secondphotoreference", secondphotoreference);
+            hPlaceDetails.put("thirdphotoreference", thirdphotoreference);
+            hPlaceDetails.put("fourthphotoreference", fourthphotoreference);
 
             hPlaceDetails.put("name", name);
             hPlaceDetails.put("pricelevel", pricelevel);

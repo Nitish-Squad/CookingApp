@@ -54,22 +54,9 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
 
         String placeName = store.get("place_name");
         String vicinity = store.get("vicinity");
-        String rating = store.get("rating");
-        String phonenumber = store.get("formatted_phone_number");
-        String price_level =  store.get("price_level");
-        String website = store.get("website");
 
-        Log.i("Store Adapter Test", "Store Website: " + website);
-        Log.i("Store Adapter Test", "Store Phonenumber: " + phonenumber);
-        Log.i("Store Adapter Test", "Store price_level: " + price_level);
-
-
-        viewHolder.tvStoreName.setText(placeName);
+        viewHolder.tvStoreName.setText((i + 1) + ". " + placeName);
         viewHolder.tvStoreLocation.setText(vicinity);
-        viewHolder.tvStoreRating.setText(rating);
-        viewHolder.tvPhonenumber.setText(phonenumber);
-        viewHolder.tvWebsite.setText(website);
-        //Glide.with(context).load(getPhotoUrl(mWidth, mHeight, mPhotoReference)).into(viewHolder.ivStoreImage);
 
     }
 
@@ -80,12 +67,8 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.ivStoreImage) public ImageView ivStoreImage;
         @BindView(R.id.tvStoreName) public TextView tvStoreName;
-        @BindView(R.id.tvStoreRating) public TextView tvStoreRating;
         @BindView(R.id.tvStoreLocation) public TextView tvStoreLocation;
-        @BindView(R.id.tvWebsite) public TextView tvWebsite;
-        @BindView(R.id.tvPhoneNumber) public TextView tvPhonenumber;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -103,15 +86,14 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
                 String id = store.get("id");
                 String placeName = store.get("place_name");
                 String vicinity = store.get("vicinity");
-                String rating = store.get("rating");
-                String phonenumber = store.get("formatted_phone_number");
-                String price_level =  store.get("price_level");
 
                 StoreDetailsFragment storeDetailsFragment = StoreDetailsFragment.newInstance(id);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.textContainer, storeDetailsFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+
+
             }
 
         }

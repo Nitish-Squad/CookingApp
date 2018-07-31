@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import com.google.android.gms.maps.GoogleMap;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,6 +64,7 @@ public class StoreListFragment extends Fragment {
         googlePlacesUrl.append("&radius=" + 10000);
         googlePlacesUrl.append("&type=" + nearbyPlace);
         googlePlacesUrl.append("&sensor=true");
+        googlePlacesUrl.append("&type=" + nearbyPlace);
         googlePlacesUrl.append("&key=" + "AIzaSyCnfJ8Xchn3-XtPkcfbLLRZk8IBLwNkfbA");
         Log.d("getUrl", googlePlacesUrl.toString());
         return (googlePlacesUrl.toString());
@@ -102,6 +105,7 @@ public class StoreListFragment extends Fragment {
             DataParser dataParser = new DataParser();
             List<HashMap<String, String>> nearbyPlaces = dataParser.parse(result);
 
+            nearbyPlacesList.clear();
             nearbyPlacesList.addAll(nearbyPlaces);
             Log.d("GooglePlacesReadTask", "onPostExecute Exit");
 
@@ -137,9 +141,10 @@ public class StoreListFragment extends Fragment {
                         calltoNearbyList();
                         return true;
                     case R.id.rating:
-                        //sortListRating();
+                        calltoProminenceList();
                         return true;
                     case R.id.price:
+                        sortListPrice();
                         return true;
                 }
                 return false;
@@ -147,7 +152,7 @@ public class StoreListFragment extends Fragment {
         });
     }
 
-    public void calltoNearbyList() {
+    public void calltoProminenceList() {
         String url = getUrl(latitude, longitude, "supermarket");
         Object[] DataTransfer = new Object[2];
         DataTransfer[0] = mMap;
@@ -157,14 +162,47 @@ public class StoreListFragment extends Fragment {
         getStorelistData.execute(DataTransfer);
     }
 
-    /*public void sortListRating() {
-        Collections.sort(nearbyPlacesList, new Comparator<HashMap<String, String>>() {
+    public void calltoNearbyList() {
+        String url = getDistanceUrl(latitude, longitude, "supermarket");
+        Object[] DataTransfer = new Object[2];
+        DataTransfer[0] = mMap;
+        DataTransfer[1] = url;
+        Log.d("onClick", url);
+        getStoreList getStorelistData = new getStoreList();
+        getStorelistData.execute(DataTransfer);
+    }
 
+    public void sortListRating() {
+        Collections.sort(nearbyPlacesList, new Comparator<HashMap<String, String>>() {
             public int compare(HashMap<String, String> obj1, HashMap<String, String> obj2) {
-                return Integer.valueOf(Integer.getInteger(obj2.get("rating"))).compareTo(Integer.getInteger(obj1.get("rating")));
+                return Float.valueOf(obj2.get("rating")).compareTo(Float.valueOf(obj1.get("rating")));
             }
         });
         storeAdapter.notifyDataSetChanged();
-    }*/
+    }
+
+    public void sortListPrice() {
+        Collections.sort(nearbyPlacesList, new Comparator<HashMap<String, String>>() {
+            public int compare(HashMap<String, String> obj1, HashMap<String, String> obj2) {
+                return obj2.get("price_level").compareTo(obj1.get("price_level"));
+            }
+        });
+        storeAdapter.notifyDataSetChanged();
+    }
+
+    private String getDistanceUrl(double latitude, double longitude, String nearbyPlace) {
+
+        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        googlePlacesUrl.append("location=" + latitude + "," + longitude);
+        googlePlacesUrl.append("&rankby=distance");
+        googlePlacesUrl.append("&type=" + nearbyPlace);
+        googlePlacesUrl.append("&sensor=true");
+        googlePlacesUrl.append("&type=" + nearbyPlace);
+        googlePlacesUrl.append("&key=" + "AIzaSyCnfJ8Xchn3-XtPkcfbLLRZk8IBLwNkfbA");
+        Log.d("getUrl", googlePlacesUrl.toString());
+        return (googlePlacesUrl.toString());
+    }
+
+
 }
 
