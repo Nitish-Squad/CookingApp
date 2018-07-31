@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.example.mapdemo.permission.MAPS_RECEIVE" />
-
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 
     <application
@@ -38,18 +37,18 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/fileprovider" />
         </provider>
-
-        <provider android:authorities="com.facebook.app.FacebookContentProvider248125599315706"
+        <provider
             android:name="com.facebook.FacebookContentProvider"
-            android:exported="true"/>
+            android:authorities="com.facebook.app.FacebookContentProvider248125599315706"
+            android:exported="true" />
 
-        <activity android:name=".HomeActivity"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-        <activity android:name=".CreateRecipe.CreateActivity"></activity>
+        <activity
+            android:name=".HomeActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".CreateRecipe.CreateActivity" />
         <activity android:name=".RecipeDetailsActivity" />
-        <activity android:name=".FinishedRecipeActivity"/>
-        <activity android:name=".RecipeDetailViewActivity"/>
+        <activity android:name=".FinishedRecipeActivity" />
+        <activity android:name=".RecipeDetailViewActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -71,9 +70,8 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Location.MapsFragment" />
-
+        <activity android:name=".Location.RestaurantActivity" />
         <uses-library
             android:name="com.google.android.maps"
             android:required="true" />
@@ -85,7 +83,8 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".YoutubeVideoActivity"></activity>
+        <activity android:name=".YoutubeVideoActivity" />
+        <activity android:name=".Location.RestaurantActivity"></activity>
     </application>
 
 </manifest>

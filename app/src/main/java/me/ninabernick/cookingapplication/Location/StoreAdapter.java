@@ -98,14 +98,4 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
 
         }
     }
-
-    private String getPhotoUrl(Integer mWidth, Integer mHeight, String photoreference) {
-        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/photo?");
-        googlePlacesUrl.append("maxwidth=" + mWidth);
-        googlePlacesUrl.append("&maxheight=" + mHeight);
-        googlePlacesUrl.append("&photoreference=" + photoreference);
-        googlePlacesUrl.append("&key=" + "AIzaSyCnfJ8Xchn3-XtPkcfbLLRZk8IBLwNkfbA");
-        Log.d("getUrl", googlePlacesUrl.toString());
-        return (googlePlacesUrl.toString());
-    }
 }

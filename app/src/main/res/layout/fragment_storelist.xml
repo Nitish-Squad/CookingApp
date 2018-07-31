@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/simpleStoretv"
+        android:id="@+id/tvTitle"
         android:layout_width="384dp"
         android:layout_height="48dp"
         android:layout_marginStart="5dp"
@@ -31,7 +31,7 @@
         android:layout_width="399dp"
         android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/simpleStoretv"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
         app:menu="@menu/menu_bottom_navigation_maps" />
 
 </android.support.constraint.ConstraintLayout>

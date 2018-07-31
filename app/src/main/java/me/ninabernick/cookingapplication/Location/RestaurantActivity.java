@@ -33,7 +33,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import me.ninabernick.cookingapplication.R;
 
-public class MapsFragment extends FragmentActivity implements OnMapReadyCallback,
+public class RestaurantActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
@@ -50,7 +50,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_restaurant);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -106,15 +106,15 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void showStores() {
-        String Supermarket = "supermarket";
-        String url = getUrl(latitude, longitude, Supermarket);
+        String restaurant = "restaurant";
+        String url = getUrl(latitude, longitude, restaurant);
         Object[] DataTransfer = new Object[2];
         DataTransfer[0] = mMap;
         DataTransfer[1] = url;
         Log.d("onClick", url);
         GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
         getNearbyPlacesData.execute(DataTransfer);
-        Toast.makeText(MapsFragment.this,"Nearby Supermarkets", Toast.LENGTH_LONG).show();
+        Toast.makeText(RestaurantActivity.this,"Nearby Supermarkets", Toast.LENGTH_LONG).show();
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -178,14 +178,14 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-        Toast.makeText(MapsFragment.this,"Your Current Location", Toast.LENGTH_LONG).show();
+        Toast.makeText(RestaurantActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
 
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
 
 
         loadStoreList();
         showStores();
-        Log.i("This is updated", "Stores Updated");
+        Log.i("This is updated", "Restaurant Updated");
 
         //stop location updates
         if (mGoogleApiClient != null) {
@@ -200,11 +200,11 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
     public void loadStoreList() {
         Log.i("Latitute", "Latitute: " + latitude);
         Log.i("Longitute", "Longitude: " + longitude);
-        StoreListFragment storeListFragment = StoreListFragment.newInstance(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        RestaurantListFragment restaurantListFragment = RestaurantListFragment.newInstance(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.textContainer, storeListFragment).commit();
-        Log.i("On Create Called from MapsActivity", "On Create Called from Maps Activity");
+        fragmentManager.beginTransaction().replace(R.id.textContainer, restaurantListFragment).commit();
+        Log.i("On Create Called from Restaurant Activity", "On Create Called from Restaurant Activity");
     }
 
     @Override

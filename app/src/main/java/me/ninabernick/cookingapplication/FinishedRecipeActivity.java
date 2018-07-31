@@ -13,6 +13,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import me.ninabernick.cookingapplication.Location.RestaurantActivity;
 import me.ninabernick.cookingapplication.models.Comment;
 import me.ninabernick.cookingapplication.models.Recipe;
 
@@ -36,6 +37,14 @@ public class FinishedRecipeActivity extends AppCompatActivity{
         btFinishRecipe = (Button) findViewById(R.id.btFinish);
         tvLowRating = (TextView) findViewById(R.id.tvLowRating);
         btFindRestaurants = (Button) findViewById(R.id.btFindRestaurants);
+
+        btFindRestaurants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(FinishedRecipeActivity.this, RestaurantActivity.class);
+                startActivity(i);
+            }
+        });
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
