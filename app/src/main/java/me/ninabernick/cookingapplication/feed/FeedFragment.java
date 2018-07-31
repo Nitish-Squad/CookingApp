@@ -10,17 +10,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -30,11 +24,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import me.ninabernick.cookingapplication.HomeActivity;
+import me.ninabernick.cookingapplication.LoadingRecipeFragment;
 import me.ninabernick.cookingapplication.R;
 
 import me.ninabernick.cookingapplication.models.Recipe;
@@ -49,8 +42,10 @@ public class FeedFragment extends Fragment {
     RecipeAdapter adapter;
     RecyclerView rvFeed;
     TextView tvFilterRecipes;
+    TextView tvFilterByIngredient;
     ParseUser user;
     FilterFragment filter = new FilterFragment();
+    FilterIngredientFragment filterIngredients = new FilterIngredientFragment();
 
     Spinner spSort;
     public static final String DATE = "Date Created (Recent to Old)";
@@ -77,6 +72,12 @@ public class FeedFragment extends Fragment {
 
 
     public void getRecipes(){
+
+        final LoadingRecipeFragment loadingRecipeFragment = new LoadingRecipeFragment();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        loadingRecipeFragment.setTargetFragment(FeedFragment.this, DIALOG_REQUEST_CODE);
+        loadingRecipeFragment.show(ft, "dialog");
         final Recipe.Query recipeQuery = new Recipe.Query();
         // make sure no duplicates
         recipes.clear();
@@ -128,6 +129,7 @@ public class FeedFragment extends Fragment {
 
                     e.printStackTrace();
                 }
+                loadingRecipeFragment.dismiss();
 
 
             }
@@ -231,8 +233,17 @@ public class FeedFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        tvFilterByIngredient = (TextView) view.findViewById(R.id.tvFilterByIngredient);
+        tvFilterByIngredient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-        tvFilterRecipes = (TextView) view.findViewById(R.id.tvFilterResults);
+                filterIngredients.setTargetFragment(FeedFragment.this, DIALOG_REQUEST_CODE);
+                filterIngredients.show(ft, "dialog");
+            }
+        });
+        tvFilterRecipes = (TextView) view.findViewById(R.id.tvFilterByTag);
         tvFilterRecipes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
