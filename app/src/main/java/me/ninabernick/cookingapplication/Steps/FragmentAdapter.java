@@ -1,10 +1,11 @@
-package me.ninabernick.cookingapplication;
+package me.ninabernick.cookingapplication.Steps;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import me.ninabernick.cookingapplication.Steps.StepsFragment;
 import me.ninabernick.cookingapplication.models.Recipe;
 
 public class FragmentAdapter extends FragmentPagerAdapter {

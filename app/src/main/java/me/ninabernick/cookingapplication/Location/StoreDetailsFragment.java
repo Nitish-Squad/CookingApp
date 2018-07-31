@@ -56,7 +56,7 @@ public class StoreDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         id = getArguments().getString("id");
 
-        
+
     }
 
 
