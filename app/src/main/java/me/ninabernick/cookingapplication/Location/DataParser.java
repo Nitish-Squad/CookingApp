@@ -55,9 +55,9 @@ public class DataParser {
         String latitude = "";
         String longitude = "";
         String reference = "";
-        String rating = "0";
+        String rating = "1";
         String formatted_phone_number = "-NA-";
-        String price_level = "0";
+        String price_level = "2";
         String id = "-NA ID-";
 
 
@@ -83,29 +83,6 @@ public class DataParser {
                 id = googlePlaceJson.getString("place_id");
             }
 
-            /*if (!googlePlaceJson.isNull("formatted_phone_number")) {
-                formatted_phone_number = googlePlaceJson.getString("formatted_phone_number");
-                Log.d("From the Data Parser", "From Data Parser, phone number: " + googlePlaceJson.getString("formatted_phone_number"));
-            }
-
-            if (!googlePlaceJson.isNull("website")) {
-                Log.d("What is pulled website", "What is pulled2");
-                website = googlePlaceJson.getString("website");
-            }
-*/
-            /*if(!googlePlaceJson.isNull("photos")){
-                JSONArray photos = googlePlaceJson.getJSONArray("photos");
-                try {
-                    mWidth = ((JSONObject)photos.get(1)).getInt("width");
-                    mHeight = ((JSONObject)photos.get(1)).getInt("height");
-                    mPhotoReference = ((JSONObject)photos.get(1)).getString("photo_reference");
-
-                    Log.d("Print photo", "Print photo attributes: " + mWidth + mHeight + mPhotoReference);
-                } catch (JSONException e1) {
-                    e1.printStackTrace();
-                }
-            }*/
-
             latitude = googlePlaceJson.getJSONObject("geometry").getJSONObject("location").getString("lat");
             longitude = googlePlaceJson.getJSONObject("geometry").getJSONObject("location").getString("lng");
             reference = googlePlaceJson.getString("reference");
@@ -116,10 +93,6 @@ public class DataParser {
             googlePlaceMap.put("formatted_phone_number", formatted_phone_number);
             googlePlaceMap.put("price_level", price_level);
             googlePlaceMap.put("id", id);
-
-            /*googlePlaceMap.put("mWidth", mWidth.toString());
-            googlePlaceMap.put("mHeight", mHeight.toString());
-            googlePlaceMap.put("mPhotoReference", mPhotoReference);*/
 
             googlePlaceMap.put("lat", latitude);
             googlePlaceMap.put("lng", longitude);

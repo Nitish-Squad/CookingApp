@@ -1,5 +1,6 @@
 package me.ninabernick.cookingapplication.Location;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,9 +14,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +26,7 @@ import java.util.List;
 
 import me.ninabernick.cookingapplication.R;
 
-public class RestaurantListFragment extends Fragment {
+public class RestaurantListFragment extends Fragment implements StoreAdapter.MapListener{
 
     GoogleMap mMap;
     double latitude;
@@ -36,15 +37,28 @@ public class RestaurantListFragment extends Fragment {
     RecyclerView rvMyStores;
     BottomNavigationView bottomNavigationView;
 
+    private StoreListFragmentListener listener;
+
+    public interface StoreListFragmentListener {
+        void oneStoreMap(String latitude, String longitude);
+    }
+
     public static RestaurantListFragment newInstance(Double latitude, Double longitude) {
-        RestaurantListFragment storeListFragment = new RestaurantListFragment();
+        RestaurantListFragment restaurantListFragment = new RestaurantListFragment();
         Bundle args = new Bundle();
         args.putDouble("Latitude", latitude);
         args.putDouble("Longitude", longitude);
-        storeListFragment.setArguments(args);
-        return storeListFragment;
+        restaurantListFragment.setArguments(args);
+        return restaurantListFragment;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof StoreListFragmentListener) {
+            this.listener = (StoreListFragmentListener) context;
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +68,7 @@ public class RestaurantListFragment extends Fragment {
         latitude = getArguments().getDouble("Latitude", 0);
 
         nearbyPlacesList = new ArrayList<>();
-        storeAdapter = new StoreAdapter(nearbyPlacesList, getFragmentManager());
+        storeAdapter = new StoreAdapter(nearbyPlacesList, getFragmentManager(), this);
 
     }
 
@@ -133,9 +147,6 @@ public class RestaurantListFragment extends Fragment {
         rvMyStores.setAdapter(storeAdapter);
         calltoNearbyList();
 
-        TextView tvTitle = view.findViewById(R.id.tvTitle);
-        tvTitle.setText("Nearby Restaurants");
-
         bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.top_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -207,6 +218,10 @@ public class RestaurantListFragment extends Fragment {
         return (googlePlacesUrl.toString());
     }
 
+    @Override
+    public void onMapDetailsClicked(String longitude, String latitude) {
+        listener.oneStoreMap(longitude, latitude);
+    }
 
 }
 

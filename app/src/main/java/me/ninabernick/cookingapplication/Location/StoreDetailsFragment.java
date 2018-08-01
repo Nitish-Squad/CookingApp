@@ -33,14 +33,11 @@ public class StoreDetailsFragment extends Fragment {
     String gmurl;
     String open_now;
     String pricelevel;
-    String firstphotoreference;
-    String secondphotoreference;
-    String thirdphotoreference;
-    String fourthphotoreference;
     String [] photoreferences;
 
     ViewPager viewPager;
     CustomSwipeAdapter swipeAdapter;
+
 
 
     public static StoreDetailsFragment newInstance(String id) {
@@ -55,8 +52,6 @@ public class StoreDetailsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         id = getArguments().getString("id");
-
-
     }
 
 

@@ -31,12 +31,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.HashMap;
+
 import me.ninabernick.cookingapplication.R;
 
 public class MapsFragment extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener, StoreListFragment.StoreListFragmentListener{
 
     private GoogleMap mMap;
     double latitude;
@@ -86,7 +88,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        //mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
 
         //Initialize Google Play Services
@@ -172,7 +174,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
         //move map camera
@@ -265,5 +267,22 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
                 return;
             }
         }
+    }
+
+    @Override
+    public void oneStoreMap(String latitude, String longitude) {
+        mMap.clear();
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+        markerOptions.position(latLng);
+        mMap.addMarker(markerOptions);
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+
+        MarkerOptions markerOptionsCL = new MarkerOptions();
+        LatLng latLngCL = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        markerOptionsCL.position(latLngCL);
+        mMap.addMarker(markerOptionsCL);
+        markerOptionsCL.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)).alpha(0.7f);
     }
 }

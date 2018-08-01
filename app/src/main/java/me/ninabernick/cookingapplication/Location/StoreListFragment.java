@@ -1,5 +1,6 @@
 package me.ninabernick.cookingapplication.Location;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +26,7 @@ import java.util.List;
 
 import me.ninabernick.cookingapplication.R;
 
-public class StoreListFragment extends Fragment {
+public class StoreListFragment extends Fragment implements StoreAdapter.MapListener{
 
     GoogleMap mMap;
     double latitude;
@@ -35,6 +37,12 @@ public class StoreListFragment extends Fragment {
     RecyclerView rvMyStores;
     BottomNavigationView bottomNavigationView;
 
+    private StoreListFragmentListener listener;
+
+    public interface StoreListFragmentListener {
+        void oneStoreMap(String latitude, String longitude);
+    }
+
     public static StoreListFragment newInstance(Double latitude, Double longitude) {
         StoreListFragment storeListFragment = new StoreListFragment();
         Bundle args = new Bundle();
@@ -44,6 +52,13 @@ public class StoreListFragment extends Fragment {
         return storeListFragment;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof StoreListFragmentListener) {
+            this.listener = (StoreListFragmentListener) context;
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +68,7 @@ public class StoreListFragment extends Fragment {
         latitude = getArguments().getDouble("Latitude", 0);
 
         nearbyPlacesList = new ArrayList<>();
-        storeAdapter = new StoreAdapter(nearbyPlacesList, getFragmentManager());
+        storeAdapter = new StoreAdapter(nearbyPlacesList, getFragmentManager(), this);
 
     }
 
@@ -141,9 +156,11 @@ public class StoreListFragment extends Fragment {
                         calltoNearbyList();
                         return true;
                     case R.id.rating:
+                        rvMyStores.smoothScrollToPosition(0);
                         calltoProminenceList();
                         return true;
                     case R.id.price:
+                        rvMyStores.smoothScrollToPosition(0);
                         sortListPrice();
                         return true;
                 }
@@ -203,6 +220,10 @@ public class StoreListFragment extends Fragment {
         return (googlePlacesUrl.toString());
     }
 
+    @Override
+    public void onMapDetailsClicked(String longitude, String latitude) {
+        listener.oneStoreMap(longitude, latitude);
+    }
 
 }
 

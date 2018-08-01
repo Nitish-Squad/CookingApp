@@ -36,7 +36,7 @@ import me.ninabernick.cookingapplication.R;
 public class RestaurantActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener, RestaurantListFragment.StoreListFragmentListener {
 
     private GoogleMap mMap;
     double latitude;
@@ -265,5 +265,22 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
                 return;
             }
         }
+    }
+
+    @Override
+    public void oneStoreMap(String latitude, String longitude) {
+        mMap.clear();
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+        markerOptions.position(latLng);
+        mMap.addMarker(markerOptions);
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+
+        MarkerOptions markerOptionsCL = new MarkerOptions();
+        LatLng latLngCL = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        markerOptionsCL.position(latLngCL);
+        mMap.addMarker(markerOptionsCL);
+        markerOptionsCL.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)).alpha(0.7f);
     }
 }

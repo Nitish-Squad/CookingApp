@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 import org.w3c.dom.Text;
@@ -30,10 +31,16 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
     List<HashMap<String, String>> nearbyPlacesList;
     Context context;
     FragmentManager fragmentManager;
+    private MapListener listener;
 
-    public StoreAdapter(List<HashMap<String, String>> nearbyPlacesList, FragmentManager fragmentManager) {
+    public interface MapListener {
+        void onMapDetailsClicked(String longitude, String latitude);
+    }
+
+    public StoreAdapter(List<HashMap<String, String>> nearbyPlacesList, FragmentManager fragmentManager, MapListener listener) {
         this.nearbyPlacesList = nearbyPlacesList;
         this.fragmentManager = fragmentManager;
+        this.listener = listener;
     }
 
     @NonNull
@@ -92,6 +99,9 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
                 fragmentTransaction.replace(R.id.textContainer, storeDetailsFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+
+                listener.onMapDetailsClicked(store.get("lat"), store.get("lng"));
+
 
 
             }
