@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -34,6 +35,8 @@ public class CountDownDialog extends DialogFragment {
         return f;
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_countdowntimer_dialog, container);
@@ -45,6 +48,7 @@ public class CountDownDialog extends DialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getDialog().getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         final int millis = getArguments().getInt("millis");
         int interval = getArguments().getInt("interval");
         CountDownTimer gameTimer = new CountDownTimer(millis, interval) {

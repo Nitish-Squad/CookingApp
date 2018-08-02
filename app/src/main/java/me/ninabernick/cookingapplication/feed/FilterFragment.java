@@ -43,6 +43,12 @@ public class FilterFragment extends DialogFragment {
         // Make sure not to add arguments to the constructor
         // Use `newInstance` instead as shown below
     }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getDialog().getWindow()
+                .getAttributes().windowAnimations = R.style.DialogAnimation;
+    }
 
 
 

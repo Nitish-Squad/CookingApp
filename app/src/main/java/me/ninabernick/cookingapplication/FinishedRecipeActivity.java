@@ -68,7 +68,7 @@ public class FinishedRecipeActivity extends AppCompatActivity{
                     recipe.addRating(rating);
                     recipe.updateAverageRating();
                 }
-                if (etLeaveComment.getText() != null) {
+                if (etLeaveComment.getText().equals("")) {
                     Comment comment = new Comment();
                     comment.setText(etLeaveComment.getText().toString());
                     comment.setUser(ParseUser.getCurrentUser());

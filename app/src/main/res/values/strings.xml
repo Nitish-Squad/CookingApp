@@ -63,6 +63,47 @@
         <item>oz</item>
     </string-array>
 
+    // parallel array with definitions--make sure to access a term and its definition with the same index
+    <string-array name="cooking_terms">
+        <item>al dente</item>
+        <item>baste</item>
+        <item>broil</item>
+        <item>caramelize</item>
+        <item>cream</item>
+        <item>dice</item>
+        <item>fold</item>
+        <item>marinate</item>
+        <item>mince</item>
+        <item>poach</item>
+        <item>reduce</item>
+        <item>saute</item>
+        <item>sear</item>
+        <item>stir-fry</item>
+        <item>whip</item>
+        <item>score</item>
+        <item>pare</item>
+    </string-array>
+
+    <string-array name="definitions">
+        <item>Italian term used to describe pasta that is cooked until it offers a slight resistance to the bite.</item>
+        <item>To moisten foods during cooking with pan drippings or special sauce to add flavor and prevent drying.</item>
+        <item>To cook under strong, direct heat.</item>
+        <item>To heat sugar in order to turn it brown and give it a special taste.</item>
+        <item>To beat ingredients, usually sugar and a fat, until smooth and fluffy.</item>
+        <item>To cut food into very small (1/8-to 1/4-inch) cubes.</item>
+        <item>To combine light ingredients such as whipped cream or beaten egg whites with a heavier mixture, using a gentle over-and-under motion, usually with a rubber spatula.</item>
+        <item>To soak in a flavored liquid; usually refers to meat, poultry, or fish.</item>
+        <item>To cut into tiny pieces, usually with a knife.</item>
+        <item>To cook gently over very low heat in barely simmering liquid just to cover.</item>
+        <item>To thicken a liquid and concentrate its flavor by boiling to reduce volume.</item>
+        <item>To cook food in a small amount of fat over relatively high heat.</item>
+        <item>To brown very quickly by intense heat. </item>
+        <item>To quickly cook small pieces of food over high heat, stirring constantly.</item>
+        <item>To beat food with a whisk or mixer to incorporate air and produce volume.</item>
+        <item>To cut narrow grooves or gashes partway through the outer surface of food.</item>
+        <item>To remove the outermost skin of a fruit or vegetable.</item>
+    </string-array>
+
     //UI element text displays
     <string name="filterbutton">Filter Recipes</string>
     <string name="ingredients_filter">Need to get rid of some ingredients?</string>

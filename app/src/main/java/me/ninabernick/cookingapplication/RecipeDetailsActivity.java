@@ -18,7 +18,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     FragmentAdapter fAdapter;
     ViewPager viewPager;
-    Recipe recipe;
+    public static Recipe recipe;
     TextView title;
 
 
