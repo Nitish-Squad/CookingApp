@@ -64,7 +64,7 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.miFeed:
-                                supportFinishAfterTransition();
+                                //supportFinishAfterTransition();
                                 FragmentTransaction fragmentTransactionFeed = fragmentManager.beginTransaction();
                                 fragmentTransactionFeed.replace(R.id.flFragmentContainer, feedFragment);
                                 fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
