@@ -8,15 +8,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
-
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseUser;
-
-import java.util.List;
 
 import me.ninabernick.cookingapplication.CreateRecipe.BasicInfoFragment;
 import me.ninabernick.cookingapplication.feed.FeedFragment;

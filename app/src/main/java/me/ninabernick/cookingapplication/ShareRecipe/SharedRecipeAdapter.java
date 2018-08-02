@@ -12,10 +12,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.parse.ParseUser;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.ninabernick.cookingapplication.R;
 import me.ninabernick.cookingapplication.RecipeDetailViewActivity;
 import me.ninabernick.cookingapplication.models.Recipe;
@@ -59,6 +61,7 @@ public class SharedRecipeAdapter extends RecyclerView.Adapter<SharedRecipeAdapte
         viewHolder.ratingBarFeed.setRating(recipe.getAverageRating().floatValue());
         Glide.with(context)
                 .load(recipe.getrecipeImage().getUrl())
+                .apply(new RequestOptions().transforms(new RoundedCornersTransformation(10, 10)))
                 .into(viewHolder.ivImageThumbnail);
 
     }

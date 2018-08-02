@@ -24,7 +24,7 @@
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
-    
+
 
     <style name="default_font_bold">
         <item name="android:textSize">14sp</item>

@@ -201,8 +201,6 @@ public class FeedFragment extends Fragment {
                         //objects.get(t).deleteInBackground();
                     }
 
-
-
                     NotifyShareDialog notifyRecipeDialog = NotifyShareDialog.newInstance(shared_recipes);
                     notifyRecipeDialog.show(getFragmentManager(), "fragment_share_notify");
 
@@ -294,7 +292,7 @@ public class FeedFragment extends Fragment {
 
 
         getRecipesShared();
-        
+
         tvFilterRecipes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
