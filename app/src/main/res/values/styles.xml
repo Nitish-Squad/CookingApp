@@ -7,9 +7,38 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">14sp</item>
+
     </style>
 
+    <style name="default_font_medium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
 
+    <style name="default_font_large">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+    
+
+    <style name="default_font_bold">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="cursive_font_medium">
+        <item name="android:fontFamily">@font/sofia</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 
     <style name="PriceRatingBar" parent="Widget.AppCompat.RatingBar">
         <item name="android:progressDrawable">@drawable/pricecustom_ratingbar</item>

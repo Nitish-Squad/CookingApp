@@ -3,12 +3,16 @@ package me.ninabernick.cookingapplication.profile;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +31,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
 import me.ninabernick.cookingapplication.R;
 import me.ninabernick.cookingapplication.models.Recipe;
 
@@ -132,6 +137,7 @@ public class ProfileFragment extends Fragment {
         rvFriends.setAdapter(adapter);
         rvFriends.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
+
         savedRecipesText = new ArrayList<>();
         if (user.<String>getList("savedRecipes") != null) {
             savedRecipesText.addAll(user.<String>getList("savedRecipes"));
@@ -159,10 +165,14 @@ public class ProfileFragment extends Fragment {
         rvSavedRecipes = (RecyclerView) view.findViewById(R.id.rvSavedRecipes);
         rvSavedRecipes.setAdapter(savedRecipeAdapter);
         rvSavedRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(rvSavedRecipes);
+        rvSavedRecipes.setItemAnimator(new SlideInRightAnimator());
         getSavedRecipes();
         rvCreatedRecipes = (RecyclerView) view.findViewById(R.id.rvCreatedRecipes);
         rvCreatedRecipes.setAdapter(createdRecipeAdapter);
         rvCreatedRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        snapHelper.attachToRecyclerView(rvCreatedRecipes);
         getRecipesCreated();
     }
 

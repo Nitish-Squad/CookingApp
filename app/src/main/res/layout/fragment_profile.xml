@@ -7,108 +7,139 @@
     android:layout_margin="10dp"
     tools:context=".profile.ProfileFragment">
 
-
-    <ImageView
-        android:id="@+id/ivProfileImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:src="@android:color/darker_gray" />
-
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
-        android:text="Name"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/tvSavedRecipes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/rlFriends"
-        android:drawableRight="@android:drawable/ic_menu_more"
-        android:gravity="center"
-        android:text="Saved Recipes" />
-
-    <TextView
-        android:id="@+id/tvCreatedRecipes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/rlSavedRecipes"
-        android:drawableRight="@android:drawable/ic_menu_more"
-        android:gravity="center"
-        android:text="Created Recipes" />
-
-    <TextView
-        android:id="@+id/tvFriends"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:text="Friends" />
-
     <RelativeLayout
-        android:id="@+id/rlFriends"
         android:layout_width="match_parent"
-        android:layout_height="125dp"
-
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvFriends"
+        android:id="@+id/rlProfile"
+        android:layout_alignParentTop="true">
 
-        android:layout_marginEnd="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp">
+        <ImageView
+            android:id="@+id/ivProfileImage"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:src="@android:color/darker_gray" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvFriends"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-
-
-
-    <RelativeLayout
-        android:id="@+id/rlSavedRecipes"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvSavedRecipes"
-        >
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvSavedRecipes"
+        <TextView
+            android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+
+            android:layout_centerInParent="true"
+            android:text="Name"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/rlFriendsEncapsulator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rlProfile"
+        >
+
+        <TextView
+            android:id="@+id/tvFriends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="Friends" />
+
+        <RelativeLayout
+            android:id="@+id/rlFriends"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tvFriends"
+
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvFriends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rlFriendsEncapsulator"
+        android:id="@+id/rlSavedRecipesEncapsulator"
+        >
+        <TextView
+            android:id="@+id/tvSavedRecipes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:text="Saved Recipes" />
+
+        <RelativeLayout
+            android:id="@+id/rlSavedRecipes"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tvSavedRecipes"
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvSavedRecipes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </RelativeLayout>
+
     </RelativeLayout>
 
 
 
     <RelativeLayout
-        android:id="@+id/rlCreatedRecipes"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvCreatedRecipes"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlSavedRecipesEncapsulator"
         >
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvCreatedRecipes"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tvCreatedRecipes"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-             />
+            android:layout_alignParentStart="true"
+
+            android:gravity="center"
+            android:text="Created Recipes" />
+        <RelativeLayout
+            android:id="@+id/rlCreatedRecipes"
+            android:layout_width="match_parent"
+            android:layout_below="@id/tvCreatedRecipes"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvCreatedRecipes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </RelativeLayout>
+
     </RelativeLayout>
+
 
 
 </RelativeLayout>
