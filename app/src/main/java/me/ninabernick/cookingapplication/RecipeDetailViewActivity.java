@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -31,6 +32,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.ninabernick.cookingapplication.Location.MapsFragment;
 import me.ninabernick.cookingapplication.ShareRecipe.ShareRecipeDialog;
 import me.ninabernick.cookingapplication.models.Comment;
@@ -111,7 +113,10 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
         ivShare = (ImageView) findViewById(R.id.fb_share_button);
 
 
-        Glide.with(RecipeDetailViewActivity.this).load(recipe.getrecipeImage().getUrl()).into(ivImage);
+        Glide.with(RecipeDetailViewActivity.this)
+                .load(recipe.getrecipeImage().getUrl())
+                .apply(new RequestOptions().transforms(new RoundedCornersTransformation(10, 10)))
+                .into(ivImage);
         ivSave = (ImageView) findViewById(R.id.ivSaveRecipe);
         if (!hasSaved(ParseUser.getCurrentUser(), recipe)) {
             ivSave.setImageResource(R.drawable.ic_vector_heart_stroke);
