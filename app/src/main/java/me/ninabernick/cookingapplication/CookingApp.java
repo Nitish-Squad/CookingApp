@@ -8,6 +8,7 @@ import com.parse.ParseObject;
 
 import me.ninabernick.cookingapplication.models.Comment;
 import me.ninabernick.cookingapplication.models.Recipe;
+import me.ninabernick.cookingapplication.models.SharedRecipe;
 
 public class CookingApp extends Application {
 
@@ -20,6 +21,8 @@ public class CookingApp extends Application {
         // registration of subclass below (in our case, should be recipe)
         ParseObject.registerSubclass(Recipe.class);
         ParseObject.registerSubclass(Comment.class);
+        ParseObject.registerSubclass(SharedRecipe.class);
+
 
         final Parse.Configuration configuration = new Parse.Configuration.Builder(this)
                 .applicationId("cooking-guide-application")
