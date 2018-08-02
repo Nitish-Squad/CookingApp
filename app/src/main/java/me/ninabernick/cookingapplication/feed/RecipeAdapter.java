@@ -1,10 +1,13 @@
 package me.ninabernick.cookingapplication.feed;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Rating;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +21,12 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.ninabernick.cookingapplication.HomeActivity;
 import me.ninabernick.cookingapplication.R;
 import me.ninabernick.cookingapplication.RecipeDetailViewActivity;
 import me.ninabernick.cookingapplication.models.Recipe;
+
+import static me.ninabernick.cookingapplication.R.string.TRANS_RECIPEIMAGE;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder>{
     Context context;
@@ -83,6 +89,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         public TextView tvTime;
         public TextView tvDescription;
         public RatingBar rating;
+        private final Context context;
 
         RecipeListener listener;
 
@@ -96,6 +103,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
             rating = (RatingBar) itemView.findViewById(R.id.ratingBarFeed);
             itemView.setOnClickListener(this);
+            context = itemView.getContext();
         }
 
         @Override
@@ -103,7 +111,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             if (getAdapterPosition() != RecyclerView.NO_POSITION) {
                 Intent i = new Intent(view.getContext(), RecipeDetailViewActivity.class);
                 i.putExtra("recipe", recipes.get(getAdapterPosition()));
-                view.getContext().startActivity(i);
+                Pair<View, String> p1 = Pair.create((View)ivThumbnail, context.getResources().getString(R.string.TRANS_RECIPEIMAGE));
+                Pair<View, String> p3 = Pair.create((View)tvTitle, context.getResources().getString(R.string.TRANS_TITLE));
+                Pair<View, String> p4 = Pair.create((View)tvDescription, context.getResources().getString(R.string.TRANS_DESCRIP));
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation((Activity)context, p1, p3, p4);
+                context.startActivity(i, options.toBundle());
             }
 
         }

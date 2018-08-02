@@ -15,8 +15,11 @@
     <string name="RATING">Rating (High to Low)</string>
 
     // transition elements
-    <string name="RECIPE_IMAGE">recipe image</string>
-    <string name="TITLE">title</string>
+    <string name="TRANS_RECIPEIMAGE">recipeimage</string>
+    <string name="TRANS_TITLE">title</string>
+    <string name="TRANS_DESCRIP">description</string>
+    <string name="MAPS_TRANS_NAME">store_name</string>
+    <string name="MAPS_TRANS_LOCATION">store_location</string>
 
 
     <string-array name="tags">

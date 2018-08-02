@@ -65,29 +65,6 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
     public static final String RECIPE_KEY = "recipe";
 
 
-//    public static RecipeDetailFragment newInstance(Recipe recipe) {
-//        RecipeDetailFragment detailFragment = new RecipeDetailFragment();
-//        Bundle args = new Bundle();
-//        args.putParcelable(RECIPE_KEY, recipe);
-//
-//        detailFragment.setArguments(args);
-//        return detailFragment;
-//    }
-
-    // This event fires 1st, before creation of fragment or any views
-    // The onAttach method is called when the Fragment instance is associated with an Activity.
-    // This does not mean the Activity is fully initialized.
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof Activity){
-//            this.listener = (FragmentActivity) context;
-//        }
-//    }
-
-    // This event fires 2nd, before views are created for the fragment
-    // The onCreate method is called when the Fragment instance is being created, or re-created.
-    // Use onCreate for any standard setup that does not require the activity to be fully created
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

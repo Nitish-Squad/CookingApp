@@ -19,6 +19,7 @@
 
     <TextView
         android:id="@+id/tvStoreName"
+        android:transitionName="@string/MAPS_TRANS_NAME"
         android:layout_width="381dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
@@ -32,6 +33,7 @@
 
     <TextView
         android:id="@+id/tvStoreLocation"
+        android:transitionName="@string/MAPS_TRANS_LOCATION"
         android:layout_width="176dp"
         android:layout_height="57dp"
         android:layout_marginStart="15dp"

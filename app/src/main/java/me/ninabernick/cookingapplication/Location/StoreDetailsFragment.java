@@ -1,12 +1,15 @@
 package me.ninabernick.cookingapplication.Location;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +55,15 @@ public class StoreDetailsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         id = getArguments().getString("id");
+
+        Transition changeTransform = TransitionInflater.from(getContext()).
+                inflateTransition(R.transition.change_image_transform);
+        Transition explodeTransform = TransitionInflater.from(getContext()).
+                inflateTransition(android.R.transition.explode);
+
+        // Setup exit transition on first fragment
+        this.setSharedElementReturnTransition(changeTransform);
+        this.setExitTransition(explodeTransform);
     }
 
 
@@ -110,8 +122,6 @@ public class StoreDetailsFragment extends Fragment {
             gmurl = nearbyPlace.get("gmurl");
             open_now = nearbyPlace.get("open_now");
             pricelevel = nearbyPlace.get("pricelevel");
-
-
             photoreferences = new String[] { nearbyPlace.get("firstphotoreference"), nearbyPlace.get("secondphotoreference"), nearbyPlace.get("thirdphotoreference"), nearbyPlace.get("fourthphotoreference") };
 
 
@@ -126,7 +136,8 @@ public class StoreDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
-        return inflater.inflate(R.layout.fragment_storedetails, parent, false);
+        View view = inflater.inflate(R.layout.fragment_storedetails, parent, false);
+        return view;
     }
 
     @Override
@@ -141,8 +152,6 @@ public class StoreDetailsFragment extends Fragment {
         placesTask.execute(DataTransfer);
 
     }
-
-
 
     public void setViewHolders(View view) {
         TextView tvStoreName = view.findViewById(R.id.tvStoreName);
