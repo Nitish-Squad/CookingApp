@@ -4,26 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+
     tools:context=".RecipeDetailViewActivity">
+    <include
+        layout="@layout/toolbar_main"
+        android:id="@+id/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
     <ImageView
         android:id="@+id/ivRecipeImage"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_below="@id/tvTitle"
-        android:layout_marginTop="10dp"
-        android:transitionName="@string/TRANS_RECIPEIMAGE"
+        android:layout_below="@id/toolbar_main"
+        android:layout_margin="10dp"
         android:layout_toEndOf="@+id/lvIngredients"
-        android:src="@android:color/darker_gray" />
+        android:src="@android:color/darker_gray"
+        android:transitionName="@string/TRANS_RECIPEIMAGE" />
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="157dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/ivRecipeImage"
-        android:layout_alignTop="@id/tvIngredientHeader"
+        android:layout_alignStart="@id/ivRecipeImage"
+        android:layout_below="@id/ivRecipeImage"
+        android:layout_marginBottom="5dp"
+        android:layout_toStartOf="@id/fb_share_button"
         android:text="Title"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -34,7 +41,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/ivRecipeImage"
-        android:layout_below="@+id/ivRecipeImage"
+        android:layout_below="@+id/rbDisplayRating"
+        android:layout_marginBottom="5dp"
         android:text="Time" />
 
     <TextView
@@ -42,8 +50,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/toolbar_main"
+
         android:layout_marginStart="22dp"
+        android:layout_marginTop="10dp"
         android:text="@string/IngredientHeader" />
 
     <ListView
@@ -62,17 +72,20 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/ivRecipeImage"
         android:layout_below="@+id/tvTime"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
         android:text="Description"
-        android:transitionName="@string/TRANS_DESCRIP"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:transitionName="@string/TRANS_DESCRIP" />
 
     <ImageView
         android:id="@+id/ivSaveRecipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="5dp"
+        android:layout_below="@+id/ivRecipeImage"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:src="@drawable/ic_vector_heart_stroke" />
 
     <RatingBar
@@ -80,8 +93,9 @@
         style="@android:style/Widget.DeviceDefault.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivRecipeImage"
-        android:layout_toEndOf="@+id/tvTime" />
+        android:layout_below="@+id/tvTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp" />
 
     <LinearLayout
         android:id="@+id/llComments"
@@ -104,9 +118,10 @@
         android:id="@+id/fb_share_button"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@+id/tvTitle"
+        android:layout_marginLeft="10dp"
         android:layout_toStartOf="@+id/ivSaveRecipe"
-        android:src="@drawable/share_4"/>
+        android:src="@drawable/share_4" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"

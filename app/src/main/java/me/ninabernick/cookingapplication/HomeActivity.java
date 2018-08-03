@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.parse.ParseUser;
 
@@ -41,6 +42,14 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (bottomNavigationView.getSelectedItemId() != R.id.miFeed) {
+                    bottomNavigationView.setSelectedItemId(R.id.miFeed);
+                }
+            }
+        });
 
         recipe_to_add = new Recipe();
 
