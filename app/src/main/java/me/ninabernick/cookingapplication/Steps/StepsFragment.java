@@ -5,25 +5,36 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.transition.Fade;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import me.ninabernick.cookingapplication.CountDownDialog;
+import me.ninabernick.cookingapplication.StepClickInfoDialog;
 import me.ninabernick.cookingapplication.R;
+import me.ninabernick.cookingapplication.RecipeDetailsActivity;
 import me.ninabernick.cookingapplication.YoutubeVideoActivity;
+import me.ninabernick.cookingapplication.models.Recipe;
 
 import static com.parse.Parse.getApplicationContext;
 
@@ -33,6 +44,11 @@ public class StepsFragment extends Fragment {
     private String time;
     private String icon;
     private String step;
+    private Recipe recipe;
+    private ArrayList<JSONObject> jsonIngredients;
+    private ArrayList<String> cookingTerms;
+    private ArrayList<String> termDefinitions;
+    private static final int DIALOG_REQUEST_CODE = 20;
 
     public static StepsFragment newInstance(int stepnumber, String time, String url, String stepdetails) {
         StepsFragment step = new StepsFragment();
@@ -52,10 +68,16 @@ public class StepsFragment extends Fragment {
         time = getArguments().getString("time");
         icon = getArguments().getString("icon");
         step = getArguments().getString("stepdetails");
+        recipe = RecipeDetailsActivity.recipe;
+        jsonIngredients = new ArrayList<>();
+        cookingTerms = new ArrayList<>();
+        termDefinitions = new ArrayList<>();
+        cookingTerms.addAll(Arrays.asList(getResources().getStringArray(R.array.cooking_terms)));
+        termDefinitions.addAll(Arrays.asList(getResources().getStringArray(R.array.definitions)));
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_steps, container, false);
 
@@ -119,6 +141,15 @@ public class StepsFragment extends Fragment {
             }
         });
 
+        // create list of json object ingredients that will be used to set clickables
+        for (int i = 0; i < recipe.getIngredients().size(); i++) {
+            try {
+                JSONObject json = new JSONObject(recipe.getIngredients().get(i));
+                jsonIngredients.add(json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         /*
          * Below is the code that sets up the variable timer for each step, it attempts to go
@@ -131,6 +162,8 @@ public class StepsFragment extends Fragment {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(step);
         Boolean match_found = matcher.matches();
+
+        SpannableString ss = new SpannableString(step);
 
 
         if (match_found) {
@@ -171,8 +204,8 @@ public class StepsFragment extends Fragment {
                 unit_of_time = false;
             }
 
-            SpannableString ss = new SpannableString(step);
 
+            //SpannableString ss = new SpannableString(step);
 
             ClickableSpan clickableSpan = new ClickableSpan() {
                 @Override
@@ -213,7 +246,74 @@ public class StepsFragment extends Fragment {
         // TextView tvStep = (TextView) view.findViewById(R.id.tvInstruct);
         // tvStep.setText(step);
 
+        // search through step text and find instances of ingredient to create a popup
+        for (int i = 0; i < recipe.getTextIngredients().size(); i++) {
+            final String ingredient = recipe.getTextIngredients().get(i);
+            if (step.contains(ingredient)) {
+                Log.d("ingredient", ingredient);
+
+
+                ClickableSpan span = new ClickableSpan() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            StepClickInfoDialog dialog = StepClickInfoDialog.newInstance(ingredient, getAmountOfIngredient(ingredient));
+                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            dialog.setTargetFragment(StepsFragment.this, DIALOG_REQUEST_CODE);
+                            dialog.setEnterTransition(new Fade());
+                            dialog.setExitTransition(new Fade());
+                            dialog.show(ft, "dialog");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                int index = step.indexOf(ingredient);
+                Log.d("index", Integer.toString(index));
+                ss.setSpan(span, index, index+ingredient.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+                TextView textView = (TextView) view.findViewById(R.id.tvInstruct);
+                textView.setText(ss);
+                textView.setMovementMethod(LinkMovementMethod.getInstance());
+                textView.setHighlightColor(Color.TRANSPARENT);
+            }
+        }
+
+        // search through step text for cooking terms
+        for (int i = 0; i < cookingTerms.size(); i++) {
+            final String term = cookingTerms.get(i);
+            final String definition = termDefinitions.get(i);
+            if (step.contains(term)) {
+                Log.d("term", term);
+                ClickableSpan span = new ClickableSpan() {
+                    @Override
+                    public void onClick(View view) {
+                        StepClickInfoDialog dialog = StepClickInfoDialog.newInstance(term, definition);
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        dialog.setTargetFragment(StepsFragment.this, DIALOG_REQUEST_CODE);
+                        dialog.show(ft, "dialog");
+                    }
+                };
+                int index = step.indexOf(term);
+                ss.setSpan(span, index, index + term.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+                TextView textView = (TextView) view.findViewById(R.id.tvInstruct);
+                textView.setText(ss);
+                textView.setMovementMethod(LinkMovementMethod.getInstance());
+                textView.setHighlightColor(Color.TRANSPARENT);
+            }
+        }
+
         return view;
+    }
+
+    public String getAmountOfIngredient(String ingredient) throws JSONException {
+        for (int i = 0; i < jsonIngredients.size(); i++) {
+            JSONObject jsonIngredient = jsonIngredients.get(i);
+            if (jsonIngredient.getString("name").equals(ingredient)) {
+                return (jsonIngredient.getString("quantity") + " " + jsonIngredient.getString("unit"));
+            }
+
+        }
+        return null;
     }
 
     public static int getResId(String resName, Class<?> c) {

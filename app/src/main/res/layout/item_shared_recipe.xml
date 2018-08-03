@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    tools:context=".ShareRecipe.NotifyShareDialog">
+
+    <TextView
+        android:id="@+id/tvSharingUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="User who shared this"
+        android:textAlignment="center" />
+
+    <ImageView
+        android:id="@+id/ivImageThumbnail"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/tvSharingUser"
+        android:layout_centerHorizontal="true"
+         />
+
+
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivImageThumbnail"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:text="Title"
+        android:textAlignment="center"
+        android:textStyle="bold"
+         />
+
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ratingBarFeed"
+        android:layout_centerHorizontal="true"
+        android:text="Recipe Description"
+        android:textAlignment="center" />
+
+    <RatingBar
+        android:id="@+id/ratingBarFeed"
+        style="@android:style/Widget.DeviceDefault.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDescription"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Time"
+        android:textSize="10sp" />
+
+</RelativeLayout>

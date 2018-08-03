@@ -46,6 +46,12 @@ public class FilterIngredientFragment extends DialogFragment {
 
 
     }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getDialog().getWindow()
+                .getAttributes().windowAnimations = R.style.DialogAnimation;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

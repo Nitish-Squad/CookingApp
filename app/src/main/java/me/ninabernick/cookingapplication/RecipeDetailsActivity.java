@@ -20,7 +20,7 @@ public class RecipeDetailsActivity extends AppCompatActivity implements SwipeFin
 
     FragmentAdapter fAdapter;
     ViewPager viewPager;
-    Recipe recipe;
+    public static Recipe recipe;
     TextView title;
 
 

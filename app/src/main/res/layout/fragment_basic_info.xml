@@ -52,7 +52,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/ivRecipeImage"
                     android:layout_below="@+id/ivRecipeImage"
-                    android:text="Take" />
+                    android:text="Take"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:id="@+id/btnChoosePhoto"
@@ -60,7 +61,8 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/etDescription"
                     android:layout_alignEnd="@+id/ivRecipeImage"
-                    android:text="Choose" />
+                    android:text="Choose"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <EditText
                     android:id="@+id/etHours"
@@ -79,7 +81,8 @@
                     android:layout_below="@+id/ivAddTag"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:text="Next" />
+                    android:text="Next"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <EditText
                     android:id="@+id/etMinutes"
@@ -130,7 +133,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="-72dp"
                     android:src="@android:drawable/ic_menu_add"
-                    android:tint="@android:color/black" />
+                    android:tint="@android:color/black"
+                    style="?android:attr/borderlessButtonStyle"/>
 
 
         </RelativeLayout>

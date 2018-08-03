@@ -38,7 +38,7 @@
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/steps"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvSteps"
                 android:layout_marginLeft="10dp"
@@ -55,7 +55,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/steps"
                 android:layout_centerHorizontal="true"
-                android:text="Add Ingredient" />
+                android:text="Add Ingredient"
+                style="?android:attr/borderlessButtonStyle"/>
 
             <Button
                 android:id="@+id/btnNext"
@@ -63,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btnAdd"
                 android:layout_centerHorizontal="true"
-                android:text="Next" />
+                android:text="Next"
+                style="?android:attr/borderlessButtonStyle"/>
 
 
 

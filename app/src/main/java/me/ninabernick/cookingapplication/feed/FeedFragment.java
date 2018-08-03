@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,8 +28,9 @@ import java.util.List;
 import me.ninabernick.cookingapplication.HomeActivity;
 import me.ninabernick.cookingapplication.LoadingRecipeFragment;
 import me.ninabernick.cookingapplication.R;
-
+import me.ninabernick.cookingapplication.ShareRecipe.NotifyShareDialog;
 import me.ninabernick.cookingapplication.models.Recipe;
+import me.ninabernick.cookingapplication.models.SharedRecipe;
 
 
 public class FeedFragment extends Fragment {
@@ -57,6 +57,8 @@ public class FeedFragment extends Fragment {
 
     private static final String FEED_TYPE = "feed type";
     private static final int DIALOG_REQUEST_CODE = 20;
+
+    public List<SharedRecipe> shared_recipes = new ArrayList<>();
 
 
     // key determines whether this is a recipe feed or a list of saved recipes, created recipes
@@ -169,6 +171,47 @@ public class FeedFragment extends Fragment {
 
         }
     }
+
+    public void getRecipesShared() {
+
+        ParseQuery<SharedRecipe> query = ParseQuery.getQuery(SharedRecipe.class);
+        query.include("sharedUser");
+        query.include("sharingUser");
+        query.include("recipeShared");
+        query.whereEqualTo("sharedUser", user);
+        query.findInBackground(new FindCallback<SharedRecipe>() {
+            @Override
+            public void done(List<SharedRecipe> objects, ParseException e) {
+                if ((objects != null) && (e == null)) {
+                    // gets rid of previous shared recipes
+                    shared_recipes.clear();
+                    for (int t = 0; t < objects.size(); t++) {
+                        shared_recipes.add(objects.get(t));
+
+                        /*
+                         * For testing purposes, the following line is commented out. In actual app
+                         * these shared recipes should be deleted after the user is notified that
+                         * the recipe has been shared. So, the shared recipes are deleted but since
+                         * the shared recipes were retrieved and their data was saved they should
+                         * still display in the screen and not be lost. They are only lost if the
+                         * dialogue is exited from. Once exited those "shared" recipes are lost
+                         * and cannot be retrieved.
+                         */
+                        
+                        //objects.get(t).deleteInBackground();
+                    }
+
+                    NotifyShareDialog notifyRecipeDialog = NotifyShareDialog.newInstance(shared_recipes);
+                    notifyRecipeDialog.show(getFragmentManager(), "fragment_share_notify");
+
+                }
+
+            }
+        });
+    }
+
+
+
     // always change adapter data set, not local "recipes" list
     public void getRecipesCreated() {
 
@@ -191,6 +234,8 @@ public class FeedFragment extends Fragment {
         });
 
     }
+
+
 
 
 
@@ -238,12 +283,16 @@ public class FeedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-
+                
                 filterIngredients.setTargetFragment(FeedFragment.this, DIALOG_REQUEST_CODE);
                 filterIngredients.show(ft, "dialog");
             }
         });
         tvFilterRecipes = (TextView) view.findViewById(R.id.tvFilterByTag);
+
+
+        getRecipesShared();
+
         tvFilterRecipes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

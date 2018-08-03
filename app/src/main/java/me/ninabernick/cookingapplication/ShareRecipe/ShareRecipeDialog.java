@@ -27,6 +27,7 @@ import java.util.List;
 import me.ninabernick.cookingapplication.R;
 import me.ninabernick.cookingapplication.RecipeDetailViewActivity;
 import me.ninabernick.cookingapplication.models.Recipe;
+import me.ninabernick.cookingapplication.models.SharedRecipe;
 import me.ninabernick.cookingapplication.profile.FriendImageAdapter;
 
 public class ShareRecipeDialog extends DialogFragment {
@@ -44,8 +45,15 @@ public class ShareRecipeDialog extends DialogFragment {
     FriendImageAdapter.FriendProfileListener friendListener = new FriendImageAdapter.FriendProfileListener() {
         @Override
         public void thumbnailClicked(ParseUser friend) {
-            // TODO: implement logic for "sharing" a recipe within the app
-            // for now this does nothing
+            SharedRecipe recipe_to_be_shared = new SharedRecipe();
+            recipe_to_be_shared.setSharedUser(friend);
+            recipe_to_be_shared.setSharingUser(ParseUser.getCurrentUser());
+            RecipeDetailViewActivity recipe_details = (RecipeDetailViewActivity) getActivity();
+            recipe_to_be_shared.setRecipe(recipe_details.getRecipeShown());
+
+            recipe_to_be_shared.saveInBackground();
+
+            dismiss();
         }
     };
 
@@ -103,6 +111,8 @@ public class ShareRecipeDialog extends DialogFragment {
                         .build();
 
                 ShareDialog.show(getActivity(), content);
+
+                dismiss();
             }
         });
 
