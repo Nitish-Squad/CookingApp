@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
@@ -54,6 +55,7 @@ public class ShareRecipeDialog extends DialogFragment {
             recipe_to_be_shared.saveInBackground();
 
             dismiss();
+            Toast.makeText(getContext(), "Recipe Shared with " + friend.getString("name"), Toast.LENGTH_SHORT).show();
         }
     };
 

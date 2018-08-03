@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -67,6 +68,7 @@ public class FinishedRecipeActivity extends AppCompatActivity{
                 if (rating != 0) {
                     recipe.addRating(rating);
                     recipe.updateAverageRating();
+                    Toast.makeText(FinishedRecipeActivity.this, "Thanks for your feedback!", Toast.LENGTH_SHORT).show();
                 }
                 if (etLeaveComment.getText().equals("")) {
                     Comment comment = new Comment();
@@ -81,6 +83,8 @@ public class FinishedRecipeActivity extends AppCompatActivity{
                             recipe.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
+                                    // this toast isnt showing up, not the biggest deal low priority thing to fix
+                                    Toast.makeText(FinishedRecipeActivity.this, "Thanks for your feedback!", Toast.LENGTH_SHORT).show();
                                     Intent i = new Intent(FinishedRecipeActivity.this, HomeActivity.class);
                                     startActivity(i);
                                 }
