@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.SaveCallback;
@@ -177,15 +176,20 @@ public class CreateStepsFragment extends Fragment {
                 new_recipe.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        //Toast.makeText(getContext(), "Recipe Uploaded!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Recipe Uploaded!", Toast.LENGTH_SHORT).show();
+                        /*
+                         * No need to implement callbacks, if you set the item selected it acts as though the
+                         * icon has been tapped and runs the code that follows.
+                         * TODO: insert the newly added recipe to the
+                         */
+                        HomeActivity homeActivity = (HomeActivity) getActivity();
+                        homeActivity.bottomNavigationView.setSelectedItemId(R.id.miFeed);
                     }
                 });
 
-                BasicInfoFragment fragment2 = new BasicInfoFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flFragmentContainer, fragment2);
-                fragmentTransaction.commit();
+
+
+
 
 
             }
