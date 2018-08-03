@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.bennyhuo.swipefinishable.SwipeFinishable;
@@ -29,9 +30,16 @@ public class RecipeDetailsActivity extends AppCompatActivity implements SwipeFin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipie_details_main);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_recipe_steps);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(RecipeDetailsActivity.this, HomeActivity.class);
+                startActivity(i);
+            }
+        });
+
         recipe = (Recipe) getIntent().getParcelableExtra("recipe");
         title = findViewById(R.id.tvRecipeTitle);
         title.setText(recipe.getTitle());

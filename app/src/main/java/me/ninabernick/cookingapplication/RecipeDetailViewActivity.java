@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,6 +73,16 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail_view);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(RecipeDetailViewActivity.this, HomeActivity.class);
+                startActivity(i);
+            }
+        });
 
         steps = new ArrayList<>();
         recipe = getIntent().getParcelableExtra("recipe");
@@ -206,6 +217,7 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
 
     }
 
+
     private void getTopComments(Recipe recipe, int numComments) {
         List<String> commentIds = recipe.getComments();
         if (commentIds == null) {
@@ -249,7 +261,6 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
         }
         else return false;
     }
-
 
 }
 
