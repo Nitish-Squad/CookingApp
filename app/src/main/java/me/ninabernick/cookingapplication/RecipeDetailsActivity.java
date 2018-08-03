@@ -8,13 +8,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import com.bennyhuo.swipefinishable.SwipeFinishable;
+
 import me.ninabernick.cookingapplication.Steps.Transformers.CubeOutTransformer;
 import me.ninabernick.cookingapplication.Steps.FragmentAdapter;
 import me.ninabernick.cookingapplication.Steps.Transformers.ScaleInOutTransformer;
 import me.ninabernick.cookingapplication.models.Recipe;
 
 
-public class RecipeDetailsActivity extends AppCompatActivity {
+public class RecipeDetailsActivity extends AppCompatActivity implements SwipeFinishable.SwipeFinishableActivity {
 
     FragmentAdapter fAdapter;
     ViewPager viewPager;
@@ -27,6 +29,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipie_details_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_recipe_steps);
         setSupportActionBar(toolbar);
         recipe = (Recipe) getIntent().getParcelableExtra("recipe");
@@ -77,6 +80,16 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         };
         viewPager.setOnPageChangeListener(pagerListener);
 
+    }
+
+    @Override
+    public void finishThisActivity() {
+        super.finish();
+    }
+
+    @Override
+    public void finish() {
+        SwipeFinishable.INSTANCE.finishCurrentActivity();
     }
 
 }

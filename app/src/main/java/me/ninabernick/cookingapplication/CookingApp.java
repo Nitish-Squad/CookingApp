@@ -2,6 +2,7 @@ package me.ninabernick.cookingapplication;
 
 import android.app.Application;
 
+import com.bennyhuo.swipefinishable.SwipeFinishable;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
@@ -15,7 +16,7 @@ public class CookingApp extends Application {
     public void onCreate()
     {
         super.onCreate();
-
+        SwipeFinishable.INSTANCE.init(this);
 
         // registration of subclass below (in our case, should be recipe)
         ParseObject.registerSubclass(Recipe.class);

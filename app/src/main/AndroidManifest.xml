@@ -70,7 +70,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Location.MapsFragment" />
+        <activity android:name=".Location.MapsFragment" android:configChanges="orientation"/>
         <activity android:name=".Location.RestaurantActivity" />
         <uses-library
             android:name="com.google.android.maps"

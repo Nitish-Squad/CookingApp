@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bennyhuo.swipefinishable.SwipeFinishable;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -31,6 +32,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+
 import java.util.HashMap;
 
 import me.ninabernick.cookingapplication.R;
@@ -38,7 +40,7 @@ import me.ninabernick.cookingapplication.R;
 public class MapsFragment extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, StoreListFragment.StoreListFragmentListener{
+        LocationListener, StoreListFragment.StoreListFragmentListener {
 
     private GoogleMap mMap;
     double latitude;
@@ -49,10 +51,27 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
 
+    private static final String TAG = MapsFragment.class.getSimpleName();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        final DragToClose dragToClose = findViewById(R.id.drag_to_close);
+        dragToClose.setDragListener(new DragListener() {
+
+            @Override
+            public void onStartDraggingView() {
+                Log.d(TAG, "onStartDraggingView()");
+            }
+
+            @Override
+            public void onViewCosed() {
+                Log.d(TAG, "onViewCosed()");
+            }
+        });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -285,4 +304,9 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(markerOptionsCL);
         markerOptionsCL.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)).alpha(0.7f);
     }
+
 }
+
+
+
+
