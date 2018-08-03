@@ -19,6 +19,20 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
+    <style name="default_font_dark_faded">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name ="android:alpha">.16</item>
+    </style>
+
+    <style name="default_font_light_faded">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/darkPurple</item>
+        <item name ="android:alpha">.16</item>
+    </style>
+
     <style name="default_font_large">
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">@font/montserrat</item>
@@ -26,7 +40,7 @@
     </style>
 
     <style name="default_font_large_bold">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">23sp</item>
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textStyle">bold</item>

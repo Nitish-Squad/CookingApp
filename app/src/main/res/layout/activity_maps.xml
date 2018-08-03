@@ -21,28 +21,36 @@
         android:layout_marginStart="15dp"
         android:orientation="vertical">
 
-
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/close_arrow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             android:scaleType="center"
             app:srcCompat="@drawable/close_down_arrow_dark" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="30dp"
+            android:text="Swipe Down to Exit"
+            android:gravity="center"
+            style="@style/default_font_dark_faded"/>
 
         <FrameLayout
             android:id="@+id/textContainer"
             android:layout_width="match_parent"
-            android:layout_height="330dp" />
+            android:layout_height="match_parent"
+            android:paddingBottom="30dp" />
 
         <fragment
             android:id="@+id/map"
             class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingBottom = "30dp" android:layout_marginBottom="30dp"/>
 
 
     </LinearLayout>

@@ -5,17 +5,36 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
     <include
         layout="@layout/toolbar_recipe_steps"
         android:id="@+id/toolbar_recipe_steps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/close_arrow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:scaleType="fitStart"
+        app:srcCompat="@drawable/close_right_arrow_dark" />
+
+    <TextView
+        android:id="@+id/Textview"
+        style="@style/default_font_light_faded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingBottom="10dp"
+        android:text="Swipe Left to Exit" />
+
     <android.support.design.widget.TabLayout
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="fixed" />
+        app:tabMode="fixed"
+        android:paddingTop="20dp"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vpPager"
