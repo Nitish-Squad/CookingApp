@@ -5,4 +5,8 @@
     <color name="colorAccent">#0D1940</color>
     <color name="darkPurple">#3D2F40</color>
     <color name="dustyPurple">#736A88</color>
+    <color name="lightGray">#B9C7D4</color>
+    <color name="darkGray">#727A82</color>
+    <color name="dustyMauve">#9E8891</color>
+    <color name="lightPink">#CFB2BD</color>
 </resources>
