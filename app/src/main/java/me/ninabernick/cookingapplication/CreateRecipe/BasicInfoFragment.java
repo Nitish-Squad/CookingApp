@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -178,71 +179,91 @@ public class BasicInfoFragment extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO implement logic for switching to the next fragment and updating the overall
-                // new recipe method
-
-                HomeActivity createActivity = (HomeActivity) getActivity();
-
-                Recipe new_recipe = createActivity.recipe_to_add;
-
-                new_recipe.setTitle(etTitle.getText().toString());
-                new_recipe.setDescription(etDescription.getText().toString());
-
-                String total_time;
-
-                total_time = etHours.getText().toString()+" hours " + etMinutes.getText().toString() + " minutes";
-
-                new_recipe.setTime(total_time);
-
-                new_recipe.setCreatedBy(ParseUser.getCurrentUser().getObjectId());
-
-                new_recipe.setrecipeImage(new ParseFile(photoFile));
-
-                int hours = 0;
-
-                if (etHours.getText().toString() != null){
-                    hours = Integer.valueOf(etHours.getText().toString());
+                String hours_input = etHours.getText().toString();
+                String minutes_input = etMinutes.getText().toString();
+                String title_input = etTitle.getText().toString();
+                String description_input = etDescription.getText().toString();
+                if (TextUtils.isEmpty((title_input))){
+                    etTitle.setError("Title must be provided");
                 }
-
-                int minutes = 0;
-
-                if (etMinutes.getText().toString() != null){
-                    minutes = Integer.valueOf(etMinutes.getText().toString());
+                else if (photoFile == null){
+                    Toast.makeText(getContext(), "Please take or select a picture to move on", Toast.LENGTH_SHORT).show();
                 }
+                else if (TextUtils.isEmpty(description_input)) {
+                    etDescription.setError("Description field must be completed");
+                }
+                else if (TextUtils.isEmpty(hours_input)) {
+                    etHours.setError("Hours field must be completed");
+                }
+                else if (TextUtils.isEmpty(minutes_input)) {
+                    etMinutes.setError("Minutes field must be completed");
+                }
+                else{
+                    HomeActivity createActivity = (HomeActivity) getActivity();
 
-                new_recipe.setStandardTime((hours * 60) + minutes);
+                    Recipe new_recipe = createActivity.recipe_to_add;
 
-                // store any tags added
+                    new_recipe.setTitle(etTitle.getText().toString());
+                    new_recipe.setDescription(etDescription.getText().toString());
 
-                List<String> tag_holder = new ArrayList<>();
+                    String total_time;
 
+                    total_time = etHours.getText().toString()+" hours " + etMinutes.getText().toString() + " minutes";
 
-                for (int i = 0; i < tagList.size(); i++) {
-                    if (tagList.get(i).getText().toString() != null) {
-                        // TODO: overwrite the tags that exist everytime instead of adding
-                        tag_holder.add(tagList.get(i).getText().toString());
+                    new_recipe.setTime(total_time);
+
+                    new_recipe.setCreatedBy(ParseUser.getCurrentUser().getObjectId());
+
+                    new_recipe.setrecipeImage(new ParseFile(photoFile));
+
+                    int hours = 0;
+
+                    if (etHours.getText().toString() != null){
+                        hours = Integer.valueOf(etHours.getText().toString());
                     }
+
+                    int minutes = 0;
+
+                    if (etMinutes.getText().toString() != null){
+                        minutes = Integer.valueOf(etMinutes.getText().toString());
+                    }
+
+                    new_recipe.setStandardTime((hours * 60) + minutes);
+
+                    // store any tags added
+
+                    List<String> tag_holder = new ArrayList<>();
+
+
+                    for (int i = 0; i < tagList.size(); i++) {
+                        if (tagList.get(i).getText().toString() != null) {
+                            // TODO: overwrite the tags that exist everytime instead of adding
+                            tag_holder.add(tagList.get(i).getText().toString());
+                        }
+                    }
+
+                    /*
+                     * Needs to overwrite the current tags because they shouldn't be lost and otherwise
+                     * it would just duplicate tags that already existed + if any tags were edited
+                     * their unedited forms would exist.
+                     */
+                    new_recipe.setTags(tag_holder);
+
+                    createActivity.recipe_to_add = new_recipe;
+                    Log.d("tags", new_recipe.getTags().toString());
+
+
+
+                    // logic for starting the next fragment
+                    IngredientsFragment fragment2 = new IngredientsFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.flFragmentContainer, fragment2);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
                 }
 
-                /*
-                 * Needs to overwrite the current tags because they shouldn't be lost and otherwise
-                 * it would just duplicate tags that already existed + if any tags were edited
-                 * their unedited forms would exist.
-                 */
-                new_recipe.setTags(tag_holder);
 
-                createActivity.recipe_to_add = new_recipe;
-                Log.d("tags", new_recipe.getTags().toString());
-
-
-
-                // logic for starting the next fragment
-                IngredientsFragment fragment2 = new IngredientsFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flFragmentContainer, fragment2);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
             }
         });
     }
