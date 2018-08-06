@@ -18,6 +18,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.CropSquareTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.ninabernick.cookingapplication.R;
 import me.ninabernick.cookingapplication.RecipeDetailViewActivity;
@@ -54,7 +55,7 @@ public class RecipeImageAdapter extends RecyclerView.Adapter<RecipeImageAdapter.
     @Override
     public void onBindViewHolder(@NonNull RecipeImageAdapter.ViewHolder viewHolder, int position) {
         Recipe recipe = recipes.get(position);
-        Glide.with(context).load(recipe.getrecipeImage().getUrl()).apply(RequestOptions.bitmapTransform(new RoundedCornersTransformation(30,10))).into(viewHolder.ivRecipeThumb);
+        Glide.with(context).load(recipe.getrecipeImage().getUrl()).apply(RequestOptions.bitmapTransform(new CropSquareTransformation())).into(viewHolder.ivRecipeThumb);
 
 
     }

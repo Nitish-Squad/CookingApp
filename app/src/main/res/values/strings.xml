@@ -35,6 +35,7 @@
         <item>@string/DATE</item>
         <item>@string/TIME</item>
         <item>@string/RATING</item>
+        <item>Sort</item>
     </string-array>
 
     <string-array name="ingredients">

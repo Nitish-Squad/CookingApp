@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import me.ninabernick.cookingapplication.HomeActivity;
@@ -54,6 +56,7 @@ public class FeedFragment extends Fragment {
     public static String SORT_METHOD;
     public static ArrayList<String> filters = new ArrayList<>();
     public static ArrayList<String> ingredientFilters = new ArrayList<>();
+    public ArrayList<String> sortMethods;
 
     private static final String FEED_TYPE = "feed type";
     private static final int DIALOG_REQUEST_CODE = 20;
@@ -265,6 +268,8 @@ public class FeedFragment extends Fragment {
         SORT_METHOD = getResources().getString(R.string.DATE);
         adapter = new RecipeAdapter(recipes);
         user = getArguments().getParcelable("user");
+        sortMethods = new ArrayList<>();
+        sortMethods.addAll(Arrays.asList(getResources().getStringArray(R.array.sorting_methods)));
 
 
     }
@@ -308,8 +313,19 @@ public class FeedFragment extends Fragment {
 
         adapter.clear();
         rvFeed.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
-
+        // set spinner with dummy last item to display
+        final int listsize = sortMethods.size()-1;
         spSort = (Spinner) view.findViewById(R.id.spSort);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, sortMethods) {
+            @Override
+            public int getCount() {
+                return(listsize); // Truncate the list
+            }
+        };
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spSort.setAdapter(dataAdapter);
+        spSort.setSelection(listsize);
+        spSort.setGravity(View.TEXT_ALIGNMENT_VIEW_END);
         spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
