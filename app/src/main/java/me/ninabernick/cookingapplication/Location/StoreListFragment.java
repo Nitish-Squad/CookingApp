@@ -80,7 +80,7 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
         googlePlacesUrl.append("&type=" + nearbyPlace);
         googlePlacesUrl.append("&sensor=true");
         googlePlacesUrl.append("&type=" + nearbyPlace);
-        googlePlacesUrl.append("&key=" + "AIzaSyCnfJ8Xchn3-XtPkcfbLLRZk8IBLwNkfbA");
+        googlePlacesUrl.append("&key=" + "AIzaSyD_gosGg3qBnX2WOj6-fglzL49kTMO-KuY");
         Log.d("getUrl", googlePlacesUrl.toString());
         return (googlePlacesUrl.toString());
     }
@@ -154,12 +154,15 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
                 switch (item.getItemId()) {
                     case R.id.distance:
                         calltoNearbyList();
+                        bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.rating);
                         return true;
                     case R.id.rating:
+                        bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.rating_filled);
                         rvMyStores.smoothScrollToPosition(0);
                         calltoProminenceList();
                         return true;
                     case R.id.price:
+                        bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.rating);
                         rvMyStores.smoothScrollToPosition(0);
                         sortListPrice();
                         return true;
@@ -171,6 +174,7 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
 
     public void calltoProminenceList() {
         String url = getUrl(latitude, longitude, "supermarket");
+        Log.i("This is url prom", "Url: " + url);
         Object[] DataTransfer = new Object[2];
         DataTransfer[0] = mMap;
         DataTransfer[1] = url;
@@ -181,6 +185,7 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
 
     public void calltoNearbyList() {
         String url = getDistanceUrl(latitude, longitude, "supermarket");
+        Log.i("This is url dist", "Url: " + url);
         Object[] DataTransfer = new Object[2];
         DataTransfer[0] = mMap;
         DataTransfer[1] = url;

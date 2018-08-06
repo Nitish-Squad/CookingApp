@@ -1,12 +1,15 @@
 package me.ninabernick.cookingapplication.Location;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
@@ -58,8 +61,16 @@ GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             LatLng latLng = new LatLng(lat, lng);
             markerOptions.position(latLng);
             markerOptions.title(placeName + " : " + vicinity);
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(getHsvFromColor("#727A82")[0]));
             mMap.addMarker(markerOptions);
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+
         }
+    }
+
+    private static float[] getHsvFromColor(String colorString) {
+        float[] hsv = new float[3];
+        int _color = Color.parseColor(colorString);
+        Color.colorToHSV(_color, hsv);
+        return hsv;
     }
 }

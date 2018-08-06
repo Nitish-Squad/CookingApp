@@ -1,8 +1,12 @@
 package me.ninabernick.cookingapplication.Location;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -27,7 +31,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -193,16 +199,10 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+        markerOptions.icon(getMarkerIcon(R.color.lightGray));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
-        //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-        Toast.makeText(MapsFragment.this,"Your Current Location", Toast.LENGTH_LONG).show();
-
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
-
 
         loadStoreList();
         showStores();
@@ -214,8 +214,24 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
             Log.d("onLocationChanged", "Removing Location Updates");
         }
 
+        latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+                .zoom(12)                   // Sets the zoom
+                .bearing(90)                // Sets the orientation of the camera to east
+                .tilt(40)                   // Sets the tilt of the camera to 30 degrees
+                .build();                   // Creates a CameraPosition from the builder
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
         Log.d("onLocationChanged", "Exit");
 
+    }
+
+    public BitmapDescriptor getMarkerIcon(Integer color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        return BitmapDescriptorFactory.defaultMarker(hsv[0]);
     }
 
     public void loadStoreList() {
@@ -295,15 +311,18 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         MarkerOptions markerOptions = new MarkerOptions();
         LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
         markerOptions.position(latLng);
+        markerOptions.icon(getMarkerIcon(R.color.darkGray));
         mMap.addMarker(markerOptions);
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
 
         MarkerOptions markerOptionsCL = new MarkerOptions();
         LatLng latLngCL = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
         markerOptionsCL.position(latLngCL);
+        markerOptionsCL.icon(getMarkerIcon(R.color.lightGray));
         mMap.addMarker(markerOptionsCL);
-        markerOptionsCL.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)).alpha(0.7f);
+
     }
+
+
 
 }
 
