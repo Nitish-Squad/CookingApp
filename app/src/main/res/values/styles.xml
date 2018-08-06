@@ -7,47 +7,53 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/lato</item>
         <item name="android:textColor">@color/colorAccent</item>
 
 
     </style>
 
     <style name="default_font_medium">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/lato</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="default_font_small">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/lato</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <style name="default_font_dark_faded">
-        <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/lato</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name ="android:alpha">.16</item>
     </style>
 
     <style name="default_font_light_faded">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textColor">@color/darkPurple</item>
         <item name ="android:alpha">.16</item>
     </style>
 
     <style name="default_font_large">
-        <item name="android:textSize">28sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <style name="default_font_large_bold">
-        <item name="android:textSize">23sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="default_font_medium_bold">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textStyle">bold</item>
@@ -58,7 +64,7 @@
         <item name="android:fontFamily">@font/sofia</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="PriceRatingBar" parent="Widget.AppCompat.RatingBar">

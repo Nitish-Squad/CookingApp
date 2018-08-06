@@ -13,6 +13,7 @@
                       <PersistentState>
                         <option name="children">
                           <map>
+<<<<<<< HEAD
                             <entry key="actionbar">
                               <value>
                                 <PersistentState>
@@ -32,6 +33,31 @@
                                   <option name="values">
                                     <map>
                                       <entry key="foregroundImage" value="$USER_HOME$/Downloads/star.png" />
+=======
+                            <entry key="launcher">
+                              <value>
+                                <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="foregroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="scalingPercent" value="39" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="646e8c" />
+                                      <entry key="foregroundImage" value="$PROJECT_DIR$/app/src/main/res/drawable/cooking.png" />
+>>>>>>> 8f314af73483b0ff46b9963e3c410dba67076268
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -39,11 +65,14 @@
                             </entry>
                           </map>
                         </option>
+<<<<<<< HEAD
                         <option name="values">
                           <map>
                             <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
+=======
+>>>>>>> 8f314af73483b0ff46b9963e3c410dba67076268
                       </PersistentState>
                     </value>
                   </entry>

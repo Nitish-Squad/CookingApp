@@ -29,12 +29,17 @@
         <item>dessert</item>
         <item>vegan</item>
         <item>vegetarian</item>
+        <item>italian</item>
+        <item>chinese</item>
+        <item>indian</item>
+        <item>mexican</item>
     </string-array>
 
     <string-array name="sorting_methods">
         <item>@string/DATE</item>
         <item>@string/TIME</item>
         <item>@string/RATING</item>
+        <item>Sort</item>
     </string-array>
 
     <string-array name="ingredients">

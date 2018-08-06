@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -84,6 +85,8 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        View view = findViewById(android.R.id.content);
+
 
         steps = new ArrayList<>();
         recipe = getIntent().getParcelableExtra("recipe");

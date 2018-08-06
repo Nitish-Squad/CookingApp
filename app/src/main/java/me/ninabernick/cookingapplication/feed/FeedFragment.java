@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,8 +23,10 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.tubitv.ui.TubiLoadingView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import me.ninabernick.cookingapplication.HomeActivity;
@@ -46,6 +50,7 @@ public class FeedFragment extends Fragment {
     ParseUser user;
     FilterFragment filter = new FilterFragment();
     FilterIngredientFragment filterIngredients = new FilterIngredientFragment();
+    ProgressBar loadingView;
 
     Spinner spSort;
     public static final String DATE = "Date Created (Recent to Old)";
@@ -54,6 +59,7 @@ public class FeedFragment extends Fragment {
     public static String SORT_METHOD;
     public static ArrayList<String> filters = new ArrayList<>();
     public static ArrayList<String> ingredientFilters = new ArrayList<>();
+    public ArrayList<String> sortMethods;
 
     private static final String FEED_TYPE = "feed type";
     private static final int DIALOG_REQUEST_CODE = 20;
@@ -74,12 +80,13 @@ public class FeedFragment extends Fragment {
 
 
     public void getRecipes(){
+        loadingView.setVisibility(View.VISIBLE);
 
         final LoadingRecipeFragment loadingRecipeFragment = new LoadingRecipeFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         loadingRecipeFragment.setTargetFragment(FeedFragment.this, DIALOG_REQUEST_CODE);
-        loadingRecipeFragment.show(ft, "dialog");
+        //loadingRecipeFragment.show(ft, "dialog");
         final Recipe.Query recipeQuery = new Recipe.Query();
         // make sure no duplicates
         recipes.clear();
@@ -126,12 +133,15 @@ public class FeedFragment extends Fragment {
                     adapter.addAll(recipes);
                     adapter.notifyDataSetChanged();
 
+
+
                 }
                 else{
 
                     e.printStackTrace();
                 }
-                loadingRecipeFragment.dismiss();
+                //loadingRecipeFragment.dismiss();
+                loadingView.setVisibility(View.INVISIBLE);
 
 
             }
@@ -265,6 +275,8 @@ public class FeedFragment extends Fragment {
         SORT_METHOD = getResources().getString(R.string.DATE);
         adapter = new RecipeAdapter(recipes);
         user = getArguments().getParcelable("user");
+        sortMethods = new ArrayList<>();
+        sortMethods.addAll(Arrays.asList(getResources().getStringArray(R.array.sorting_methods)));
 
 
     }
@@ -278,6 +290,8 @@ public class FeedFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadingView = (ProgressBar) view.findViewById(R.id.pbLoading);
+
         tvFilterByIngredient = (TextView) view.findViewById(R.id.tvFilterByIngredient);
         tvFilterByIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -308,8 +322,19 @@ public class FeedFragment extends Fragment {
 
         adapter.clear();
         rvFeed.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
-
+        // set spinner with dummy last item to display
+        final int listsize = sortMethods.size()-1;
         spSort = (Spinner) view.findViewById(R.id.spSort);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, sortMethods) {
+            @Override
+            public int getCount() {
+                return(listsize); // Truncate the list
+            }
+        };
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spSort.setAdapter(dataAdapter);
+        spSort.setSelection(listsize);
+        spSort.setGravity(View.TEXT_ALIGNMENT_VIEW_END);
         spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {

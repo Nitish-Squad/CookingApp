@@ -12,8 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_margin="10dp"
         android:layout_below="@id/tvFilterByTag" />
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:progressTint="@color/colorPrimaryDark"
+        android:indeterminateTint="@color/colorPrimaryDark"
+        android:layout_centerInParent="true"/>
 
     <TextView
         android:id="@+id/tvFilterByTag"
@@ -23,7 +30,8 @@
 
         android:layout_margin="10dp"
         android:text="Filter By Tags"
-        android:textSize="14sp" />
+        android:textSize="16sp"
+        android:textAppearance="@style/default_font_medium"/>
 
     <TextView
         android:id="@+id/tvFilterByIngredient"
@@ -32,18 +40,15 @@
         android:layout_alignTop="@id/tvFilterByTag"
         android:layout_toEndOf="@id/tvFilterByTag"
         android:text="Filter By Ingredient"
-        android:textSize="14sp"/>
+        android:textAppearance="@style/default_font_medium"
+        android:textSize="16sp" />
 
     <Spinner
         android:id="@+id/spSort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_alignTop="@+id/tvFilterByTag"
-
-        android:layout_toEndOf="@id/tvFilterByIngredient"
-
-
-        android:entries="@array/sorting_methods" />
+        android:layout_marginTop="-3dp"
+        android:layout_toEndOf="@id/tvFilterByIngredient" />
 
 </RelativeLayout>

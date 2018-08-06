@@ -20,6 +20,7 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.CropSquareTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.ninabernick.cookingapplication.R;
 import me.ninabernick.cookingapplication.RecipeDetailViewActivity;
@@ -59,7 +60,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         holder.rating.setRating(recipe.getAverageRating().floatValue());
         Glide.with(context)
                 .load(recipe.getrecipeImage().getUrl())
-                .apply(new RequestOptions().transforms(new RoundedCornersTransformation(10, 10)))
+                .apply(new RequestOptions().transforms(new CropSquareTransformation()))
                 .into(holder.ivThumbnail);
 
     }
