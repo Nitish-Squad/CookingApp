@@ -79,5 +79,9 @@ dependencies {
     //progress bar
     compile 'com.tubitv.ui:tubi-loading-view:0.0.4@aar'
 
+    // circular progress bar
+    implementation 'com.mikhaellopez:circularprogressbar:2.0.0'
+
+
 
 }
