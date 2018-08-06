@@ -182,7 +182,7 @@ public class FeedFragment extends Fragment {
         query.findInBackground(new FindCallback<SharedRecipe>() {
             @Override
             public void done(List<SharedRecipe> objects, ParseException e) {
-                if ((objects != null) && (e == null)) {
+                if ((objects.size() != 0) && (e == null)) {
                     // gets rid of previous shared recipes
                     shared_recipes.clear();
                     for (int t = 0; t < objects.size(); t++) {
@@ -198,7 +198,7 @@ public class FeedFragment extends Fragment {
                          * and cannot be retrieved.
                          */
                         
-                        //objects.get(t).deleteInBackground();
+                        objects.get(t).deleteInBackground();
                     }
 
                     NotifyShareDialog notifyRecipeDialog = NotifyShareDialog.newInstance(shared_recipes);
