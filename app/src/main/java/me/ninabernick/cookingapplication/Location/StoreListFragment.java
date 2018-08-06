@@ -189,14 +189,6 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
         getStorelistData.execute(DataTransfer);
     }
 
-    public void sortListRating() {
-        Collections.sort(nearbyPlacesList, new Comparator<HashMap<String, String>>() {
-            public int compare(HashMap<String, String> obj1, HashMap<String, String> obj2) {
-                return Float.valueOf(obj2.get("rating")).compareTo(Float.valueOf(obj1.get("rating")));
-            }
-        });
-        storeAdapter.notifyDataSetChanged();
-    }
 
     public void sortListPrice() {
         Collections.sort(nearbyPlacesList, new Comparator<HashMap<String, String>>() {
@@ -215,7 +207,7 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
         googlePlacesUrl.append("&type=" + nearbyPlace);
         googlePlacesUrl.append("&sensor=true");
         googlePlacesUrl.append("&type=" + nearbyPlace);
-        googlePlacesUrl.append("&key=" + "AIzaSyCnfJ8Xchn3-XtPkcfbLLRZk8IBLwNkfbA");
+        googlePlacesUrl.append("&key=" + "AIzaSyD_gosGg3qBnX2WOj6-fglzL49kTMO-KuY");
         Log.d("getUrl", googlePlacesUrl.toString());
         return (googlePlacesUrl.toString());
     }

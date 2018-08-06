@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-
     <include
         layout="@layout/toolbar_main"
         android:id="@+id/toolbar_main"
@@ -16,20 +15,10 @@
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/close_arrow"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="10dp"
         android:paddingTop="10dp"
-        android:scaleType="fitStart"
-        app:srcCompat="@drawable/close_right_arrow_dark" />
+        android:scaleType="fitStart" />
 
-    <TextView
-        android:id="@+id/Textview"
-        style="@style/default_font_light_faded"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:paddingBottom="10dp"
-        android:text="Swipe Left to Exit" />
-=======
     <TextView
         android:id="@+id/tvRecipeTitle"
         android:layout_width="match_parent"
@@ -38,18 +27,6 @@
         android:textAppearance="@style/default_font_large_bold"
         android:gravity="center"
         android:text="TextView" />
-
-
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/sliding_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMode="fixed"
-        android:paddingTop="20dp"/>
-        android:layout_below="@id/tvRecipeTitle"
-        app:tabMode="fixed" />
-
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vpPager"
@@ -60,5 +37,14 @@
         app:tabMaxWidth="0dp"
         app:tabGravity="fill"
         app:tabMode="fixed" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp" />
 
 </LinearLayout>

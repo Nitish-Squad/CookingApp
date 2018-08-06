@@ -32,10 +32,5 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         return recipe.getNumberofSteps();
     }
 
-    // ßReturns the page title for the top indicator
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return "Step " + (position + 1);
-    }
 
 }

@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
@@ -172,10 +173,15 @@ public class StoreDetailsFragment extends Fragment {
         RatingBar priceBar = view.findViewById(R.id.rbDisplayPrice);
         priceBar.setRating((float) (Float.parseFloat(pricelevel) * 1.25));
 
+
+
         viewPager = view.findViewById(R.id.view_pager);
         swipeAdapter = new CustomSwipeAdapter(this.getContext(), photoreferences);
         viewPager.setAdapter(swipeAdapter);
         viewPager.setPageTransformer(true, new DepthPageTransformer());
+
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabDots);
+        tabLayout.setupWithViewPager(viewPager, true);
     }
 
 }
