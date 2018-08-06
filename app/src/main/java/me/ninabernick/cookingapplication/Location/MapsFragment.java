@@ -43,7 +43,7 @@ import java.util.HashMap;
 
 import me.ninabernick.cookingapplication.R;
 
-public class MapsFragment extends FragmentActivity implements OnMapReadyCallback,
+public class MapsFragment extends FragmentActivity implements OnMapReadyCallback, StoreDetailsFragment.Callback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener, StoreListFragment.StoreListFragmentListener {
@@ -307,11 +307,12 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void oneStoreMap(String latitude, String longitude) {
         mMap.clear();
+        showStoresLight();
 
         MarkerOptions markerOptions = new MarkerOptions();
         LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
         markerOptions.position(latLng);
-        markerOptions.icon(getMarkerIcon(R.color.darkGray));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(getHsvFromColor("#727A82")[0]));
         mMap.addMarker(markerOptions);
 
         MarkerOptions markerOptionsCL = new MarkerOptions();
@@ -322,8 +323,29 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    private static float[] getHsvFromColor(String colorString) {
+        float[] hsv = new float[3];
+        int _color = Color.parseColor(colorString);
+        Color.colorToHSV(_color, hsv);
+        return hsv;
+    }
 
+    public void showStoresLight() {
+        String Supermarket = "supermarket";
+        String url = getUrl(latitude, longitude, Supermarket);
+        Object[] DataTransfer = new Object[2];
+        DataTransfer[0] = mMap;
+        DataTransfer[1] = url;
+        Log.d("onClick", url);
+        GetNearbyPlacesData_Light getNearbyPlacesData = new GetNearbyPlacesData_Light();
+        getNearbyPlacesData.execute(DataTransfer);
+        Toast.makeText(MapsFragment.this,"Nearby Supermarkets", Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void onReturntoStoreList() {
+        onLocationChanged(mLastLocation);
+    }
 }
 
 

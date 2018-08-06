@@ -13,38 +13,30 @@
                       <PersistentState>
                         <option name="children">
                           <map>
-<<<<<<< HEAD
                             <entry key="actionbar">
                               <value>
                                 <PersistentState>
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/star.png" />
-                                      <entry key="outputName" value="rating_filled" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/cancel.png" />
+                                      <entry key="outputName" value="cancel_button" />
                                     </map>
                                   </option>
                                 </PersistentState>
                               </value>
                             </entry>
-                            <entry key="launcher">
-                              <value>
-                                <PersistentState>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/star.png" />
-=======
-                            <entry key="launcher">
+                            <entry key="notification">
                               <value>
                                 <PersistentState>
                                   <option name="children">
                                     <map>
-                                      <entry key="foregroundImage">
+                                      <entry key="clipArt">
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="39" />
+                                                <entry key="paddingPercent" value="40" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -54,10 +46,8 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="646e8c" />
-                                      <entry key="foregroundImage" value="$PROJECT_DIR$/app/src/main/res/drawable/cooking.png" />
->>>>>>> 8f314af73483b0ff46b9963e3c410dba67076268
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/cancel.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -65,14 +55,11 @@
                             </entry>
                           </map>
                         </option>
-<<<<<<< HEAD
                         <option name="values">
                           <map>
                             <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
-=======
->>>>>>> 8f314af73483b0ff46b9963e3c410dba67076268
                       </PersistentState>
                     </value>
                   </entry>
