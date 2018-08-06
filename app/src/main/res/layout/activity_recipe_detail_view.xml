@@ -49,7 +49,7 @@
         android:id="@+id/tvIngredientHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/ivRecipeImage"
         android:layout_below="@id/toolbar_main"
 
         android:layout_marginStart="22dp"
@@ -80,13 +80,14 @@
 
     <ImageView
         android:id="@+id/ivSaveRecipe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/ivRecipeImage"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/ic_vector_heart_stroke" />
+        android:tint="@color/colorPrimaryDark"
+        android:src="@drawable/save" />
 
     <RatingBar
         android:id="@+id/rbDisplayRating"
@@ -121,7 +122,8 @@
         android:layout_alignTop="@+id/tvTitle"
         android:layout_marginLeft="10dp"
         android:layout_toStartOf="@+id/ivSaveRecipe"
-        android:src="@drawable/share_4" />
+        android:src="@drawable/mail"
+        android:tint="@color/colorPrimaryDark"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"

@@ -34,6 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.CropSquareTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.ninabernick.cookingapplication.Location.MapsFragment;
 import me.ninabernick.cookingapplication.ShareRecipe.ShareRecipeDialog;
@@ -128,7 +129,7 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
 
         Glide.with(RecipeDetailViewActivity.this)
                 .load(recipe.getrecipeImage().getUrl())
-                .apply(new RequestOptions().transforms(new RoundedCornersTransformation(10, 10)))
+                .apply(new RequestOptions().transforms(new CropSquareTransformation()))
                 .into(ivImage);
         ivSave = (ImageView) findViewById(R.id.ivSaveRecipe);
         if (!hasSaved(ParseUser.getCurrentUser(), recipe)) {
