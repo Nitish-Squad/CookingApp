@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.bennyhuo.swipefinishable.SwipeFinishable;
 
-import me.ninabernick.cookingapplication.Steps.Transformers.CubeOutTransformer;
 import me.ninabernick.cookingapplication.Steps.FragmentAdapter;
 import me.ninabernick.cookingapplication.Steps.Transformers.ScaleInOutTransformer;
 import me.ninabernick.cookingapplication.models.Recipe;
@@ -60,10 +59,19 @@ public class RecipeDetailsActivity extends AppCompatActivity implements SwipeFin
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){
                 int lastIdx = fAdapter.getCount() - 1;
                 // starts finished recipe activity
-                if(lastPageChange && position == lastIdx) {
+                if(lastPageChange && (position == lastIdx)) {
                     Intent i = new Intent(RecipeDetailsActivity.this, FinishedRecipeActivity.class);
                     i.putExtra("recipe", recipe);
                     startActivity(i);
+
+                    /*
+                     * Negation below fixes back error, the code appears to run this onPageScrolled section
+                     * multiple times upon conclusion so on the last slide it actually creates
+                     * multiple FinishedRecipeActivities which was causing the problems with the
+                     * back navigation. Setting the lastPageChange as false at the end of this
+                     * conditional makes sure it is only added one time.
+                     */
+                    lastPageChange = false;
                 }
 
             }
@@ -76,10 +84,8 @@ public class RecipeDetailsActivity extends AppCompatActivity implements SwipeFin
                 int lastIdx = fAdapter.getCount() - 1;
 
                 int curItem = viewPager.getCurrentItem();
-                if(curItem==lastIdx  && state==1){
+                if((curItem == lastIdx)  && (state == 1)){
                     lastPageChange = true;
-
-                    finish();
 
                 }else  {
                     lastPageChange = false;

@@ -85,8 +85,10 @@ public class FinishedRecipeActivity extends AppCompatActivity{
                                 public void done(ParseException e) {
                                     // this toast isnt showing up, not the biggest deal low priority thing to fix
                                     Toast.makeText(FinishedRecipeActivity.this, "Thanks for your feedback!", Toast.LENGTH_SHORT).show();
-                                    Intent i = new Intent(FinishedRecipeActivity.this, HomeActivity.class);
-                                    startActivity(i);
+                                    Intent intent = new Intent(FinishedRecipeActivity.this, HomeActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             });
                         }
@@ -96,8 +98,11 @@ public class FinishedRecipeActivity extends AppCompatActivity{
                     recipe.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            Intent i = new Intent(FinishedRecipeActivity.this, HomeActivity.class);
-                            startActivity(i);
+                            Intent intent = new Intent(FinishedRecipeActivity.this, HomeActivity.class);
+                            // these flags clear the back stack of activities to solve potential back navigation issues
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
                         }
                     });
                 }

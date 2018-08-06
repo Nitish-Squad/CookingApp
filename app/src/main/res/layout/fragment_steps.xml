@@ -6,7 +6,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:gravity="center_horizontal">
+
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,28 +20,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvStepNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="TextView"
-            android:gravity="center"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="30dp"
-            tools:text="1" />
+            <TextView
+                android:id="@+id/tvStepNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="24sp"
+                tools:text="1" />
 
-        <TextView
-            android:id="@+id/tvETime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/tvETime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-            android:layout_above="@+id/ivIcon"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="-120dp"
-            android:text="TextView"
+                android:layout_above="@+id/ivIcon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="-120dp"
+                android:text="TextView"
 
-            tools:text="30 min" />
+                android:textSize="18sp"
+                tools:text="30 min" />
 
         <ImageButton
             android:id="@+id/ivIcon"
@@ -51,16 +54,18 @@
             android:layout_marginTop="120dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            app:srcCompat="@color/colorPrimary" />
+            app:srcCompat="@color/colorPrimary"
+            style="?android:attr/borderlessButtonStyle" />
 
-        <TextView
-            android:id="@+id/tvInstruct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ivIcon"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/tvInstruct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivIcon"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="18sp" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

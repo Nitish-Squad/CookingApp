@@ -30,9 +30,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import me.ninabernick.cookingapplication.CountDownDialog;
-import me.ninabernick.cookingapplication.StepClickInfoDialog;
 import me.ninabernick.cookingapplication.R;
 import me.ninabernick.cookingapplication.RecipeDetailsActivity;
+import me.ninabernick.cookingapplication.StepClickInfoDialog;
 import me.ninabernick.cookingapplication.YoutubeVideoActivity;
 import me.ninabernick.cookingapplication.models.Recipe;
 
@@ -205,7 +205,6 @@ public class StepsFragment extends Fragment {
             }
 
 
-            //SpannableString ss = new SpannableString(step);
 
             ClickableSpan clickableSpan = new ClickableSpan() {
                 @Override
@@ -217,6 +216,7 @@ public class StepsFragment extends Fragment {
                 @Override
                 public void updateDrawState(TextPaint ds) {
                     super.updateDrawState(ds);
+                    ds.setColor(Color.RED);
                     ds.setUnderlineText(false);
                 }
             };
