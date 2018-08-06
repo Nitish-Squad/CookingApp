@@ -6,20 +6,20 @@ import android.app.NotificationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 public class CountDownDialog extends DialogFragment {
 
     private TextView counter;
-    private ProgressBar progress;
+    private CircularProgressBar progress;
 
     public CountDownDialog(){}
 
@@ -41,7 +41,7 @@ public class CountDownDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_countdowntimer_dialog, container);
         counter = (TextView) view.findViewById(R.id.tvCount);
-        progress = (ProgressBar) view.findViewById(R.id.determinateBar);
+        progress = (CircularProgressBar) view.findViewById(R.id.determinateBar);
         return view;
     }
 
@@ -51,6 +51,7 @@ public class CountDownDialog extends DialogFragment {
         getDialog().getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         final int millis = getArguments().getInt("millis");
         int interval = getArguments().getInt("interval");
+        progress.setProgressMax(millis / 1000);
         CountDownTimer gameTimer = new CountDownTimer(millis, interval) {
             @Override
             public void onTick(long l) {
@@ -84,23 +85,35 @@ public class CountDownDialog extends DialogFragment {
                     }
                 }
 
-                seconds = Integer.toString(numberOfSeconds);
+                if ((numberOfHours != 0) || (numberOfMinutes != 0)){
+                    seconds = Integer.toString(numberOfSeconds);
+                    if (seconds.length() == 1){
+                        seconds = "0" + seconds;
+                    }
+                }
+                else{
+                    seconds = Integer.toString(numberOfSeconds);
+                }
+
 
 
                 counter.setText(hours + minutes + seconds);
 
-                // provides total number of seconds (ex: 3600 for an hour of time)
-                // counter.setText(""+((int)Math.round(l/1000.0)-1));
 
                 double float_test= (((double) millis) - ((double) l))/(millis);
 
-                int progress_count = ((int)Math.round(float_test * 100)) + 1;
-                progress.setProgress(progress_count);
+                int time_elapsed = (millis / 1000) - total_seconds;
+                /*
+                 * Duration here is set for 1.25 seconds, specifically because each tick is slightly
+                 * longer than a second so we want the animation to last longer than each tick so the
+                 * animation is always moving or barely stopped.
+                 */
+                progress.setProgressWithAnimation(time_elapsed, 1250);
             }
 
             @Override
             public void onFinish() {
-                progress.setProgress(100);
+                progress.setProgress(millis / 1000);
                 counter.setText("Time's Up!\n Click Anywhere to Exit");
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
