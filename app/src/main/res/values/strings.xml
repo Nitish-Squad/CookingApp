@@ -29,6 +29,10 @@
         <item>dessert</item>
         <item>vegan</item>
         <item>vegetarian</item>
+        <item>italian</item>
+        <item>chinese</item>
+        <item>indian</item>
+        <item>mexican</item>
     </string-array>
 
     <string-array name="sorting_methods">

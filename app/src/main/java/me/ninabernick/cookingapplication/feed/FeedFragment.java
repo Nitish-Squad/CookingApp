@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.tubitv.ui.TubiLoadingView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +50,7 @@ public class FeedFragment extends Fragment {
     ParseUser user;
     FilterFragment filter = new FilterFragment();
     FilterIngredientFragment filterIngredients = new FilterIngredientFragment();
+    ProgressBar loadingView;
 
     Spinner spSort;
     public static final String DATE = "Date Created (Recent to Old)";
@@ -77,12 +80,13 @@ public class FeedFragment extends Fragment {
 
 
     public void getRecipes(){
+        loadingView.setVisibility(View.VISIBLE);
 
         final LoadingRecipeFragment loadingRecipeFragment = new LoadingRecipeFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         loadingRecipeFragment.setTargetFragment(FeedFragment.this, DIALOG_REQUEST_CODE);
-        loadingRecipeFragment.show(ft, "dialog");
+        //loadingRecipeFragment.show(ft, "dialog");
         final Recipe.Query recipeQuery = new Recipe.Query();
         // make sure no duplicates
         recipes.clear();
@@ -129,12 +133,15 @@ public class FeedFragment extends Fragment {
                     adapter.addAll(recipes);
                     adapter.notifyDataSetChanged();
 
+
+
                 }
                 else{
 
                     e.printStackTrace();
                 }
-                loadingRecipeFragment.dismiss();
+                //loadingRecipeFragment.dismiss();
+                loadingView.setVisibility(View.INVISIBLE);
 
 
             }
@@ -283,6 +290,8 @@ public class FeedFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadingView = (ProgressBar) view.findViewById(R.id.pbLoading);
+
         tvFilterByIngredient = (TextView) view.findViewById(R.id.tvFilterByIngredient);
         tvFilterByIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
