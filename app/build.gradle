@@ -75,7 +75,7 @@ dependencies {
 
     //recyclerview animation
     implementation 'jp.wasabeef:recyclerview-animators:2.2.3'
-    
+
     //progress bar
     compile 'com.tubitv.ui:tubi-loading-view:0.0.4@aar'
 

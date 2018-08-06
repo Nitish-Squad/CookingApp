@@ -115,36 +115,36 @@ public class CountDownDialog extends DialogFragment {
             public void onFinish() {
                 progress.setProgress(millis / 1000);
                 counter.setText("Time's Up!\n Click Anywhere to Exit");
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (isAdded()) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-                        CharSequence name = getString(R.string.channel_name);
-                        String description = getString(R.string.channel_description);
-                        int importance = NotificationManager.IMPORTANCE_HIGH;
-                        NotificationChannel channel = new NotificationChannel("cookingappid", name, importance);
-                        channel.setDescription(description);
-                        // Register the channel with the system; you can't change the importance
-                        // or other notification behaviors after this
-                        NotificationManager notificationManager = getContext().getSystemService(NotificationManager.class);
-                        notificationManager.createNotificationChannel(channel);
+                            CharSequence name = getString(R.string.channel_name);
+                            String description = getString(R.string.channel_description);
+                            int importance = NotificationManager.IMPORTANCE_HIGH;
+                            NotificationChannel channel = new NotificationChannel("cookingappid", name, importance);
+                            channel.setDescription(description);
+                            // Register the channel with the system; you can't change the importance
+                            // or other notification behaviors after this
+                            NotificationManager notificationManager = getContext().getSystemService(NotificationManager.class);
+                            notificationManager.createNotificationChannel(channel);
+                        }
                     }
+
+                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), "cookingappid")
+                            .setSmallIcon(R.drawable.chicken_icon)
+                            .setContentTitle("Timer Complete")
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .bigText("Step timer complete, ready to move onto the next step!"))
+                            .setPriority(NotificationCompat.PRIORITY_HIGH)
+                            .setDefaults(Notification.DEFAULT_SOUND)
+                            .setDefaults(Notification.DEFAULT_VIBRATE);
+
+                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+
+                    // notificationId is a unique int for each notification that you must define
+                    notificationManager.notify(70987, mBuilder.build());
                 }
-
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), "cookingappid")
-                        .setSmallIcon(R.drawable.chicken_icon)
-                        .setContentTitle("Timer Complete")
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText("Step timer complete, ready to move onto the next step!"))
-                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setDefaults(Notification.DEFAULT_SOUND)
-                        .setDefaults(Notification.DEFAULT_VIBRATE);
-
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-
-                // notificationId is a unique int for each notification that you must define
-                notificationManager.notify(70987, mBuilder.build());
-
 
                 // dismiss();
             }
