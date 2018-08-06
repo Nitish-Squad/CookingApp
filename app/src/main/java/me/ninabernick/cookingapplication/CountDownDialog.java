@@ -55,7 +55,7 @@ public class CountDownDialog extends DialogFragment {
         CountDownTimer gameTimer = new CountDownTimer(millis, interval) {
             @Override
             public void onTick(long l) {
-                int total_seconds = ((int)Math.round(l/1000.0)-1);
+                int total_seconds = ((int)Math.round(l/1000.0) - 1);
 
                 int numberOfHours = (total_seconds % 86400 ) / 3600 ;
                 int numberOfMinutes = ((total_seconds % 86400 ) % 3600 ) / 60;
@@ -108,7 +108,7 @@ public class CountDownDialog extends DialogFragment {
                  * longer than a second so we want the animation to last longer than each tick so the
                  * animation is always moving or barely stopped.
                  */
-                progress.setProgressWithAnimation(time_elapsed, 1250);
+                progress.setProgressWithAnimation((time_elapsed + 1), 1250);
             }
 
             @Override
