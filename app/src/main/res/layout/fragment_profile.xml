@@ -115,14 +115,33 @@
             android:layout_height="100dp"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tvSavedRecipes"
-            >
+
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvSavedRecipes"
+                android:requiresFadingEdge="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/ivSavedLeftArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/back" />
+
+        <ImageView
+            android:id="@+id/ivSavedRightArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:rotation="180"
+            android:src="@drawable/back" />
 
     </RelativeLayout>
 
@@ -141,6 +160,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider3"
         >
+
         <TextView
             android:id="@+id/tvCreatedRecipes"
             android:layout_width="match_parent"
@@ -149,22 +169,44 @@
             android:textAppearance="@style/default_font_medium"
             android:gravity="center"
             android:text="Created Recipes" />
+
         <RelativeLayout
             android:id="@+id/rlCreatedRecipes"
             android:layout_width="match_parent"
-            android:layout_below="@id/tvCreatedRecipes"
             android:layout_height="100dp"
             android:layout_alignParentStart="true"
-            >
+            android:layout_below="@id/tvCreatedRecipes"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvCreatedRecipes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:requiresFadingEdge="horizontal"/>
         </RelativeLayout>
 
+        <ImageView
+            android:id="@+id/ivCreatedLeftArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/back" />
+        <ImageView
+            android:id="@+id/ivCreatedRightArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:rotation="180"
+            android:src="@drawable/back" />
+
     </RelativeLayout>
+
 
 
 

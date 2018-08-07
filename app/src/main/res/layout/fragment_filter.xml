@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-
+    android:background="@drawable/rounded_corners_shape"
     android:layout_height="match_parent">
 
     <TextView
@@ -25,19 +25,28 @@
 
     <Button
         android:id="@+id/btFilter"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/llTags"
         android:layout_centerHorizontal="true"
-        android:text="@string/filterbutton" />
+        android:background="@drawable/rounded_button"
+        android:text="@string/filterbutton"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btClear"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btFilter"
         android:layout_centerHorizontal="true"
-        android:text="Clear Filters" />
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded_button"
+        android:text="Clear Filters"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>

@@ -1,28 +1,23 @@
 package me.ninabernick.cookingapplication.feed;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
-
-import com.google.android.gms.common.images.WebImageCreator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import me.ninabernick.cookingapplication.R;
-import me.ninabernick.cookingapplication.feed.FeedFragment;
 
 
 public class FilterIngredientFragment extends DialogFragment {
@@ -56,7 +51,13 @@ public class FilterIngredientFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_filter_ingredients, container);
+        View view = inflater.inflate(R.layout.fragment_filter_ingredients, container);
+        // Not exactly sure why, but this code is required to get the dialog to have rounded corners
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        }
+        return view;
     }
 
     @Override
@@ -81,6 +82,7 @@ public class FilterIngredientFragment extends DialogFragment {
                 FeedFragment feed = (FeedFragment) getTargetFragment();
                 if (feed != null) {
                     feed.getRecipes();
+                    feed.updateSelectedTags();
                 }
                 dismiss();
             }
@@ -98,6 +100,7 @@ public class FilterIngredientFragment extends DialogFragment {
                 FeedFragment feed = (FeedFragment) getTargetFragment();
                 if (feed != null) {
                     feed.getRecipes();
+                    feed.updateSelectedTags();
                 }
                 dismiss();
             }

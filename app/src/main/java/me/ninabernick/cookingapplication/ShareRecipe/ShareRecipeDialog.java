@@ -2,6 +2,8 @@ package me.ninabernick.cookingapplication.ShareRecipe;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.facebook.share.model.SharePhoto;
@@ -37,7 +40,7 @@ public class ShareRecipeDialog extends DialogFragment {
 
     private ParseUser user;
     private RecyclerView recycler_friends;
-    private Button fb_share;
+    private ImageButton fb_share;
     private ArrayList<String> friends = new ArrayList<>();
     private ArrayList<String> savedRecipes;
     private ArrayList<ParseUser> friendUsers = new ArrayList<>();
@@ -66,11 +69,16 @@ public class ShareRecipeDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_share_dialog, container);
+        // Not exactly sure why, but this code is required to get the dialog to have rounded corners
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        }
 
         user = ParseUser.getCurrentUser();
 
         recycler_friends = (RecyclerView) view.findViewById(R.id.RecyclerView);
-        fb_share = (Button) view.findViewById(R.id.fb_share);
+        fb_share = (ImageButton) view.findViewById(R.id.fb_share);
         friends.clear();
         friends.addAll(user.<String>getList("friends"));
 

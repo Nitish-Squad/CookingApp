@@ -92,7 +92,10 @@
                 android:layout_below="@+id/steps"
                 android:layout_centerHorizontal="true"
                 android:text="Add Step"
-                style="?android:attr/borderlessButtonStyle"/>
+                style="?android:attr/borderlessButtonStyle"
+                android:background="@drawable/rounded_button"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/btnNext"
@@ -101,7 +104,10 @@
                 android:layout_below="@+id/btnAdd"
                 android:layout_centerHorizontal="true"
                 android:text="Upload"
-                style="?android:attr/borderlessButtonStyle"/>
+                style="?android:attr/borderlessButtonStyle"
+                android:background="@drawable/rounded_button"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
 
 

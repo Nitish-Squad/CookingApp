@@ -56,18 +56,23 @@
         android:layout_below="@+id/etComment"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/low_rating"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/btFindRestaurants"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvLowRating"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-20dp"
-        android:visibility="invisible"
-        android:text="Find Nearby Restaurants" />
+        android:layout_marginTop="-15dp"
+        android:background="@drawable/rounded_button"
+        android:text="Find Nearby Restaurants"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/btFinish"
@@ -76,6 +81,10 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:text="Done" />
+        android:text="Done"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="@drawable/rounded_button"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
 
 </RelativeLayout>
