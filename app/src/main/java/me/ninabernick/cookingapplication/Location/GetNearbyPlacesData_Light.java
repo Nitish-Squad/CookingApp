@@ -4,21 +4,16 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
 import java.util.List;
 
-import me.ninabernick.cookingapplication.R;
-
 public class
-GetNearbyPlacesData extends AsyncTask<Object, String, String> {
+GetNearbyPlacesData_Light extends AsyncTask<Object, String, String> {
 
     String googlePlacesData;
     GoogleMap mMap;
@@ -61,7 +56,7 @@ GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             LatLng latLng = new LatLng(lat, lng);
             markerOptions.position(latLng);
             markerOptions.title(placeName + " : " + vicinity);
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(getHsvFromColor("#727A82")[0]));
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(getHsvFromColor("#727A82")[0])).alpha(.25f);
             mMap.addMarker(markerOptions);
 
         }

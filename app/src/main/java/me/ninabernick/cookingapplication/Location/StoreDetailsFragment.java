@@ -1,5 +1,6 @@
 package me.ninabernick.cookingapplication.Location;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -42,7 +45,24 @@ public class StoreDetailsFragment extends Fragment {
     ViewPager viewPager;
     CustomSwipeAdapter swipeAdapter;
 
+    ImageButton returnButton;
 
+    interface Callback {
+        void onReturntoStoreList();
+    }
+
+    private StoreDetailsFragment.Callback callback;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof StoreDetailsFragment.Callback) {
+            callback = (StoreDetailsFragment.Callback) context;
+        } else {
+            throw new IllegalStateException("Containing context must implement UserInputFragment.Callback.");
+        }
+    }
 
     public static StoreDetailsFragment newInstance(String id) {
         StoreDetailsFragment storeDetailsFragment = new StoreDetailsFragment();
@@ -151,6 +171,14 @@ public class StoreDetailsFragment extends Fragment {
         DataTransfer[1] = url;
         PlacesTask placesTask = new PlacesTask();
         placesTask.execute(DataTransfer);
+
+        returnButton = view.findViewById(R.id.returnButton);
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callback.onReturntoStoreList();
+            }
+        });
 
     }
 

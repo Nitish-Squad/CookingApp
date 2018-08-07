@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CookingApplication</string>
+    <string name="app_name">Recipease</string>
     <string name="google_maps_api_key">AIzaSyD_gosGg3qBnX2WOj6-fglzL49kTMO-KuY</string>
 
 
@@ -123,7 +123,7 @@
     <string name="channel_name">CookingAppChannel</string>
     <string name="channel_description">Channel for CookingApp Notifications</string>
     <string name="CHANNEL_ID">cooking_app_id</string>
-    <string name="youtube_api_key">nothing</string>
+    <string name="youtube_api_key">AIzaSyD_gosGg3qBnX2WOj6-fglzL49kTMO-KuY</string>
 
 
 </resources>

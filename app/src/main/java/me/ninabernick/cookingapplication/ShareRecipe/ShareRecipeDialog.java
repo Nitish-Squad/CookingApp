@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.facebook.share.model.SharePhoto;
@@ -37,7 +37,7 @@ public class ShareRecipeDialog extends DialogFragment {
 
     private ParseUser user;
     private RecyclerView recycler_friends;
-    private Button fb_share;
+    private ImageButton fb_share;
     private ArrayList<String> friends = new ArrayList<>();
     private ArrayList<String> savedRecipes;
     private ArrayList<ParseUser> friendUsers = new ArrayList<>();
@@ -70,7 +70,7 @@ public class ShareRecipeDialog extends DialogFragment {
         user = ParseUser.getCurrentUser();
 
         recycler_friends = (RecyclerView) view.findViewById(R.id.RecyclerView);
-        fb_share = (Button) view.findViewById(R.id.fb_share);
+        fb_share = (ImageButton) view.findViewById(R.id.fb_share);
         friends.clear();
         friends.addAll(user.<String>getList("friends"));
 
