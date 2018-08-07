@@ -82,6 +82,7 @@ public class FilterIngredientFragment extends DialogFragment {
                 FeedFragment feed = (FeedFragment) getTargetFragment();
                 if (feed != null) {
                     feed.getRecipes();
+                    feed.updateSelectedTags();
                 }
                 dismiss();
             }
@@ -99,6 +100,7 @@ public class FilterIngredientFragment extends DialogFragment {
                 FeedFragment feed = (FeedFragment) getTargetFragment();
                 if (feed != null) {
                     feed.getRecipes();
+                    feed.updateSelectedTags();
                 }
                 dismiss();
             }

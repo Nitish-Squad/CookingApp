@@ -75,6 +75,12 @@ public class ProfileFragment extends Fragment {
     private ArrayList<Recipe> createdRecipes;
     private RecipeImageAdapter savedRecipeAdapter;
     private RecipeImageAdapter createdRecipeAdapter;
+    private ImageView savedLeftArrow;
+    private ImageView savedRightArrow;
+    private ImageView createdLeftArrow;
+    private ImageView createdRightArrow;
+    private LinearLayoutManager savedRecipeManager;
+    private LinearLayoutManager createdRecipeManager;
 
 
 
@@ -136,6 +142,47 @@ public class ProfileFragment extends Fragment {
         rvFriends = (RecyclerView) view.findViewById(R.id.rvFriends);
         rvFriends.setAdapter(adapter);
         rvFriends.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        savedLeftArrow = (ImageView) view.findViewById(R.id.ivSavedLeftArrow);
+        savedRightArrow = (ImageView) view.findViewById(R.id.ivSavedRightArrow);
+        createdLeftArrow = (ImageView) view.findViewById(R.id.ivCreatedLeftArrow);
+        createdRightArrow = (ImageView) view.findViewById(R.id.ivCreatedRightArrow);
+        savedLeftArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (savedRecipeManager.findFirstVisibleItemPosition() > 0) {
+                    rvSavedRecipes.smoothScrollToPosition(savedRecipeManager.findFirstVisibleItemPosition() - 1);
+                } else {
+                    rvSavedRecipes.smoothScrollToPosition(0);
+                }
+
+            }
+        });
+
+        savedRightArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rvSavedRecipes.smoothScrollToPosition(savedRecipeManager.findLastVisibleItemPosition() + 1);
+            }
+        });
+
+        createdLeftArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (createdRecipeManager.findFirstVisibleItemPosition() > 0) {
+                    rvCreatedRecipes.smoothScrollToPosition(createdRecipeManager.findFirstVisibleItemPosition() - 1);
+                } else {
+                    rvCreatedRecipes.smoothScrollToPosition(0);
+                }
+
+            }
+        });
+
+        createdRightArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rvCreatedRecipes.smoothScrollToPosition(createdRecipeManager.findLastVisibleItemPosition() + 1);
+            }
+        });
 
 
         savedRecipesText = new ArrayList<>();
@@ -164,15 +211,18 @@ public class ProfileFragment extends Fragment {
 
         rvSavedRecipes = (RecyclerView) view.findViewById(R.id.rvSavedRecipes);
         rvSavedRecipes.setAdapter(savedRecipeAdapter);
-        rvSavedRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(rvSavedRecipes);
+        savedRecipeManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvSavedRecipes.setLayoutManager(savedRecipeManager);
+
+//        SnapHelper snapHelper = new LinearSnapHelper();
+//        snapHelper.attachToRecyclerView(rvSavedRecipes);
         rvSavedRecipes.setItemAnimator(new SlideInRightAnimator());
         getSavedRecipes();
         rvCreatedRecipes = (RecyclerView) view.findViewById(R.id.rvCreatedRecipes);
         rvCreatedRecipes.setAdapter(createdRecipeAdapter);
-        rvCreatedRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        snapHelper.attachToRecyclerView(rvCreatedRecipes);
+        createdRecipeManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvCreatedRecipes.setLayoutManager(createdRecipeManager);
+        //snapHelper.attachToRecyclerView(rvCreatedRecipes);
         getRecipesCreated();
     }
 

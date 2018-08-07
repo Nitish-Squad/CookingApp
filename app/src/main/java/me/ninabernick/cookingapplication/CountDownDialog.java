@@ -142,7 +142,9 @@ public class CountDownDialog extends DialogFragment {
                     }
 
                     NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), "cookingappid")
+
                             .setSmallIcon(R.drawable.cooking)
+
                             .setContentTitle("Timer Complete")
                             .setStyle(new NotificationCompat.BigTextStyle()
                                     .bigText("Step timer complete, ready to move onto the next step!"))

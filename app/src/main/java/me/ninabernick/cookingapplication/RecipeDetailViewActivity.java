@@ -139,7 +139,7 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
             ivSave.setImageResource(R.drawable.ic_vector_heart_stroke);
         }
         else {
-            ivSave.setImageResource(R.drawable.ic_vector_heart);
+            ivSave.setColorFilter(R.drawable.ic_vector_heart);
         }
         ivSave.setOnClickListener(new View.OnClickListener() {
             @Override

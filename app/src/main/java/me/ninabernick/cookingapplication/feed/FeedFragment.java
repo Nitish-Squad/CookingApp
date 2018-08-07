@@ -10,11 +10,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,8 +26,9 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.tubitv.ui.TubiLoadingView;
 
+
+import java.security.cert.CertificateNotYetValidException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,9 +52,11 @@ public class FeedFragment extends Fragment {
     TextView tvFilterRecipes;
     TextView tvFilterByIngredient;
     ParseUser user;
-    FilterFragment filter = new FilterFragment();
-    FilterIngredientFragment filterIngredients = new FilterIngredientFragment();
+
+
     ProgressBar loadingView;
+    LinearLayout llTitle;
+    LinearLayout llSelectedFilters;
 
     Spinner spSort;
     public static final String DATE = "Date Created (Recent to Old)";
@@ -94,10 +100,10 @@ public class FeedFragment extends Fragment {
 
         //check if the user has applied filters to their search
         if (!filters.isEmpty()) {
-            recipeQuery.whereContainedIn("tags", filters);
+            recipeQuery.whereContainsAll("tags", filters);
         }
         if (!ingredientFilters.isEmpty()) {
-            recipeQuery.whereContainedIn("textIngredients", ingredientFilters);
+            recipeQuery.whereContainsAll("textIngredients", ingredientFilters);
         }
 
          //order by sorting method
@@ -291,11 +297,13 @@ public class FeedFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loadingView = (ProgressBar) view.findViewById(R.id.pbLoading);
-
+        llTitle = (LinearLayout) view.findViewById(R.id.llTitle);
+        llSelectedFilters = (LinearLayout) view.findViewById(R.id.llSelectedTags);
         tvFilterByIngredient = (TextView) view.findViewById(R.id.tvFilterByIngredient);
         tvFilterByIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FilterIngredientFragment filterIngredients = new FilterIngredientFragment();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 
                 filterIngredients.setTargetFragment(FeedFragment.this, DIALOG_REQUEST_CODE);
@@ -311,7 +319,7 @@ public class FeedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-
+                FilterFragment filter = new FilterFragment();
                 filter.setTargetFragment(FeedFragment.this, DIALOG_REQUEST_CODE);
                 filter.show(ft, "dialog");
             }
@@ -319,9 +327,10 @@ public class FeedFragment extends Fragment {
 
         rvFeed = (RecyclerView) view.findViewById(R.id.rvFeed);
         rvFeed.setAdapter(adapter);
-
         adapter.clear();
         rvFeed.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
+
+
         // set spinner with dummy last item to display
         final int listsize = sortMethods.size()-1;
         spSort = (Spinner) view.findViewById(R.id.spSort);
@@ -348,9 +357,21 @@ public class FeedFragment extends Fragment {
                         getRecipes();
                         break;
                     case HomeActivity.CREATED_RECIPES:
+                        TextView title = new TextView(getContext());
+                        title.setText("Created Recipes");
+                        title.setTextAppearance(R.style.default_font_large);
+                        title.setGravity(Gravity.CENTER);
+                        title.setPadding(10,10,10,10);
+                        llTitle.addView(title);
                         getRecipesCreated();
                         break;
                     case HomeActivity.SAVED_RECIPES:
+                        TextView title2 = new TextView(getContext());
+                        title2.setText("Saved Recipes");
+                        title2.setTextAppearance(R.style.default_font_large);
+                        title2.setGravity(Gravity.CENTER);
+                        title2.setPadding(10,10,10,10);
+                        llTitle.addView(title2);
                         getSavedRecipes();
                         break;
                     default:
@@ -376,5 +397,42 @@ public class FeedFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
+    //dynamically add selected tags to linear layout
+    public void updateSelectedTags() {
+        llSelectedFilters.removeAllViews();
+        for (int i = 0; i < filters.size(); i++) {
+            final CheckBox cb = new CheckBox(getContext());
+            final String tag = filters.get(i);
+            cb.setChecked(true);
+            cb.setText(tag);
+            cb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    filters.remove(tag);
+                    llSelectedFilters.removeView(cb);
+                    getRecipes();
+                }
+            });
+            llSelectedFilters.addView(cb);
+        }
+        Log.d("ingredient filters", ingredientFilters.toString());
+        for (int i = 0; i < ingredientFilters.size(); i++) {
+            final CheckBox cb = new CheckBox(getContext());
+            final String ingredient = ingredientFilters.get(i);
+            cb.setChecked(true);
+            cb.setText(ingredient);
+            cb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ingredientFilters.remove(ingredient);
+                    llSelectedFilters.removeView(cb);
+                    getRecipes();
+                }
+            });
+            llSelectedFilters.addView(cb);
+        }
+        //getRecipes();
+    }
 
 }
+
