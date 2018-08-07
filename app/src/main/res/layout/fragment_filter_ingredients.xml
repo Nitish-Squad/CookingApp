@@ -49,20 +49,32 @@
 
         android:src="@android:drawable/ic_menu_add"
         android:tint="@android:color/black" />
+
     <Button
         android:id="@+id/btFilter"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivAddIngredient"
         android:layout_centerHorizontal="true"
-        android:text="@string/filterbutton" />
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/filterbutton"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
     <Button
         android:id="@+id/btClear"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btFilter"
         android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_button"
         android:text="Clear Ingredients"
-        android:layout_margin="10dp"/>
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
 </RelativeLayout>
