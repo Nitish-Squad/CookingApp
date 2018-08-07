@@ -27,8 +27,6 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-
-import java.security.cert.CertificateNotYetValidException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -128,13 +126,20 @@ public class FeedFragment extends Fragment {
             public void done(List<Recipe> objects, ParseException e) {
                 if (e == null)
                 {
-
+                    /*
+                     * Found the multiple loading issue, the adapter list was clear each time BUT
+                     * the list that existed in the actual feed fragment itself was never cleared
+                     * so each individual load reloaded the recipes list in this fragment which was
+                     * then added to the adapter.
+                     */
+                    recipes.clear();
                     for (int i = 0; i < objects.size(); i ++){
                         Recipe recipe = objects.get(i);
                         recipes.add(recipe);
                     }
 
-                    
+
+
                     adapter.clear();
                     adapter.addAll(recipes);
                     adapter.notifyDataSetChanged();
