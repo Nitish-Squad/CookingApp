@@ -3,6 +3,8 @@ package me.ninabernick.cookingapplication;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -12,6 +14,8 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+
 import android.widget.TextView;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
@@ -40,6 +44,11 @@ public class CountDownDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_countdowntimer_dialog, container);
+        // Not exactly sure why, but this code is required to get the dialog to have rounded corners
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        }
         counter = (TextView) view.findViewById(R.id.tvCount);
         progress = (CircularProgressBar) view.findViewById(R.id.determinateBar);
         return view;
@@ -108,7 +117,8 @@ public class CountDownDialog extends DialogFragment {
                  * longer than a second so we want the animation to last longer than each tick so the
                  * animation is always moving or barely stopped.
                  */
-                progress.setProgressWithAnimation((time_elapsed + 1), 1250);
+                progress.setProgressWithAnimation(time_elapsed, 1250);
+
             }
 
             @Override

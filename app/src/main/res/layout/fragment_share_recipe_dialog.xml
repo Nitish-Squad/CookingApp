@@ -3,11 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/rounded_corners_shape"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tvShareTitle"
         android:layout_width="125dp"
+        android:layout_margin="10dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -18,6 +20,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvSharedRecipes"
+        android:layout_margin="10dp"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvShareTitle"
