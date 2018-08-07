@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropSquareTransformation;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.ninabernick.cookingapplication.R;
 import me.ninabernick.cookingapplication.RecipeDetailViewActivity;
 import me.ninabernick.cookingapplication.models.Recipe;
@@ -75,6 +74,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     }
 
     public void addAll(List<Recipe> newRecipes) {
+        clear();
         recipes.addAll(newRecipes);
         notifyDataSetChanged();
     }
