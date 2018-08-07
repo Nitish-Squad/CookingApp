@@ -133,6 +133,9 @@ public class StepsFragment extends Fragment {
                     intent.putExtra("video_extension", video_extension);
                     startActivity(intent);
                 }
+
+                // if not a valid video extension then nothing happens
+
             }
         });
 
