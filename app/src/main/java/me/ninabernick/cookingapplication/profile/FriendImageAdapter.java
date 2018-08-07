@@ -57,7 +57,10 @@ public class FriendImageAdapter extends RecyclerView.Adapter<FriendImageAdapter.
         int index = name.indexOf(" ");
         String firstName = name.substring(0, index);
        viewHolder.tvName.setText(firstName);
-       Glide.with(context).load(friend.getString("profileImageURL")).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(viewHolder.ivProfileThumb);
+       Glide.with(context)
+               .load("https://graph.facebook.com/" + friend.getString("fbId") + "/picture?type=large")
+               .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+               .into(viewHolder.ivProfileThumb);
     }
 
     @Override

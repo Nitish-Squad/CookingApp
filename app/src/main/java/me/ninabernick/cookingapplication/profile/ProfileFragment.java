@@ -3,16 +3,11 @@ package me.ninabernick.cookingapplication.profile;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -194,8 +189,12 @@ public class ProfileFragment extends Fragment {
 
         tvName.setText(name);
 
-        profileImageUrl = user.getString("profileImageURL");
-        Glide.with(view).load(profileImageUrl).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(ivProfileImage);
+        profileImageUrl = "https://graph.facebook.com/" + user.getString("fbId") + "/picture?type=large";
+        Glide.with(view)
+                .load(profileImageUrl)
+                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                .into(ivProfileImage);
+
         tvSavedRecipes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
