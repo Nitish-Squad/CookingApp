@@ -30,7 +30,7 @@
         android:layout_alignStart="@id/ivRecipeImage"
         android:layout_below="@id/ivRecipeImage"
         android:layout_marginBottom="5dp"
-        android:layout_toStartOf="@id/fb_share_button"
+
         android:text="Title"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -49,8 +49,7 @@
         android:id="@+id/tvIngredientHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/ivRecipeImage"
-        android:layout_below="@id/toolbar_main"
+        android:layout_below="@id/ivSaveRecipe"
         android:layout_marginStart="22dp"
         android:layout_marginTop="10dp"
         android:text="@string/IngredientHeader" />
@@ -85,21 +84,19 @@
         android:id="@+id/ivSaveRecipe"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/ivRecipeImage"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:tint="@color/colorPrimaryDark"
-        android:src="@drawable/save" />
+        android:layout_below="@+id/toolbar_main"
+        android:layout_margin="10dp"
+        android:layout_toEndOf="@+id/fb_share_button"
+        android:src="@drawable/ic_vector_heart_stroke"
+        android:tint="@color/colorPrimaryDark" />
 
     <RatingBar
         android:id="@+id/rbDisplayRating"
         style="@android:style/Widget.DeviceDefault.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp" />
+        android:layout_alignStart="@+id/ivRecipeImage"
+        android:layout_below="@+id/tvTitle" />
 
     <LinearLayout
         android:id="@+id/llComments"
@@ -122,11 +119,11 @@
         android:id="@+id/fb_share_button"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_alignTop="@+id/tvTitle"
-        android:layout_marginLeft="10dp"
-        android:layout_toStartOf="@+id/ivSaveRecipe"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar_main"
+        android:layout_margin="10dp"
         android:src="@drawable/mail"
-        android:tint="@color/colorPrimaryDark"/>
+        android:tint="@color/colorPrimaryDark" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
