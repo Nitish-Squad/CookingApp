@@ -74,6 +74,8 @@ public class FilterFragment extends DialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setCancelable(true);
+        selectedTags.clear();
+        Log.d("onViewCreated", "called");
 
         filter = (Button) view.findViewById(R.id.btFilter);
         filter.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +87,7 @@ public class FilterFragment extends DialogFragment {
                 FeedFragment feed = (FeedFragment) getTargetFragment();
                 if (feed != null) {
                     feed.getRecipes();
+                    feed.updateSelectedTags();
                 }
                 dismiss();
             }
@@ -94,6 +97,13 @@ public class FilterFragment extends DialogFragment {
         for (int i = 0; i < tags.size(); i++) {
             CheckBox cb = new CheckBox(view.getContext());
             cb.setText(tags.get(i));
+            if (FeedFragment.filters.contains(tags.get(i))) {
+                cb.setChecked(true);
+                selectedTags.add(cb.getText().toString());
+            }
+            else {
+                cb.setChecked(false);
+            }
             cb.setId(i);
             cb.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -129,6 +139,7 @@ public class FilterFragment extends DialogFragment {
                 FeedFragment feed = (FeedFragment) getTargetFragment();
                 if (feed != null) {
                     feed.getRecipes();
+                    feed.updateSelectedTags();
                 }
                 dismiss();
             }

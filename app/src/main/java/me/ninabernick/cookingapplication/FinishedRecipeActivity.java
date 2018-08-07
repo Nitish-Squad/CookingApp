@@ -70,20 +70,19 @@ public class FinishedRecipeActivity extends AppCompatActivity{
                     recipe.updateAverageRating();
                     Toast.makeText(FinishedRecipeActivity.this, "Thanks for your feedback!", Toast.LENGTH_SHORT).show();
                 }
-                if (etLeaveComment.getText().equals("")) {
-                    Comment comment = new Comment();
+                if (!etLeaveComment.getText().equals("")) {
+                    final Comment comment = new Comment();
                     comment.setText(etLeaveComment.getText().toString());
                     comment.setUser(ParseUser.getCurrentUser());
                     comment.setRecipe(recipe);
-                    recipe.addComment(comment);
+
                     comment.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-
+                            recipe.addComment(comment);
                             recipe.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
-                                    // this toast isnt showing up, not the biggest deal low priority thing to fix
                                     Toast.makeText(FinishedRecipeActivity.this, "Thanks for your feedback!", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(FinishedRecipeActivity.this, HomeActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
