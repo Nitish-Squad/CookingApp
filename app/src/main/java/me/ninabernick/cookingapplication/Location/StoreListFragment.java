@@ -3,6 +3,7 @@ package me.ninabernick.cookingapplication.Location;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -14,15 +15,16 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.ninabernick.cookingapplication.R;
 
@@ -36,6 +38,8 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
     StoreAdapter storeAdapter;
     RecyclerView rvMyStores;
     BottomNavigationView bottomNavigationView;
+    ProgressBar loadingView;
+    Boolean pricelistsorted = false;
 
     private StoreListFragmentListener listener;
 
@@ -125,6 +129,7 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
             Log.d("GooglePlacesReadTask", "onPostExecute Exit");
 
             storeAdapter.notifyDataSetChanged();
+            loadingView.setVisibility(View.INVISIBLE);
 
             Log.d("Adapter", "Not Different Data Set");
 
@@ -141,6 +146,8 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        loadingView = (ProgressBar) view.findViewById(R.id.pbLoading);
+
         rvMyStores = view.findViewById(R.id.rvMyStores);
         rvMyStores.setLayoutManager(new LinearLayoutManager(getContext()));
         rvMyStores.setHasFixedSize(true);
@@ -153,18 +160,29 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.distance:
-                        calltoNearbyList();
+                        loadingView.setVisibility(View.VISIBLE);
                         bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.rating);
+                        rvMyStores.smoothScrollToPosition(0);
+                        calltoNearbyList();
                         return true;
                     case R.id.rating:
+                        loadingView.setVisibility(View.VISIBLE);
                         bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.rating_filled);
                         rvMyStores.smoothScrollToPosition(0);
                         calltoProminenceList();
                         return true;
                     case R.id.price:
+                        loadingView.setVisibility(View.VISIBLE);
                         bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.rating);
                         rvMyStores.smoothScrollToPosition(0);
-                        sortListPrice();
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                sortListPrice();
+                                loadingView.setVisibility(View.INVISIBLE);
+                            }
+                        }, 100);
                         return true;
                 }
                 return false;
@@ -195,14 +213,15 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
     }
 
 
-    public void sortListPrice() {
+    public void sortListPrice () {
+
         Collections.sort(nearbyPlacesList, new Comparator<HashMap<String, String>>() {
             public int compare(HashMap<String, String> obj1, HashMap<String, String> obj2) {
                 return obj2.get("price_level").compareTo(obj1.get("price_level"));
             }
         });
         storeAdapter.notifyDataSetChanged();
-    }
+        }
 
     private String getDistanceUrl(double latitude, double longitude, String nearbyPlace) {
 
@@ -222,5 +241,22 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
         listener.oneStoreMap(longitude, latitude);
     }
 
+/*    public void findLocationClicked (Double longitude, Double latitude) {
+        String keyLat = "lat";
+        String keyLong = "long";
+        for (HashMap<String, String> hashMap : nearbyPlacesList)
+        {
+            for (String key : hashMap.keySet()) {
+                if (keyLat.equals(key)) {
+                    for (Map.Entry<String, String> entry  : hashMap.entrySet()) {
+                        entry.get(key);
+
+                    }
+                }
+            }
+        }
+        rvMyStores.smoothScrollToPosition(0);
+
+    }*/
 }
 

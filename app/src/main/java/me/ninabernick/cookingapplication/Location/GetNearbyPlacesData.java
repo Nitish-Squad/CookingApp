@@ -1,5 +1,6 @@
 package me.ninabernick.cookingapplication.Location;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.HashMap;
 import java.util.List;
 
+import me.ninabernick.cookingapplication.MainActivity;
 import me.ninabernick.cookingapplication.R;
 
 public class
@@ -23,6 +25,10 @@ GetNearbyPlacesData extends AsyncTask<Object, String, String> {
     String googlePlacesData;
     GoogleMap mMap;
     String url;
+
+    Activity activity;
+
+
 
     @Override
     protected String doInBackground(Object... params) {
@@ -64,6 +70,13 @@ GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(getHsvFromColor("#727A82")[0]));
             mMap.addMarker(markerOptions);
 
+/*            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    ((MainActivity )getActivity()).addCoupon();
+
+                }
+            });*/
         }
     }
 

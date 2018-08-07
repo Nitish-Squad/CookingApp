@@ -25,6 +25,12 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
+    <style name="default_font_extrasmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/lato</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
     <style name="default_font_dark_faded">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/lato</item>
@@ -73,6 +79,7 @@
         <item name="colorControlActivated">#c51162</item>
         <item name="android:minHeight">30dip</item>
         <item name="android:maxHeight">30dip</item>
+        <item name="android:gravity">center_vertical|start</item>
     </style>
 
 

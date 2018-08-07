@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -46,6 +47,7 @@ public class StoreDetailsFragment extends Fragment {
     CustomSwipeAdapter swipeAdapter;
 
     ImageButton returnButton;
+    ProgressBar loadingView;
 
     interface Callback {
         void onReturntoStoreList();
@@ -150,6 +152,8 @@ public class StoreDetailsFragment extends Fragment {
                     + formatted_address + ", " + website + ", " + open_now + ", " + rating + ", " + Float.parseFloat(rating) + ", " + pricelevel + ", " + Float.parseFloat(pricelevel));
 
             setViewHolders(view);
+            loadingView.setVisibility(View.INVISIBLE);
+
 
         }
     }
@@ -164,6 +168,9 @@ public class StoreDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        loadingView = (ProgressBar) view.findViewById(R.id.pbLoading);
+        //loadingView.setVisibility(View.VISIBLE);
 
         String url = getUrl(id);
         Object[] DataTransfer = new Object[2];

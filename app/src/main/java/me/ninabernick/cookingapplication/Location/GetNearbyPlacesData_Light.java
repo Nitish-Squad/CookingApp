@@ -3,6 +3,8 @@ package me.ninabernick.cookingapplication.Location;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -18,6 +20,7 @@ GetNearbyPlacesData_Light extends AsyncTask<Object, String, String> {
     String googlePlacesData;
     GoogleMap mMap;
     String url;
+    ProgressBar loadingView;
 
     @Override
     protected String doInBackground(Object... params) {
@@ -25,6 +28,7 @@ GetNearbyPlacesData_Light extends AsyncTask<Object, String, String> {
             Log.d("GetNearbyPlacesData", "doInBackground entered");
             mMap = (GoogleMap) params[0];
             url = (String) params[1];
+            loadingView = (ProgressBar) params [2];
             DownloadUrl downloadUrl = new DownloadUrl();
             googlePlacesData = downloadUrl.readUrl(url);
             Log.d("GooglePlacesReadTask", "doInBackground Exit");
@@ -58,8 +62,10 @@ GetNearbyPlacesData_Light extends AsyncTask<Object, String, String> {
             markerOptions.title(placeName + " : " + vicinity);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(getHsvFromColor("#727A82")[0])).alpha(.25f);
             mMap.addMarker(markerOptions);
-
         }
+
+        loadingView.setVisibility(View.INVISIBLE);
+
     }
 
     private static float[] getHsvFromColor(String colorString) {

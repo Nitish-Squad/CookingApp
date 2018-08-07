@@ -17,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bennyhuo.swipefinishable.SwipeFinishable;
@@ -46,7 +47,7 @@ import me.ninabernick.cookingapplication.R;
 public class MapsFragment extends FragmentActivity implements OnMapReadyCallback, StoreDetailsFragment.Callback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, StoreListFragment.StoreListFragmentListener {
+        LocationListener, StoreListFragment.StoreListFragmentListener, GoogleMap.OnCameraIdleListener {
 
     private GoogleMap mMap;
     double latitude;
@@ -56,6 +57,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
+    ProgressBar loadingView;
 
     private static final String TAG = MapsFragment.class.getSimpleName();
 
@@ -64,6 +66,8 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        loadingView = (ProgressBar) findViewById(R.id.pbLoading);
 
         final DragToClose dragToClose = findViewById(R.id.drag_to_close);
         dragToClose.setDragListener(new DragListener() {
@@ -78,6 +82,8 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
                 Log.d(TAG, "onViewCosed()");
             }
         });
+
+        loadingView.setVisibility(View.VISIBLE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -95,6 +101,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
     private boolean CheckGooglePlayServices() {
@@ -129,7 +136,6 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
-
     }
 
     public void showStores() {
@@ -222,11 +228,14 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
                 .bearing(90)                // Sets the orientation of the camera to east
                 .tilt(40)                   // Sets the tilt of the camera to 30 degrees
                 .build();                   // Creates a CameraPosition from the builder
+
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMap.setOnCameraIdleListener(this);
 
         Log.d("onLocationChanged", "Exit");
 
     }
+
 
     public BitmapDescriptor getMarkerIcon(Integer color) {
         float[] hsv = new float[3];
@@ -306,6 +315,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void oneStoreMap(String latitude, String longitude) {
+        loadingView.setVisibility(View.VISIBLE);
         mMap.clear();
         showStoresLight();
 
@@ -315,11 +325,16 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(getHsvFromColor("#727A82")[0]));
         mMap.addMarker(markerOptions);
 
-        MarkerOptions markerOptionsCL = new MarkerOptions();
-        LatLng latLngCL = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-        markerOptionsCL.position(latLngCL);
-        markerOptionsCL.icon(getMarkerIcon(R.color.lightGray));
-        mMap.addMarker(markerOptionsCL);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(latLng)             // Sets the center of the map to location user
+                .zoom(14)                   // Sets the zoom
+                .bearing(90)                // Sets the orientation of the camera to east
+                .tilt(40)                   // Sets the tilt of the camera to 30 degrees
+                .build();                   // Creates a CameraPosition from the builder
+
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMap.setOnCameraIdleListener(this);
 
     }
 
@@ -333,9 +348,10 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
     public void showStoresLight() {
         String Supermarket = "supermarket";
         String url = getUrl(latitude, longitude, Supermarket);
-        Object[] DataTransfer = new Object[2];
+        Object[] DataTransfer = new Object[3];
         DataTransfer[0] = mMap;
         DataTransfer[1] = url;
+        DataTransfer[2] = loadingView;
         Log.d("onClick", url);
         GetNearbyPlacesData_Light getNearbyPlacesData = new GetNearbyPlacesData_Light();
         getNearbyPlacesData.execute(DataTransfer);
@@ -344,7 +360,14 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onReturntoStoreList() {
+        loadingView.setVisibility(View.VISIBLE);
         onLocationChanged(mLastLocation);
+    }
+
+
+    @Override
+    public void onCameraIdle() {
+        loadingView.setVisibility(View.INVISIBLE);
     }
 }
 
