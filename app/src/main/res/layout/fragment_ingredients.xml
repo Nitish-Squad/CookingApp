@@ -29,7 +29,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:text="Ingredients"
+                android:text=" Add Ingredients 2/3"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="15dp"
                 tools:layout_editor_absoluteY="435dp" />
