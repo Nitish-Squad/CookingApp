@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropSquareTransformation;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.ninabernick.cookingapplication.Location.MapsFragment;
 import me.ninabernick.cookingapplication.ShareRecipe.ShareRecipeDialog;
 import me.ninabernick.cookingapplication.models.Comment;
@@ -81,8 +79,9 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(RecipeDetailViewActivity.this, HomeActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(RecipeDetailViewActivity.this, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
         View view = findViewById(android.R.id.content);
