@@ -1,6 +1,9 @@
 package me.ninabernick.cookingapplication;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,7 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropSquareTransformation;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.ninabernick.cookingapplication.Location.MapsFragment;
 import me.ninabernick.cookingapplication.ShareRecipe.ShareRecipeDialog;
 import me.ninabernick.cookingapplication.models.Comment;
@@ -81,8 +82,9 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(RecipeDetailViewActivity.this, HomeActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(RecipeDetailViewActivity.this, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
         View view = findViewById(android.R.id.content);
@@ -135,12 +137,21 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
                 .apply(new RequestOptions().transforms(new CropSquareTransformation()))
                 .into(ivImage);
         ivSave = (ImageView) findViewById(R.id.ivSaveRecipe);
+
+        // save button animation
+        Drawable[] layers = new Drawable[2];
+        layers[0] = getResources().getDrawable(R.drawable.heart_outline, getTheme());
+        layers[1] = getResources().getDrawable(R.drawable.heart, getTheme());
+        final TransitionDrawable transitionDrawable = new TransitionDrawable(layers);
+        ivSave.setImageDrawable(transitionDrawable);
+
         if (!hasSaved(ParseUser.getCurrentUser(), recipe)) {
-            ivSave.setImageResource(R.drawable.ic_vector_heart_stroke);
+            transitionDrawable.resetTransition();
         }
         else {
-            ivSave.setColorFilter(R.drawable.ic_vector_heart);
+            transitionDrawable.startTransition(300);
         }
+
         ivSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,13 +163,14 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
                     user.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            ivSave.setImageResource(R.drawable.ic_vector_heart);
-                            Toast.makeText(RecipeDetailViewActivity.this, "Saved to recipes!", Toast.LENGTH_LONG);
+
+                            transitionDrawable.startTransition(300);
+                            Toast.makeText(RecipeDetailViewActivity.this, "Saved to recipes!", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
                 else {
-                    ivSave.setImageResource(R.drawable.ic_vector_heart_stroke);
+                    transitionDrawable.reverseTransition(300);;
                     ArrayList<String> savedRecipes = new ArrayList<>();
                     savedRecipes.addAll(user.<String>getList("savedRecipes"));
                     savedRecipes.remove(recipe.getObjectId());
@@ -256,14 +268,23 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
 
     private boolean hasSaved(ParseUser user, Recipe recipe) {
         ArrayList<String> savedRecipes = new ArrayList<>();
-        if (user.<String>getList("savedRecipes") != null) {
+        List<String> sRecipes = user.getList("savedRecipes");
+        Log.d("this recipe", recipe.getObjectId());
+        if (sRecipes != null) {
             savedRecipes.addAll(user.<String>getList("savedRecipes"));
+            for (int i = 0; i < savedRecipes.size(); i++) {
+                Log.d("saved Recipes", savedRecipes.get(i));
+            }
         }
 
         if (savedRecipes.contains(recipe.getObjectId())) {
+            Log.d("has saved", "true");
             return true;
         }
-        else return false;
+        else {
+            Log.d("has saved", "false");
+            return false;
+        }
     }
 
 }

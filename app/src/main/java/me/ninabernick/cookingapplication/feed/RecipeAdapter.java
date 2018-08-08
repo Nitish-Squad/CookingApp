@@ -74,7 +74,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     }
 
     public void addAll(List<Recipe> newRecipes) {
-        clear();
         recipes.addAll(newRecipes);
         notifyDataSetChanged();
     }
@@ -112,12 +111,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             if (getAdapterPosition() != RecyclerView.NO_POSITION) {
                 Intent i = new Intent(view.getContext(), RecipeDetailViewActivity.class);
                 i.putExtra("recipe", recipes.get(getAdapterPosition()));
-                Pair<View, String> p1 = Pair.create((View)ivThumbnail, context.getResources().getString(R.string.TRANS_RECIPEIMAGE));
-                //Pair<View, String> p3 = Pair.create((View)tvTitle, context.getResources().getString(R.string.TRANS_TITLE));
-                //Pair<View, String> p4 = Pair.create((View)tvDescription, context.getResources().getString(R.string.TRANS_DESCRIP));
-                ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation((Activity)context, p1);
-                context.startActivity(i, options.toBundle());
+//                Pair<View, String> p1 = Pair.create((View)ivThumbnail, context.getResources().getString(R.string.TRANS_RECIPEIMAGE));
+//                //Pair<View, String> p3 = Pair.create((View)tvTitle, context.getResources().getString(R.string.TRANS_TITLE));
+//                //Pair<View, String> p4 = Pair.create((View)tvDescription, context.getResources().getString(R.string.TRANS_DESCRIP));
+//                ActivityOptionsCompat options = ActivityOptionsCompat.
+//                        makeSceneTransitionAnimation((Activity)context, p1);
+                context.startActivity(i);
             }
 
         }
