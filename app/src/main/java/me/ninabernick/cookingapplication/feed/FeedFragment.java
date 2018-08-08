@@ -1,5 +1,8 @@
 package me.ninabernick.cookingapplication.feed;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -416,7 +419,31 @@ public class FeedFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     filters.remove(tag);
-                    llSelectedFilters.removeView(cb);
+
+                    ObjectAnimator fadeAnim = ObjectAnimator.ofFloat(cb, "alpha", 0.0f);
+                    fadeAnim.start();
+                    fadeAnim.addListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animator) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animator) {
+                            llSelectedFilters.removeView(cb);
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animator) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animator) {
+
+                        }
+                    });
+
                     getRecipes();
                 }
             });
@@ -432,7 +459,30 @@ public class FeedFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     ingredientFilters.remove(ingredient);
-                    llSelectedFilters.removeView(cb);
+                    ObjectAnimator fadeAnim = ObjectAnimator.ofFloat(cb, "alpha", 0.2f);
+                    fadeAnim.start();
+                    fadeAnim.addListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animator) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animator) {
+                            llSelectedFilters.removeView(cb);
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animator) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animator) {
+
+                        }
+                    });
+
                     getRecipes();
                 }
             });

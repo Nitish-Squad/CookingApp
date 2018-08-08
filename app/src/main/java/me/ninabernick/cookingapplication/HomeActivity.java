@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -33,6 +34,7 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
     Fragment RecipeDetailFragment;
     Fragment profileFragment = ProfileFragment.newInstance(ParseUser.getCurrentUser());
     Fragment searchFragment = new SearchFragment();
+    BasicInfoFragment createfragment1 = new BasicInfoFragment();
     Fragment savedRecipeFragment = FeedFragment.newInstance(SAVED_RECIPES, ParseUser.getCurrentUser());
     Fragment createdRecipeFragment = FeedFragment.newInstance(CREATED_RECIPES, ParseUser.getCurrentUser());
     public static BottomNavigationView bottomNavigationView;
@@ -67,32 +69,18 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.miFeed:
-                                //supportFinishAfterTransition();
-                                FragmentTransaction fragmentTransactionFeed = fragmentManager.beginTransaction();
-                                fragmentTransactionFeed.replace(R.id.flFragmentContainer, feedFragment);
-                                fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                                fragmentTransactionFeed.commit();
+                                switchToFragment(feedFragment);
                                 return true;
 
                             case R.id.miCreate:
-                                BasicInfoFragment createfragment1 = new BasicInfoFragment();
-                                fragmentTransactionFeed = fragmentManager.beginTransaction();
-                                fragmentTransactionFeed.replace(R.id.flFragmentContainer, createfragment1);
-                                fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                                fragmentTransactionFeed.commit();
+                                switchToFragment(createfragment1);
                                 return true;
 
                             case R.id.miProfile:
-                                FragmentTransaction fragmentTransactionProfile = fragmentManager.beginTransaction();
-                                fragmentTransactionProfile.replace(R.id.flFragmentContainer, profileFragment);
-                                fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                                fragmentTransactionProfile.commit();
+                                switchToFragment(profileFragment);
                                 return true;
                             case R.id.miSearch:
-                                FragmentTransaction fragmentTransactionSearch = fragmentManager.beginTransaction();
-                                fragmentTransactionSearch.replace(R.id.flFragmentContainer, searchFragment);
-                                fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                                fragmentTransactionSearch.commit();
+                                switchToFragment(searchFragment);
                                 return true;
 
                             default:
@@ -121,6 +109,14 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
         fragmentTransactionSavedRecipes.replace(R.id.flFragmentContainer, createdFragment);
         fragmentTransactionSavedRecipes.addToBackStack(null);
         fragmentTransactionSavedRecipes.commit();
+    }
+
+    public void switchToFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.flFragmentContainer, fragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fragmentTransaction.commit();
     }
 
 
