@@ -61,12 +61,15 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
 
     private static final String TAG = MapsFragment.class.getSimpleName();
 
+    StoreListFragment storeListFragment;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        fragmentManager = getSupportFragmentManager();
         loadingView = (ProgressBar) findViewById(R.id.pbLoading);
 
         final DragToClose dragToClose = findViewById(R.id.drag_to_close);
@@ -145,7 +148,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         DataTransfer[0] = mMap;
         DataTransfer[1] = url;
         Log.d("onClick", url);
-        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData(storeListFragment);
         getNearbyPlacesData.execute(DataTransfer);
         Toast.makeText(MapsFragment.this,"Nearby Supermarkets", Toast.LENGTH_LONG).show();
     }
@@ -246,9 +249,8 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
     public void loadStoreList() {
         Log.i("Latitute", "Latitute: " + latitude);
         Log.i("Longitute", "Longitude: " + longitude);
-        StoreListFragment storeListFragment = StoreListFragment.newInstance(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        storeListFragment = StoreListFragment.newInstance(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
-        final FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.textContainer, storeListFragment).commit();
         Log.i("On Create Called from MapsActivity", "On Create Called from Maps Activity");
     }

@@ -26,8 +26,12 @@ GetNearbyPlacesData extends AsyncTask<Object, String, String> {
     GoogleMap mMap;
     String url;
 
-    Activity activity;
+    StoreListFragment fragment;
 
+    public GetNearbyPlacesData(StoreListFragment fragment)
+    {
+        this.fragment = fragment;
+    }
 
 
     @Override
@@ -56,6 +60,7 @@ GetNearbyPlacesData extends AsyncTask<Object, String, String> {
     }
 
     private void ShowNearbyPlaces(List<HashMap<String, String>> nearbyPlacesList) {
+
         for (int i = 0; i < nearbyPlacesList.size(); i++) {
             Log.d("onPostExecute","Entered into showing locations");
             MarkerOptions markerOptions = new MarkerOptions();
@@ -70,13 +75,14 @@ GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(getHsvFromColor("#727A82")[0]));
             mMap.addMarker(markerOptions);
 
-/*            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
-                    ((MainActivity )getActivity()).addCoupon();
-
+                    LatLng position = marker.getPosition();
+                    fragment.findLocationClicked(position.latitude, position.longitude);
+                    return true;
                 }
-            });*/
+            });
         }
     }
 

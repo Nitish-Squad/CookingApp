@@ -47,6 +47,8 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
 
+    RestaurantListFragment restaurantListFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,8 +114,8 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
         DataTransfer[0] = mMap;
         DataTransfer[1] = url;
         Log.d("onClick", url);
-        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
-        getNearbyPlacesData.execute(DataTransfer);
+        //GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData(this);
+        //getNearbyPlacesData.execute(DataTransfer);
         Toast.makeText(RestaurantActivity.this,"Nearby Supermarkets", Toast.LENGTH_LONG).show();
     }
 
@@ -200,7 +202,7 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
     public void loadStoreList() {
         Log.i("Latitute", "Latitute: " + latitude);
         Log.i("Longitute", "Longitude: " + longitude);
-        RestaurantListFragment restaurantListFragment = RestaurantListFragment.newInstance(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        restaurantListFragment = RestaurantListFragment.newInstance(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.textContainer, restaurantListFragment).commit();

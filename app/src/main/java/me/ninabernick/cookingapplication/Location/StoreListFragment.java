@@ -241,22 +241,19 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
         listener.oneStoreMap(longitude, latitude);
     }
 
-/*    public void findLocationClicked (Double longitude, Double latitude) {
-        String keyLat = "lat";
-        String keyLong = "long";
+
+    public void findLocationClicked (Double latitude, Double longitude) {
         for (HashMap<String, String> hashMap : nearbyPlacesList)
         {
-            for (String key : hashMap.keySet()) {
-                if (keyLat.equals(key)) {
-                    for (Map.Entry<String, String> entry  : hashMap.entrySet()) {
-                        entry.get(key);
+            if (Double.parseDouble(hashMap.get("lat")) == latitude) {
+                if (Double.parseDouble(hashMap.get("lng")) == longitude) {
+                    Log.i("Name", hashMap.get("place_name"));
+                    int position = nearbyPlacesList.indexOf(hashMap);
+                    rvMyStores.smoothScrollToPosition(position);
 
-                    }
-                }
+        }
             }
         }
-        rvMyStores.smoothScrollToPosition(0);
-
-    }*/
+    }
 }
 
