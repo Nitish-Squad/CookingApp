@@ -1,7 +1,6 @@
 package me.ninabernick.cookingapplication.feed;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +16,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -30,8 +30,6 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-
-import java.security.cert.CertificateNotYetValidException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -275,6 +273,7 @@ public class FeedFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         if (context instanceof Activity){
             this.listener = (FragmentActivity) context;
         }

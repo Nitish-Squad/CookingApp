@@ -9,10 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +46,7 @@ public class CreateStepsFragment extends Fragment {
     ArrayList<EditText> step_time_array;
     ArrayList<Spinner> icon_spinner_array;
     Spinner spinnerIcon1;
+    ProgressBar loadingView;
 
     List<String> steps_list;
 
@@ -63,12 +66,15 @@ public class CreateStepsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_create_steps, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadingView = (ProgressBar) view.findViewById(R.id.pbUploading);
+        loadingView.setVisibility(View.INVISIBLE);
 
         btnAddStep = (Button) view.findViewById(R.id.btnAdd);
         btnNext = (Button) view.findViewById(R.id.btnNext);
@@ -76,6 +82,7 @@ public class CreateStepsFragment extends Fragment {
         tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         etStepDescription1 = new EditText(getContext());
         etStepTime1 = new EditText(getContext());
+
 
         // initial spinner setup
         spinnerIcon1 = new Spinner(getContext());
@@ -209,10 +216,19 @@ public class CreateStepsFragment extends Fragment {
                          * No need to implement callbacks, if you set the item selected it acts as though the
                          * icon has been tapped and runs the code that follows.
                          */
+
+                        for (Fragment fragment:getFragmentManager().getFragments()) {
+                            getFragmentManager().beginTransaction().remove(fragment).commit();
+                        }
                         HomeActivity homeActivity = (HomeActivity) getActivity();
                         homeActivity.bottomNavigationView.setSelectedItemId(R.id.miFeed);
                     }
                 });
+
+                loadingView.setVisibility(View.VISIBLE);
+                createActivity.recipe_to_add = new Recipe();
+                getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
 
 
