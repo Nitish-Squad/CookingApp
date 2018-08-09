@@ -56,28 +56,30 @@
 
                 <TextView
                     android:id="@+id/tvIngredientHeader"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
                     android:layout_alignStart="@id/tvDescription"
                     android:layout_below="@+id/tvDescription"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="30dp"
-                    android:gravity="center"
                     android:text="@string/IngredientHeader"
                     android:textSize="18sp" />
 
-                <ListView
-                    android:id="@+id/lvIngredients"
-                    android:layout_width="200dp"
+                <LinearLayout
+                    android:id="@+id/llIngredients"
+                    android:layout_width="175dp"
                     android:layout_height="wrap_content"
-
+                    android:orientation="vertical"
                     android:layout_alignParentBottom="true"
+                    android:paddingLeft="10dp"
                     android:layout_alignStart="@id/tvIngredientHeader"
                     android:layout_below="@id/tvIngredientHeader"
-                    android:divider="@android:color/transparent">
+                    >
 
 
-                </ListView>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tvTime"
@@ -116,8 +118,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@+id/tvIngredientHeader"
-                    android:layout_margin="10dp"
-                    android:layout_toRightOf="@id/lvIngredients"
+
+                    android:layout_toRightOf="@id/llIngredients"
                     android:orientation="vertical"
                     android:paddingVertical="3dp"></LinearLayout>
 
@@ -125,11 +127,10 @@
                     android:id="@+id/tvCommentLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/llComments"
                     android:layout_alignTop="@+id/tvIngredientHeader"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="18sp"
-                    android:layout_toEndOf="@+id/tvIngredientHeader"
-                    android:text="Comments:" />
+                    android:text="Comments:"
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:id="@+id/fb_share_button"
