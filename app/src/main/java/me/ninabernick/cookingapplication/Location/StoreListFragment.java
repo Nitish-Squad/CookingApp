@@ -1,6 +1,7 @@
 package me.ninabernick.cookingapplication.Location;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 
@@ -28,7 +31,7 @@ import java.util.Map;
 
 import me.ninabernick.cookingapplication.R;
 
-public class StoreListFragment extends Fragment implements StoreAdapter.MapListener{
+public class StoreListFragment extends Fragment implements StoreAdapter.MapListener {
 
     GoogleMap mMap;
     double latitude;
@@ -39,7 +42,7 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
     RecyclerView rvMyStores;
     BottomNavigationView bottomNavigationView;
     ProgressBar loadingView;
-    Boolean pricelistsorted = false;
+    LinearLayoutManager llm;
 
     private StoreListFragmentListener listener;
 
@@ -149,7 +152,7 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
         loadingView = (ProgressBar) view.findViewById(R.id.pbLoading);
 
         rvMyStores = view.findViewById(R.id.rvMyStores);
-        rvMyStores.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvMyStores.setLayoutManager(new SnappingLinearLayoutManager(getContext()));
         rvMyStores.setHasFixedSize(true);
         rvMyStores.setAdapter(storeAdapter);
         calltoNearbyList();
@@ -213,7 +216,7 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
     }
 
 
-    public void sortListPrice () {
+    public void sortListPrice() {
 
         Collections.sort(nearbyPlacesList, new Comparator<HashMap<String, String>>() {
             public int compare(HashMap<String, String> obj1, HashMap<String, String> obj2) {
@@ -221,7 +224,7 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
             }
         });
         storeAdapter.notifyDataSetChanged();
-        }
+    }
 
     private String getDistanceUrl(double latitude, double longitude, String nearbyPlace) {
 
@@ -242,16 +245,30 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
     }
 
 
-    public void findLocationClicked (Double latitude, Double longitude) {
-        for (HashMap<String, String> hashMap : nearbyPlacesList)
-        {
+    public void findLocationClicked(Double latitude, Double longitude) {
+        for (HashMap<String, String> hashMap : nearbyPlacesList) {
             if (Double.parseDouble(hashMap.get("lat")) == latitude) {
                 if (Double.parseDouble(hashMap.get("lng")) == longitude) {
-                    Log.i("Name", hashMap.get("place_name"));
-                    int position = nearbyPlacesList.indexOf(hashMap);
+
+                    final int position = nearbyPlacesList.indexOf(hashMap);
                     rvMyStores.smoothScrollToPosition(position);
 
-        }
+                    View rightview = rvMyStores.getChildAt(position);
+
+                    for (int i = 0; i < nearbyPlacesList.size(); i++) {
+                        View view = rvMyStores.getChildAt(i);
+
+                        if (view != null) {
+                            TextView textView = (TextView) view.findViewById(R.id.tvStoreName);
+                            if (position == i) {
+                                Log.i("textview", "textview" + textView.toString());
+                                textView.setTextColor(ContextCompat.getColor(getContext(), R.color.lightGray));
+                            } else {
+                                textView.setTextColor(ContextCompat.getColor(getContext(), R.color.darkPurple));
+                            }
+                        }
+                    }
+                }
             }
         }
     }

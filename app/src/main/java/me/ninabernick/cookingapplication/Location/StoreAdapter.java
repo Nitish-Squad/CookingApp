@@ -80,7 +80,6 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        Log.i("Store Adapter Size", "Size:" + nearbyPlacesList.size());
         return nearbyPlacesList.size();
     }
 
