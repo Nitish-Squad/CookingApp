@@ -83,8 +83,19 @@ public class CreateStepsFragment extends Fragment {
 
         // TODO: put the images in this spinner
         SimpleImageArrayAdapter adapter = new SimpleImageArrayAdapter(getContext(),
-                new Integer[]{R.drawable.stove_top_icon, R.drawable.chicken_icon, R.drawable.glove_icon});
+                new Integer[]{R.drawable.oven_vector,
+                        R.drawable.blender_vector,
+                        R.drawable.microwave_vector,
+                        R.drawable.bowl_vector,
+                        R.drawable.fridge_vector,
+                        R.drawable.kettle_vector,
+                        R.drawable.mixer_vector,
+                        R.drawable.pan_vector,
+                        R.drawable.roller_vector,
+                        R.drawable.toaster_vector,
+                        R.drawable.knife_vector});
         spinnerIcon1.setAdapter(adapter);
+        spinnerIcon1.setDropDownVerticalOffset(10);
 
         step_description_array = new ArrayList<>();
         step_description_array.add(etStepDescription1);
@@ -109,9 +120,20 @@ public class CreateStepsFragment extends Fragment {
                 // logic for adding new spinners for icons
                 Spinner tempspinner = new Spinner(getContext());
                 SimpleImageArrayAdapter adapter = new SimpleImageArrayAdapter(getContext(),
-                        new Integer[]{R.drawable.stove_top_icon, R.drawable.chicken_icon, R.drawable.glove_icon});
+                        new Integer[]{R.drawable.oven_vector,
+                                R.drawable.blender_vector,
+                                R.drawable.microwave_vector,
+                                R.drawable.bowl_vector,
+                                R.drawable.fridge_vector,
+                                R.drawable.kettle_vector,
+                                R.drawable.mixer_vector,
+                                R.drawable.pan_vector,
+                                R.drawable.roller_vector,
+                                R.drawable.toaster_vector,
+                                R.drawable.knife_vector});
                 tempspinner.setAdapter(adapter);
                 tempspinner.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+                tempspinner.setDropDownVerticalOffset(10);
                 steps.addView(tempspinner);
                 icon_spinner_array.add(tempspinner);
 
@@ -173,6 +195,7 @@ public class CreateStepsFragment extends Fragment {
 
                 createActivity.recipe_to_add = new Recipe();
 
+
                 new_recipe.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -180,7 +203,6 @@ public class CreateStepsFragment extends Fragment {
                         /*
                          * No need to implement callbacks, if you set the item selected it acts as though the
                          * icon has been tapped and runs the code that follows.
-                         * TODO: insert the newly added recipe to the
                          */
                         HomeActivity homeActivity = (HomeActivity) getActivity();
                         homeActivity.bottomNavigationView.setSelectedItemId(R.id.miFeed);
@@ -212,11 +234,27 @@ public class CreateStepsFragment extends Fragment {
         Integer spinner_position = icon_spinner_array.get(position).getSelectedItemPosition();
         switch (spinner_position){
             case (0):
-                return "stove_top_icon";
+                return "oven_vector";
             case(1):
-                return "chicken_icon";
+                return "blender_vector";
             case(2):
-                return"glove_icon";
+                return "microwave_vector";
+            case(3):
+                return "bowl_vector";
+            case(4):
+                return "fridge_vector";
+            case(5):
+                return "kettle_vector";
+            case(6):
+                return "mixer_vector";
+            case(7):
+                return "pan_vector";
+            case(8):
+                return "roller_vector";
+            case(9):
+                return "toaster_vector";
+            case(10):
+                return "knife_vector";
         }
 
         // this should never be reached, only here to solve error and indicate errors

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ABB8DB</color>
+    <color name="colorPrimary">#abb8db</color>
     <color name="colorPrimaryDark">#646E8C</color>
     <color name="colorAccent">#0D1940</color>
     <color name="darkPurple">#3D2F40</color>
