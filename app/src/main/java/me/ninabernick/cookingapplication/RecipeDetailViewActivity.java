@@ -1,6 +1,8 @@
 package me.ninabernick.cookingapplication;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
@@ -29,8 +31,12 @@ import com.bennyhuo.swipefinishable.SwipeFinishable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -58,12 +64,14 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
     private TextView tvDescription;
     private ImageView ivImage;
     private Recipe recipe;
-    private Button btStartRecipe;
-    private Button btStartMaps;
+
     private ImageView ivSave;
     private RatingBar rbDisplayRating;
     private LinearLayout llComments;
     private ImageView ivShare;
+    private ImageView ivFacebookShare;
+    private TextView tvCreatedBy;
+    private ImageView ivCreatedBy;
 
     private LinearLayout llIngredientList;
     private ArrayList<String> steps;
@@ -138,6 +146,21 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
         rbDisplayRating = (RatingBar) findViewById(R.id.rbDisplayRating);
         rbDisplayRating.setRating(recipe.getAverageRating().floatValue());
         ivShare = (ImageView) findViewById(R.id.fb_share_button);
+        ivFacebookShare = (ImageView) findViewById(R.id.ivFacebookShare);
+        tvCreatedBy = (TextView) findViewById(R.id.tvCreator);
+        ivCreatedBy = (ImageView) findViewById(R.id.ivCreatedBy);
+
+        String userId = recipe.getCreatedBy();
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        try {
+            ParseUser userCreated = query.get(userId);
+            Glide.with(this).load(userCreated.getString("profileImageURL")).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(ivCreatedBy);
+            tvCreatedBy.setText(userCreated.getString("name"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
 
 
         Glide.with(RecipeDetailViewActivity.this)
@@ -200,6 +223,27 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
             }
         });
 
+        ivFacebookShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ParseFile parseFile = recipe.getParseFile("recipeImage");
+                byte[] parse_data = new byte[0];
+                try {
+                    parse_data = parseFile.getData();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Bitmap image = BitmapFactory.decodeByteArray(parse_data, 0, parse_data.length);
+                SharePhoto photo = new SharePhoto.Builder()
+                        .setBitmap(image)
+                        .build();
+                SharePhotoContent content = new SharePhotoContent.Builder()
+                        .addPhoto(photo)
+                        .build();
+                ShareDialog.show(RecipeDetailViewActivity.this, content);
+            }
+        });
+
 
 
         tvTitle.setText(recipe.getTitle());
@@ -234,10 +278,6 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
 
 
         }
-
-
-
-
         getTopComments(recipe, 3);
 
 
@@ -246,7 +286,10 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
 
     private void getTopComments(Recipe recipe, int numComments) {
         List<String> commentIds = recipe.getComments();
-        if (commentIds == null) {
+        if (commentIds.size() == 0) {
+            TextView view = new TextView(this);
+            view.setText("No Comments Yet!");
+            llComments.addView(view);
             return;
         }
         ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
@@ -258,6 +301,7 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
             @Override
             public void done(List<Comment> objects, ParseException e) {
                 if (e == null) {
+                    llComments.removeAllViews();
                     for (int i = 0; i < objects.size(); i++) {
                         Comment comment = objects.get(i);
                         comments.add(comment);

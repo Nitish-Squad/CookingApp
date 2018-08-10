@@ -78,7 +78,7 @@ public class ShareRecipeDialog extends DialogFragment {
         user = ParseUser.getCurrentUser();
 
         recycler_friends = (RecyclerView) view.findViewById(R.id.RecyclerView);
-        fb_share = (ImageButton) view.findViewById(R.id.fb_share);
+        //fb_share = (ImageButton) view.findViewById(R.id.fb_share);
         friends.clear();
         friends.addAll(user.<String>getList("friends"));
 
@@ -97,34 +97,34 @@ public class ShareRecipeDialog extends DialogFragment {
 
         recycler_friends.setLayoutManager(layoutManager);
 
-        fb_share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                RecipeDetailViewActivity recipeDetails = (RecipeDetailViewActivity) getActivity();
-
-                Recipe recipe = recipeDetails.getRecipeShown();
-
-                ParseFile parseFile = recipe.getParseFile("recipeImage");
-                byte[] parse_data = new byte[0];
-                try {
-                    parse_data = parseFile.getData();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Bitmap image = BitmapFactory.decodeByteArray(parse_data, 0, parse_data.length);
-                SharePhoto photo = new SharePhoto.Builder()
-                        .setBitmap(image)
-                        .build();
-                SharePhotoContent content = new SharePhotoContent.Builder()
-                        .addPhoto(photo)
-                        .build();
-
-                ShareDialog.show(getActivity(), content);
-
-                dismiss();
-            }
-        });
+//        fb_share.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                RecipeDetailViewActivity recipeDetails = (RecipeDetailViewActivity) getActivity();
+//
+//                Recipe recipe = recipeDetails.getRecipeShown();
+//
+//                ParseFile parseFile = recipe.getParseFile("recipeImage");
+//                byte[] parse_data = new byte[0];
+//                try {
+//                    parse_data = parseFile.getData();
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//                Bitmap image = BitmapFactory.decodeByteArray(parse_data, 0, parse_data.length);
+//                SharePhoto photo = new SharePhoto.Builder()
+//                        .setBitmap(image)
+//                        .build();
+//                SharePhotoContent content = new SharePhotoContent.Builder()
+//                        .addPhoto(photo)
+//                        .build();
+//
+//                ShareDialog.show(getActivity(), content);
+//
+//                dismiss();
+//            }
+//        });
 
 
     }
