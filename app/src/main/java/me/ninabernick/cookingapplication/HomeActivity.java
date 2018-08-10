@@ -41,7 +41,8 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        getWindow().setEnterTransition(new Fade());
+        // getting an error here, cant recognize Fade
+        //getWindow().setEnterTransition(new Fade());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         toolbar.setOnClickListener(new View.OnClickListener() {
