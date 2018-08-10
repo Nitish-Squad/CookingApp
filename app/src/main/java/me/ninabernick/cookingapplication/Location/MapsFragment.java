@@ -150,7 +150,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         Log.d("onClick", url);
         GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData(storeListFragment);
         getNearbyPlacesData.execute(DataTransfer);
-        Toast.makeText(MapsFragment.this,"Nearby Supermarkets", Toast.LENGTH_LONG).show();
+        Toast.makeText(MapsFragment.this,"Nearby Supermarkets", Toast.LENGTH_LONG);
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -308,7 +308,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
                 } else {
 
                     // Permission denied, Disable the functionality that depends on this permission.
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG);
                 }
                 return;
             }
@@ -357,7 +357,7 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
         Log.d("onClick", url);
         GetNearbyPlacesData_Light getNearbyPlacesData = new GetNearbyPlacesData_Light();
         getNearbyPlacesData.execute(DataTransfer);
-        Toast.makeText(MapsFragment.this,"Nearby Supermarkets", Toast.LENGTH_LONG).show();
+        Toast.makeText(MapsFragment.this,"Nearby Supermarkets", Toast.LENGTH_LONG);
     }
 
     @Override

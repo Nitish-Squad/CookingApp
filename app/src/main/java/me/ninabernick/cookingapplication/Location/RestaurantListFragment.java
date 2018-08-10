@@ -3,10 +3,12 @@ package me.ninabernick.cookingapplication.Location;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,9 +16,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +29,7 @@ import java.util.List;
 
 import me.ninabernick.cookingapplication.R;
 
-public class RestaurantListFragment extends Fragment implements StoreAdapter.MapListener{
+public class RestaurantListFragment extends Fragment implements StoreAdapter.MapListener {
 
     GoogleMap mMap;
     double latitude;
@@ -36,6 +39,8 @@ public class RestaurantListFragment extends Fragment implements StoreAdapter.Map
     StoreAdapter storeAdapter;
     RecyclerView rvMyStores;
     BottomNavigationView bottomNavigationView;
+    ProgressBar loadingView;
+    LinearLayoutManager llm;
 
     private StoreListFragmentListener listener;
 
@@ -80,7 +85,7 @@ public class RestaurantListFragment extends Fragment implements StoreAdapter.Map
         googlePlacesUrl.append("&type=" + nearbyPlace);
         googlePlacesUrl.append("&sensor=true");
         googlePlacesUrl.append("&type=" + nearbyPlace);
-        googlePlacesUrl.append("&key=" + "AIzaSyCnfJ8Xchn3-XtPkcfbLLRZk8IBLwNkfbA");
+        googlePlacesUrl.append("&key=" + "AIzaSyD_gosGg3qBnX2WOj6-fglzL49kTMO-KuY");
         Log.d("getUrl", googlePlacesUrl.toString());
         return (googlePlacesUrl.toString());
     }
@@ -125,6 +130,7 @@ public class RestaurantListFragment extends Fragment implements StoreAdapter.Map
             Log.d("GooglePlacesReadTask", "onPostExecute Exit");
 
             storeAdapter.notifyDataSetChanged();
+            loadingView.setVisibility(View.INVISIBLE);
 
             Log.d("Adapter", "Not Different Data Set");
 
@@ -141,11 +147,16 @@ public class RestaurantListFragment extends Fragment implements StoreAdapter.Map
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        loadingView = (ProgressBar) view.findViewById(R.id.pbLoading);
+
         rvMyStores = view.findViewById(R.id.rvMyStores);
-        rvMyStores.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvMyStores.setLayoutManager(new SnappingLinearLayoutManager(getContext()));
         rvMyStores.setHasFixedSize(true);
         rvMyStores.setAdapter(storeAdapter);
         calltoNearbyList();
+
+        TextView title = (TextView) view.findViewById(R.id.tvTitle);
+        title.setText("Nearby Restaurants");
 
         bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.top_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -153,13 +164,29 @@ public class RestaurantListFragment extends Fragment implements StoreAdapter.Map
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.distance:
+                        loadingView.setVisibility(View.VISIBLE);
+                        bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.rating);
+                        rvMyStores.smoothScrollToPosition(0);
                         calltoNearbyList();
                         return true;
                     case R.id.rating:
+                        loadingView.setVisibility(View.VISIBLE);
+                        bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.rating_filled);
+                        rvMyStores.smoothScrollToPosition(0);
                         calltoProminenceList();
                         return true;
                     case R.id.price:
-                        sortListPrice();
+                        loadingView.setVisibility(View.VISIBLE);
+                        bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.rating);
+                        rvMyStores.smoothScrollToPosition(0);
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                sortListPrice();
+                                loadingView.setVisibility(View.INVISIBLE);
+                            }
+                        }, 100);
                         return true;
                 }
                 return false;
@@ -169,6 +196,7 @@ public class RestaurantListFragment extends Fragment implements StoreAdapter.Map
 
     public void calltoProminenceList() {
         String url = getUrl(latitude, longitude, "restaurant");
+        Log.i("This is url prom", "Url: " + url);
         Object[] DataTransfer = new Object[2];
         DataTransfer[0] = mMap;
         DataTransfer[1] = url;
@@ -179,6 +207,7 @@ public class RestaurantListFragment extends Fragment implements StoreAdapter.Map
 
     public void calltoNearbyList() {
         String url = getDistanceUrl(latitude, longitude, "restaurant");
+        Log.i("This is url dist", "Url: " + url);
         Object[] DataTransfer = new Object[2];
         DataTransfer[0] = mMap;
         DataTransfer[1] = url;
@@ -187,16 +216,9 @@ public class RestaurantListFragment extends Fragment implements StoreAdapter.Map
         getStorelistData.execute(DataTransfer);
     }
 
-    public void sortListRating() {
-        Collections.sort(nearbyPlacesList, new Comparator<HashMap<String, String>>() {
-            public int compare(HashMap<String, String> obj1, HashMap<String, String> obj2) {
-                return Float.valueOf(obj2.get("rating")).compareTo(Float.valueOf(obj1.get("rating")));
-            }
-        });
-        storeAdapter.notifyDataSetChanged();
-    }
 
     public void sortListPrice() {
+
         Collections.sort(nearbyPlacesList, new Comparator<HashMap<String, String>>() {
             public int compare(HashMap<String, String> obj1, HashMap<String, String> obj2) {
                 return obj2.get("price_level").compareTo(obj1.get("price_level"));
@@ -213,7 +235,7 @@ public class RestaurantListFragment extends Fragment implements StoreAdapter.Map
         googlePlacesUrl.append("&type=" + nearbyPlace);
         googlePlacesUrl.append("&sensor=true");
         googlePlacesUrl.append("&type=" + nearbyPlace);
-        googlePlacesUrl.append("&key=" + "AIzaSyCnfJ8Xchn3-XtPkcfbLLRZk8IBLwNkfbA");
+        googlePlacesUrl.append("&key=" + "AIzaSyD_gosGg3qBnX2WOj6-fglzL49kTMO-KuY");
         Log.d("getUrl", googlePlacesUrl.toString());
         return (googlePlacesUrl.toString());
     }
@@ -223,5 +245,33 @@ public class RestaurantListFragment extends Fragment implements StoreAdapter.Map
         listener.oneStoreMap(longitude, latitude);
     }
 
+
+    public void findLocationClicked(Double latitude, Double longitude) {
+        for (HashMap<String, String> hashMap : nearbyPlacesList) {
+            if (Double.parseDouble(hashMap.get("lat")) == latitude) {
+                if (Double.parseDouble(hashMap.get("lng")) == longitude) {
+
+                    final int position = nearbyPlacesList.indexOf(hashMap);
+                    rvMyStores.smoothScrollToPosition(position);
+
+                    View rightview = rvMyStores.getChildAt(position);
+
+                    for (int i = 0; i < nearbyPlacesList.size(); i++) {
+                        View view = rvMyStores.getChildAt(i);
+
+                        if (view != null) {
+                            TextView textView = (TextView) view.findViewById(R.id.tvStoreName);
+                            if (position == i) {
+                                Log.i("textview", "textview" + textView.toString());
+                                textView.setTextColor(ContextCompat.getColor(getContext(), R.color.lightGray));
+                            } else {
+                                textView.setTextColor(ContextCompat.getColor(getContext(), R.color.darkPurple));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 

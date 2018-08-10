@@ -1,8 +1,12 @@
 package me.ninabernick.cookingapplication.Location;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -13,8 +17,10 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bennyhuo.swipefinishable.SwipeFinishable;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -26,17 +32,22 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+
+import java.util.HashMap;
+
 import me.ninabernick.cookingapplication.R;
 
-public class RestaurantActivity extends FragmentActivity implements OnMapReadyCallback,
+public class RestaurantActivity extends FragmentActivity implements OnMapReadyCallback, RestaurantDetailsFragment.Callback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, RestaurantListFragment.StoreListFragmentListener {
+        LocationListener, RestaurantListFragment.StoreListFragmentListener, GoogleMap.OnCameraIdleListener {
 
     private GoogleMap mMap;
     double latitude;
@@ -46,13 +57,36 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
+    ProgressBar loadingView;
+
+    private static final String TAG = MapsFragment.class.getSimpleName();
 
     RestaurantListFragment restaurantListFragment;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant);
+
+        fragmentManager = getSupportFragmentManager();
+        loadingView = (ProgressBar) findViewById(R.id.pbLoading);
+
+        final DragToClose dragToClose = findViewById(R.id.drag_to_close);
+        dragToClose.setDragListener(new DragListener() {
+
+            @Override
+            public void onStartDraggingView() {
+                Log.d(TAG, "onStartDraggingView()");
+            }
+
+            @Override
+            public void onViewCosed() {
+                Log.d(TAG, "onViewCosed()");
+            }
+        });
+
+        loadingView.setVisibility(View.VISIBLE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -70,6 +104,7 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
     private boolean CheckGooglePlayServices() {
@@ -88,7 +123,7 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        //mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
 
         //Initialize Google Play Services
@@ -104,7 +139,6 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
-
     }
 
     public void showStores() {
@@ -114,9 +148,9 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
         DataTransfer[0] = mMap;
         DataTransfer[1] = url;
         Log.d("onClick", url);
-        //GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData(this);
-        //getNearbyPlacesData.execute(DataTransfer);
-        Toast.makeText(RestaurantActivity.this,"Nearby Supermarkets", Toast.LENGTH_LONG).show();
+        GetNearbyPlacesData_Restaurant getNearbyPlacesData = new GetNearbyPlacesData_Restaurant(restaurantListFragment);
+        getNearbyPlacesData.execute(DataTransfer);
+        Toast.makeText(RestaurantActivity.this,"Nearby Supermarkets", Toast.LENGTH_LONG);
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -148,7 +182,7 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
         googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
         googlePlacesUrl.append("&type=" + nearbyPlace);
         googlePlacesUrl.append("&sensor=true");
-        googlePlacesUrl.append("&key=" + "AIzaSyCnfJ8Xchn3-XtPkcfbLLRZk8IBLwNkfbA");
+        googlePlacesUrl.append("&key=" + "AIzaSyD_gosGg3qBnX2WOj6-fglzL49kTMO-KuY");
         Log.d("getUrl", googlePlacesUrl.toString());
         return (googlePlacesUrl.toString());
     }
@@ -174,20 +208,14 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        markerOptions.icon(getMarkerIcon(R.color.lightGray));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
-
-        //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-        Toast.makeText(RestaurantActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
 
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
 
-
         loadStoreList();
         showStores();
-        Log.i("This is updated", "Restaurant Updated");
+        Log.i("This is updated", "Restaurants Updated");
 
         //stop location updates
         if (mGoogleApiClient != null) {
@@ -195,8 +223,27 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
             Log.d("onLocationChanged", "Removing Location Updates");
         }
 
+        latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+                .zoom(12)                   // Sets the zoom
+                .bearing(90)                // Sets the orientation of the camera to east
+                .tilt(40)                   // Sets the tilt of the camera to 30 degrees
+                .build();                   // Creates a CameraPosition from the builder
+
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMap.setOnCameraIdleListener(this);
+
         Log.d("onLocationChanged", "Exit");
 
+    }
+
+
+    public BitmapDescriptor getMarkerIcon(Integer color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        return BitmapDescriptorFactory.defaultMarker(hsv[0]);
     }
 
     public void loadStoreList() {
@@ -204,9 +251,8 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
         Log.i("Longitute", "Longitude: " + longitude);
         restaurantListFragment = RestaurantListFragment.newInstance(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
-        final FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.textContainer, restaurantListFragment).commit();
-        Log.i("On Create Called from Restaurant Activity", "On Create Called from Restaurant Activity");
+        Log.i("On Create Called from MapsActivity", "On Create Called from Maps Activity");
     }
 
     @Override
@@ -262,7 +308,7 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
                 } else {
 
                     // Permission denied, Disable the functionality that depends on this permission.
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG);
                 }
                 return;
             }
@@ -271,18 +317,63 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
 
     @Override
     public void oneStoreMap(String latitude, String longitude) {
+        loadingView.setVisibility(View.VISIBLE);
         mMap.clear();
+        showStoresLight();
 
         MarkerOptions markerOptions = new MarkerOptions();
         LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
         markerOptions.position(latLng);
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(getHsvFromColor("#727A82")[0]));
         mMap.addMarker(markerOptions);
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
 
-        MarkerOptions markerOptionsCL = new MarkerOptions();
-        LatLng latLngCL = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-        markerOptionsCL.position(latLngCL);
-        mMap.addMarker(markerOptionsCL);
-        markerOptionsCL.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)).alpha(0.7f);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(latLng)             // Sets the center of the map to location user
+                .zoom(14)                   // Sets the zoom
+                .bearing(90)                // Sets the orientation of the camera to east
+                .tilt(40)                   // Sets the tilt of the camera to 30 degrees
+                .build();                   // Creates a CameraPosition from the builder
+
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMap.setOnCameraIdleListener(this);
+
     }
+
+    private static float[] getHsvFromColor(String colorString) {
+        float[] hsv = new float[3];
+        int _color = Color.parseColor(colorString);
+        Color.colorToHSV(_color, hsv);
+        return hsv;
+    }
+
+    public void showStoresLight() {
+        String restaurant = "restaurant";
+        String url = getUrl(latitude, longitude, restaurant);
+        Object[] DataTransfer = new Object[3];
+        DataTransfer[0] = mMap;
+        DataTransfer[1] = url;
+        DataTransfer[2] = loadingView;
+        Log.d("onClick", url);
+        GetNearbyPlacesData_Light getNearbyPlacesData = new GetNearbyPlacesData_Light();
+        getNearbyPlacesData.execute(DataTransfer);
+        Toast.makeText(RestaurantActivity.this,"Nearby Supermarkets", Toast.LENGTH_LONG);
+    }
+
+    @Override
+    public void onReturntoStoreList() {
+        loadingView.setVisibility(View.VISIBLE);
+        onLocationChanged(mLastLocation);
+    }
+
+
+    @Override
+    public void onCameraIdle() {
+        loadingView.setVisibility(View.INVISIBLE);
+    }
+
 }
+
+
+
+

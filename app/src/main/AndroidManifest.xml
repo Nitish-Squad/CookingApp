@@ -87,7 +87,6 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".YoutubeVideoActivity" />
-        <activity android:name=".Location.RestaurantActivity"></activity>
     </application>
 
 </manifest>

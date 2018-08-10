@@ -21,7 +21,6 @@
     <string name="MAPS_TRANS_NAME">store_name</string>
     <string name="MAPS_TRANS_LOCATION">store_location</string>
 
-
     <string-array name="tags">
         <item>breakfast</item>
         <item>lunch</item>
@@ -29,6 +28,29 @@
         <item>dessert</item>
         <item>vegan</item>
         <item>vegetarian</item>
+        <item>gluten free</item>
+        <item>dairy free</item>
+        <item>italian</item>
+        <item>chinese</item>
+        <item>indian</item>
+        <item>mexican</item>
+    </string-array>
+
+    <string-array name="dish_tags">
+        <item>breakfast</item>
+        <item>lunch</item>
+        <item>dinner</item>
+        <item>dessert</item>
+    </string-array>
+
+    <string-array name="dietary_info_tags">
+        <item>vegan</item>
+        <item>vegetarian</item>
+        <item>gluten free</item>
+        <item>dairy free</item>
+    </string-array>
+
+    <string-array name="meal_tags">
         <item>italian</item>
         <item>chinese</item>
         <item>indian</item>
