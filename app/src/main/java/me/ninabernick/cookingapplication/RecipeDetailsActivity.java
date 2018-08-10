@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.bennyhuo.swipefinishable.SwipeFinishable;
 
 import me.ninabernick.cookingapplication.Steps.FragmentAdapter;
-import me.ninabernick.cookingapplication.Steps.Transformers.ScaleInOutTransformer;
 import me.ninabernick.cookingapplication.Steps.Transformers.ZoomOutTransformation;
 import me.ninabernick.cookingapplication.models.Recipe;
 
