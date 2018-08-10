@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Fade;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -42,6 +41,8 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         toolbar.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +74,14 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
                                 return true;
 
                             case R.id.miCreate:
+                                /*
+                                 * Pretty interesting bug fixed here, the HomeActivity is never destroyed
+                                 * during the create flow, so essentially the initialized createfragment
+                                 * is always retained so after the user makes a new recipe and navigates
+                                 * back to the create flow the old instance is retained and causes super
+                                 * strange interactions.
+                                 */
+                                createfragment1 = new BasicInfoFragment();
                                 switchToFragment(createfragment1);
                                 return true;
 

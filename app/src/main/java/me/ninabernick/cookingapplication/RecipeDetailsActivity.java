@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bennyhuo.swipefinishable.SwipeFinishable;
 
 import me.ninabernick.cookingapplication.Steps.FragmentAdapter;
-import me.ninabernick.cookingapplication.Steps.Transformers.ScaleInOutTransformer;
+import me.ninabernick.cookingapplication.Steps.Transformers.ZoomOutTransformation;
 import me.ninabernick.cookingapplication.models.Recipe;
 
 
@@ -48,7 +48,7 @@ public class RecipeDetailsActivity extends AppCompatActivity implements SwipeFin
         fAdapter = new FragmentAdapter(getSupportFragmentManager(), recipe, RecipeDetailsActivity.this);
         viewPager = (ViewPager) findViewById(R.id.vpPager);
         viewPager.setAdapter(fAdapter);
-        viewPager.setPageTransformer(true, new ScaleInOutTransformer());
+        viewPager.setPageTransformer(true, new ZoomOutTransformation());
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);

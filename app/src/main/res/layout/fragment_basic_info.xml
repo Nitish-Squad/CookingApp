@@ -11,7 +11,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:fillViewport="true">
 
 
@@ -43,15 +43,15 @@
                     android:layout_width="179dp"
                     android:layout_height="171dp"
                     android:layout_below="@+id/etTitle"
-                    android:layout_marginBottom="10dp"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
                     android:src="@android:color/black" />
 
                 <Button
                     android:id="@+id/btnTakePhoto"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_alignStart="@+id/ivRecipeImage"
                     android:layout_below="@+id/ivRecipeImage"
                     android:layout_margin="1dp"
@@ -63,8 +63,9 @@
 
                 <Button
                     android:id="@+id/btnChoosePhoto"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_above="@+id/etDescription"
                     android:layout_alignEnd="@+id/ivRecipeImage"
                     android:layout_marginBottom="1dp"
@@ -73,12 +74,11 @@
                     android:layout_marginRight="1dp"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="1dp"
-                    style="?android:attr/borderlessButtonStyle"
                     android:background="@drawable/rounded_button"
                     android:text="Select"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etHours"
@@ -90,18 +90,7 @@
                     android:hint="Hours"
                     android:inputType="number" />
 
-                <Button
-                    android:id="@+id/btnNext"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_below="@+id/ivAddTag"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/rounded_button"
-                    android:text="Next"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+
 
                 <EditText
                     android:id="@+id/etMinutes"
@@ -137,23 +126,63 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/etHours"
                     android:layout_centerHorizontal="true"
-
                     android:layout_marginBottom="72dp"
                     android:orientation="vertical">
 
                 </LinearLayout>
 
-                <ImageButton
-                    android:id="@+id/ivAddTag"
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tags"
-                    android:clickable="true"
+                    android:layout_height="144dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@id/tags"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="-72dp"
-                    android:src="@android:drawable/ic_menu_add"
-                    android:tint="@android:color/black"
-                    style="?android:attr/borderlessButtonStyle"/>
+                    android:layout_marginBottom="85dp"
+                    android:layout_marginTop="-150dp"
+                    android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:id="@+id/newlayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignStart="@+id/etTitle"
+                            android:orientation="horizontal">
+
+                                <ImageButton
+                                    android:id="@+id/ivAddTag"
+                                    style="?android:attr/borderlessButtonStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:clickable="true"
+                                    android:src="@android:drawable/ic_menu_add"
+                                    android:tint="@android:color/black" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="-15dp"
+                                    android:text="Add Additional Tags" />
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnNext"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:background="@drawable/rounded_button"
+                            android:text="Next"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/textView2"

@@ -3,6 +3,7 @@ package me.ninabernick.cookingapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,7 +71,7 @@ public class FinishedRecipeActivity extends AppCompatActivity{
                     recipe.updateAverageRating();
                     Toast.makeText(FinishedRecipeActivity.this, "Thanks for your feedback!", Toast.LENGTH_SHORT).show();
                 }
-                if (!etLeaveComment.getText().equals("")) {
+                if (!etLeaveComment.getText().toString().equals("")) {
                     final Comment comment = new Comment();
                     comment.setText(etLeaveComment.getText().toString());
                     comment.setUser(ParseUser.getCurrentUser());

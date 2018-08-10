@@ -4,52 +4,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
     tools:context=".profile.ProfileFragment">
 
     <RelativeLayout
+        android:id="@+id/rlProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:id="@+id/rlProfile"
         android:layout_alignParentTop="true">
 
         <ImageView
-            android:id="@+id/ivProfileImage"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:id="@+id/ivGradient"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@drawable/gradient" />
+        <RelativeLayout
+            android:id="@+id/rlProfilePicture"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:background="@drawable/circle_border"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="20dp"
-            android:src="@android:color/darker_gray" />
+            android:layout_centerVertical="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/ivProfileImage"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_centerInParent="true"
+
+                android:src="@android:color/darker_gray" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/rlProfilePicture"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/ivProfileImage"
-            android:layout_centerVertical="true"
+            android:layout_marginBottom="5dp"
+            android:layout_alignBottom="@id/ivGradient"
             android:text="Name"
+            android:textColor="@color/white"
             android:textSize="24sp" />
-    </RelativeLayout>
 
-    <View
-        android:id="@+id/divider1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignStart="@+id/rlFriendsEncapsulator"
-        android:layout_below="@id/rlProfile"
-        android:layout_marginTop="10dp"
-        android:background="?android:attr/listDivider" />
+        <ImageView
+            android:id="@+id/ivSettings"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/settings"
+            android:tint="@color/lightGray" />
+
+    </RelativeLayout>
 
 
     <RelativeLayout
         android:id="@+id/rlFriendsEncapsulator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/divider1"
+        android:layout_below="@id/rlProfile"
         >
+
+        <View
+            android:id="@+id/divider1left"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/tvFriends"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="?android:attr/listDivider" />
+        <View
+            android:id="@+id/divider1right"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_toRightOf="@+id/tvFriends"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="?android:attr/listDivider" />
+
 
         <TextView
             android:id="@+id/tvFriends"
@@ -57,9 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:textAppearance="@style/default_font_medium"
-            android:text="Friends" />
+            android:text="Friends"
+            android:textAppearance="@style/default_font_medium" />
 
         <RelativeLayout
             android:id="@+id/rlFriends"
@@ -83,36 +125,52 @@
 
     </RelativeLayout>
 
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignStart="@+id/rlFriendsEncapsulator"
-        android:layout_below="@id/rlFriendsEncapsulator"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:background="?android:attr/listDivider" />
+
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/divider2"
+        android:layout_below="@id/rlFriendsEncapsulator"
+        android:layout_marginTop="10dp"
         android:id="@+id/rlSavedRecipesEncapsulator"
         >
+        <View
+            android:id="@+id/divider2left"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_alignParentStart="true"
+
+            android:layout_toStartOf="@id/tvSavedRecipes"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="?android:attr/listDivider" />
+        <View
+            android:id="@+id/divider2right"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toRightOf="@id/tvSavedRecipes"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="10dp"
+            android:background="?android:attr/listDivider" />
         <TextView
             android:id="@+id/tvSavedRecipes"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:gravity="center"
+
+            android:layout_centerHorizontal="true"
             android:textAppearance="@style/default_font_medium"
             android:text="Saved Recipes" />
 
         <RelativeLayout
             android:id="@+id/rlSavedRecipes"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tvSavedRecipes"
 
@@ -145,35 +203,49 @@
 
     </RelativeLayout>
 
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignStart="@+id/rlFriendsEncapsulator"
-        android:layout_below="@id/rlSavedRecipesEncapsulator"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="?android:attr/listDivider" />
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider3"
+        android:layout_below="@+id/rlSavedRecipesEncapsulator"
+        android:layout_marginTop="10dp"
         >
+        <View
+            android:id="@+id/divider3left"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/tvCreatedRecipes"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="?android:attr/listDivider" />
+        <View
+            android:id="@+id/divider3right"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@id/tvCreatedRecipes"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="10dp"
+            android:background="?android:attr/listDivider" />
 
         <TextView
             android:id="@+id/tvCreatedRecipes"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:textAppearance="@style/default_font_medium"
-            android:gravity="center"
+            android:layout_centerHorizontal="true"
             android:text="Created Recipes" />
 
         <RelativeLayout
             android:id="@+id/rlCreatedRecipes"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@id/tvCreatedRecipes"
             android:layout_marginLeft="20dp"

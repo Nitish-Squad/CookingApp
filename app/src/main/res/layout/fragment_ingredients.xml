@@ -51,27 +51,28 @@
 
             <Button
                 android:id="@+id/btnAdd"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_below="@+id/steps"
                 android:layout_centerHorizontal="true"
-                android:text="Add Ingredient"
-                style="?android:attr/borderlessButtonStyle"
                 android:background="@drawable/rounded_button"
+                android:text="Add Ingredient"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnNext"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_below="@+id/btnAdd"
                 android:layout_centerHorizontal="true"
-                android:text="Next"
-                style="?android:attr/borderlessButtonStyle"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/rounded_button"
+                android:text="Next"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
 
 

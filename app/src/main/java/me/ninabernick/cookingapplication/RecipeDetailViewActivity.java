@@ -11,19 +11,23 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bennyhuo.swipefinishable.SwipeFinishable;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -33,6 +37,7 @@ import com.parse.SaveCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,13 +65,14 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
     private LinearLayout llComments;
     private ImageView ivShare;
 
-    private ListView lvIngredientList;
+    private LinearLayout llIngredientList;
     private ArrayList<String> steps;
     private ArrayList<String> ingredients;
     private List<String> ingredientsList;
     private ArrayAdapter<String> ingredientAdapter;
     private ArrayAdapter<String> stepAdapter;
     private ArrayList<Comment> comments;
+    private LinearLayout.LayoutParams layoutParams;
     BottomNavigationView bottomNavigationView;
 
     public static final String RECIPE_KEY = "recipe";
@@ -88,6 +94,8 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
             }
         });
         View view = findViewById(android.R.id.content);
+        layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(10,10,10,10);
 
 
         steps = new ArrayList<>();
@@ -201,10 +209,7 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
 
 
 
-        lvIngredientList = (ListView) findViewById(R.id.lvIngredients);
-        if (lvIngredientList == null) {
-            Log.d("ListView", "ListView null");
-        }
+        llIngredientList = (LinearLayout) findViewById(R.id.llIngredients);
 
         // loop through ingredient list and parse JSON objects
         ArrayList<String> parsedIngredients = new ArrayList<>();
@@ -222,11 +227,16 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
                 Log.d("ingredient", "json object not parsed");
             }
             parsedIngredients.add(text);
+            TextView ingredient = new TextView(this);
+            ingredient.setText(text);
+            ingredient.setLayoutParams(layoutParams);
+            llIngredientList.addView(ingredient);
+
+
         }
 
 
-        ingredientAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, parsedIngredients);
-        lvIngredientList.setAdapter(ingredientAdapter);
+
 
         getTopComments(recipe, 3);
 
@@ -249,10 +259,21 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
             public void done(List<Comment> objects, ParseException e) {
                 if (e == null) {
                     for (int i = 0; i < objects.size(); i++) {
-
-                        comments.add(objects.get(i));
-                        TextView newComment = new TextView(RecipeDetailViewActivity.this);
-                        newComment.setText(String.format("%s: %s", objects.get(i).getUser().getString("name"), objects.get(i).getText()));
+                        Comment comment = objects.get(i);
+                        comments.add(comment);
+                        View newComment = LayoutInflater.from(RecipeDetailViewActivity.this).inflate(R.layout.comment, null);
+                        ImageView ivProfile = (ImageView) newComment.findViewById(R.id.ivProfile);
+                        TextView tvName = (TextView) newComment.findViewById(R.id.tvName);
+                        TextView tvComment = (TextView) newComment.findViewById(R.id.tvCommentText);
+                        String profileImageUrl = "https://graph.facebook.com/" + comment.getUser().getString("fbId") + "/picture?type=large";
+                        Glide.with(RecipeDetailViewActivity.this)
+                                .load(profileImageUrl)
+                                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                                .into(ivProfile);
+                        String name = comment.getUser().getString("name");
+                        //name = name.substring(0, name.indexOf(" "));
+                        tvName.setText(name);
+                        tvComment.setText(comment.getText());
                         llComments.addView(newComment);
                     }
 

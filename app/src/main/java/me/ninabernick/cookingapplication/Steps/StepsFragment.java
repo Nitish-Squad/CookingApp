@@ -132,6 +132,7 @@ public class StepsFragment extends Fragment {
                     Intent intent = new Intent(getContext(), YoutubeVideoActivity.class);
                     intent.putExtra("video_extension", video_extension);
                     startActivity(intent);
+
                 }
 
                 // if not a valid video extension then nothing happens
@@ -190,11 +191,9 @@ public class StepsFragment extends Fragment {
                     unit_length++;
                 }
                 millisseconds = integer * 60 * 1000;
-            } else if (step.indexOf("second") != -1) {
-                unit_length = 6;
-                if (step.indexOf("seconds") != -1) {
-                    unit_length++;
-                }
+            } else if (step.indexOf("seconds") != -1) {
+                unit_length = 7;
+                // should never be a timer of 1 second, doesn't make sense assume >1 second of time
                 millisseconds = integer * 1000;
             } else {
                 // should never get here, only reachable if there is no time period in the text
@@ -214,7 +213,7 @@ public class StepsFragment extends Fragment {
                 @Override
                 public void updateDrawState(TextPaint ds) {
                     super.updateDrawState(ds);
-                    ds.setColor(Color.RED);
+                    ds.setColor(Color.BLUE);
                     ds.setUnderlineText(false);
                 }
             };
