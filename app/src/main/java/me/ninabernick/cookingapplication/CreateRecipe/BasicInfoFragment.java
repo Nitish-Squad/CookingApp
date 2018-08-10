@@ -390,6 +390,12 @@ public class BasicInfoFragment extends Fragment {
                         Log.d("BasicInfoFragment","Could not retrieve image!");
                         e.printStackTrace();
                     }
+
+                    // code for rotating a selected image (when selected they are sideways)
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(90);
+                    selectedImage = Bitmap.createBitmap(selectedImage, 0, 0, selectedImage.getWidth(), selectedImage.getHeight(), matrix, true);
+
                     // Load the selected image into a preview
                     ImageView ivPreview = (ImageView) getView().findViewById(R.id.ivRecipeImage);
                     ivPreview.setImageBitmap(selectedImage);
