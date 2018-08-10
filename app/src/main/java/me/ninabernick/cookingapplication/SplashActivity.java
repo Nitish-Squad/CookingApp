@@ -41,8 +41,6 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent i = new Intent(SplashActivity.this, LoginActivity.class);
-//                Transition transition = new Fade();
-//                getWindow().setExitTransition(transition);
                 startActivity(i);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
