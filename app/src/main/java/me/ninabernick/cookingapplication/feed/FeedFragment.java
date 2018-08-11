@@ -312,7 +312,6 @@ public class FeedFragment extends Fragment {
         tvFilterByIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 FilterIngredientFragment filterIngredients = new FilterIngredientFragment();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 
@@ -330,9 +329,8 @@ public class FeedFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 FilterFragment filter = new FilterFragment();
-                //ft.add(FeedFragment.this, "fragment_dialog");
                 filter.setTargetFragment(FeedFragment.this, DIALOG_REQUEST_CODE);
-                filter.show(ft, "fragment_dialog");
+                filter.show(ft, "dialog");
             }
         });
 

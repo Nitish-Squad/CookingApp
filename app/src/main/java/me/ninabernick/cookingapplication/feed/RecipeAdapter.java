@@ -25,8 +25,6 @@ import me.ninabernick.cookingapplication.R;
 import me.ninabernick.cookingapplication.RecipeDetailViewActivity;
 import me.ninabernick.cookingapplication.models.Recipe;
 
-import static android.support.v4.app.ActivityOptionsCompat.makeSceneTransitionAnimation;
-
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder>{
     Context context;
     private ArrayList<Recipe> recipes;
