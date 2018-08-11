@@ -50,8 +50,8 @@
                 <Button
                     android:id="@+id/btnTakePhoto"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="76dp"
-                    android:layout_height="40dp"
+                    android:layout_width="77dp"
+                    android:layout_height="36dp"
                     android:layout_alignStart="@+id/ivRecipeImage"
                     android:layout_below="@+id/ivRecipeImage"
                     android:layout_marginBottom="1dp"
@@ -59,30 +59,30 @@
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="9dp"
                     android:layout_marginStart="1dp"
-                    android:layout_marginTop="1dp"
-                    android:layout_toLeftOf="@id/btnChoosePhoto"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/rounded_button"
                     android:text="Take"
                     android:textColor="@color/white"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btnChoosePhoto"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="36dp"
                     android:layout_above="@+id/etDescription"
                     android:layout_alignEnd="@+id/ivRecipeImage"
                     android:layout_marginBottom="1dp"
                     android:layout_marginEnd="1dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="2dp"
                     android:layout_marginRight="1dp"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="1dp"
                     android:background="@drawable/rounded_button"
                     android:text="Select"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -159,9 +159,8 @@
                                 <ImageButton
                                     android:id="@+id/ivAddTag"
                                     style="?android:attr/borderlessButtonStyle"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="50dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="108dp"
                                     android:clickable="true"
                                     android:src="@android:drawable/ic_menu_add"
                                     android:tint="@android:color/black" />
@@ -170,7 +169,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="-15dp"
+                                    android:layout_marginLeft="-7dp"
                                     android:text="Add Additional Tags" />
 
                         </LinearLayout>
