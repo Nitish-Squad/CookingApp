@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +29,7 @@ public class FilterFragment extends DialogFragment {
     Button filter;
     Button btClear;
 
-
-
-
-
+    FilterAdapter adapterViewPager;
 
     public FilterFragment() {
         // Empty constructor is required for DialogFragment
@@ -64,6 +62,10 @@ public class FilterFragment extends DialogFragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_filter, container);
+
+        ViewPager pager = (ViewPager) view.findViewById(R.id.vpPager);
+        adapterViewPager = new FilterAdapter(getFragmentManager());
+        pager.setAdapter(adapterViewPager);
 
         // Not exactly sure why, but this code is required to get the dialog to have rounded corners
         if (getDialog() != null && getDialog().getWindow() != null) {
@@ -148,5 +150,10 @@ public class FilterFragment extends DialogFragment {
                 dismiss();
             }
         });
+    }
+
+    public void updateCBandSelectedTags(ArrayList<CheckBox> cbTags, ArrayList<String> selectedTags) {
+        this.selectedTags.addAll(selectedTags);
+        this.cbTags.addAll(cbTags);
     }
 }
