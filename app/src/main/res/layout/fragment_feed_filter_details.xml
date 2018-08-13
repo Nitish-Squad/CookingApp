@@ -7,42 +7,14 @@
     <LinearLayout
         android:id="@+id/llTags"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/tvFilter"
         android:layout_centerHorizontal="true"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        android:showDividers="middle"
+        android:divider="@drawable/empty_tall_divider"></LinearLayout>
 
-    <Button
-        android:id="@+id/btClear"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/rounded_button"
-        android:paddingBottom="20dp"
-        android:text="Clear Filters"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btFilter" />
-
-    <Button
-        android:id="@+id/btFilter"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/rounded_button"
-        android:text="@string/filterbutton"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:paddingTop="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/llTags" />
 
 </android.support.constraint.ConstraintLayout>

@@ -41,17 +41,12 @@ public class FilterIngredientFragment extends DialogFragment {
 
 
     }
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getDialog().getWindow()
-                .getAttributes().windowAnimations = R.style.DialogAnimation;
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_filter_ingredients, container);
+        View view = inflater.inflate(R.layout.fragment_filter_ingredients, container, false);
         // Not exactly sure why, but this code is required to get the dialog to have rounded corners
         if (getDialog() != null && getDialog().getWindow() != null) {
             getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -65,7 +60,7 @@ public class FilterIngredientFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         setCancelable(true);
 
-        filter = (Button) view.findViewById(R.id.btFilter);
+/*        filter = (Button) view.findViewById(R.id.btFilter);
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,7 +99,7 @@ public class FilterIngredientFragment extends DialogFragment {
                 }
                 dismiss();
             }
-        });
+        });*/
 
 
 
@@ -112,10 +107,14 @@ public class FilterIngredientFragment extends DialogFragment {
         final ArrayAdapter<String> ingredientAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.ingredients));
         acIngredientFilter = view.findViewById(R.id.acIngredient);
         acIngredientFilter.setAdapter(ingredientAdapter);
+
         if (FeedFragment.ingredientFilters.size() != 0) {
             acIngredientFilter.setText(FeedFragment.ingredientFilters.get(0));
         }
+
         selectedIngredients.add(acIngredientFilter);
+        ((FilterFragment) getParentFragment()).updateSelectedIngredients(selectedIngredients, ingredientsLayout);
+
         ingredientsLayout = (LinearLayout) view.findViewById(R.id.llIngredientFilters);
 
 
@@ -127,6 +126,7 @@ public class FilterIngredientFragment extends DialogFragment {
             newIngredient.setText(FeedFragment.ingredientFilters.get(i));
             ingredientsLayout.addView(newIngredient);
             selectedIngredients.add(newIngredient);
+
         }
 
         ivAddIngredient = view.findViewById(R.id.ivAddIngredient);
@@ -139,8 +139,11 @@ public class FilterIngredientFragment extends DialogFragment {
                 newIngredient.setAdapter(ingredientAdapter);
                 ingredientsLayout.addView(newIngredient);
                 selectedIngredients.add(newIngredient);
+
             }
         });
+
+        ((FilterFragment) getParentFragment()).updateSelectedIngredients(selectedIngredients, ingredientsLayout);
 
     }
 

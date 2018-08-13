@@ -309,7 +309,7 @@ public class FeedFragment extends Fragment {
         llTitle = (LinearLayout) view.findViewById(R.id.llTitle);
         llSelectedFilters = (LinearLayout) view.findViewById(R.id.llSelectedTags);
         tvFilterByIngredient = (TextView) view.findViewById(R.id.tvFilterByIngredient);
-        tvFilterByIngredient.setOnClickListener(new View.OnClickListener() {
+/*        tvFilterByIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FilterIngredientFragment filterIngredients = new FilterIngredientFragment();
@@ -318,7 +318,7 @@ public class FeedFragment extends Fragment {
                 filterIngredients.setTargetFragment(FeedFragment.this, DIALOG_REQUEST_CODE);
                 filterIngredients.show(ft, "dialog");
             }
-        });
+        });*/
         tvFilterRecipes = (TextView) view.findViewById(R.id.tvFilterByTag);
 
 

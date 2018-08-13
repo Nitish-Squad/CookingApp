@@ -33,13 +33,15 @@ public class FilterDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tags = getArguments().getStringArrayList("choiceTags");
+        cbTags = new ArrayList<>();
+        selectedTags = new ArrayList<>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_feed_filter_details, container);
+        View view = inflater.inflate(R.layout.fragment_feed_filter_details, container, false);
         tagsLayout = (LinearLayout) view.findViewById(R.id.llTags);
 
         for (int i = 0; i < tags.size(); i++) {
@@ -48,6 +50,7 @@ public class FilterDetailsFragment extends Fragment {
             if (FeedFragment.filters.contains(tags.get(i))) {
                 cb.setChecked(true);
                 selectedTags.add(cb.getText().toString());
+                ((FilterFragment) getParentFragment()).updateCBandSelectedTags(cbTags, selectedTags);
             }
             else {
                 cb.setChecked(false);
@@ -65,9 +68,12 @@ public class FilterDetailsFragment extends Fragment {
                     else {
                         selectedTags.remove(((CheckBox)view).getText().toString());
                     }
+                    ((FilterFragment) getParentFragment()).updateCBandSelectedTags(cbTags, selectedTags);
+
                 }
             });
             cbTags.add(cb);
+            ((FilterFragment) getParentFragment()).updateCBandSelectedTags(cbTags, selectedTags);
             tagsLayout.addView(cb);
         }
 

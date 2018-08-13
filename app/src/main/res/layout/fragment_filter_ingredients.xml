@@ -3,15 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rounded_corners_shape">
+
     <TextView
         android:id="@+id/tvIngredientsFilter"
+        style="@style/default_font_medium_bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
         android:gravity="center"
-        android:text="@string/ingredients_filter"
-        android:textSize="24sp" />
+        android:text="@string/ingredients_filter" />
 
     <ScrollView
         android:id="@+id/svIngredients"
@@ -32,7 +33,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/ingredients_filter_prompt"
                 android:gravity="center"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                style="@style/default_font_medium"/>
 
         </LinearLayout>
 
@@ -43,38 +45,10 @@
         android:id="@+id/ivAddIngredient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_below="@id/svIngredients"
         android:layout_centerHorizontal="true"
-
         android:src="@android:drawable/ic_menu_add"
-        android:tint="@android:color/black" />
-
-    <Button
-        android:id="@+id/btFilter"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_below="@+id/ivAddIngredient"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/rounded_button"
-        android:text="@string/filterbutton"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btClear"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_below="@id/btFilter"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="5dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/rounded_button"
-        android:text="Clear Ingredients"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:tint="@android:color/black"
+        android:paddingTop="20dp"/>
 
 </RelativeLayout>

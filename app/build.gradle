@@ -83,7 +83,6 @@ dependencies {
     // circular progress bar
     implementation 'com.mikhaellopez:circularprogressbar:2.0.0'
 
-    
-
+    implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
 
 }
