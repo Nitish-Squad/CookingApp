@@ -308,17 +308,7 @@ public class FeedFragment extends Fragment {
         loadingView = (ProgressBar) view.findViewById(R.id.pbLoading);
         llTitle = (LinearLayout) view.findViewById(R.id.llTitle);
         llSelectedFilters = (LinearLayout) view.findViewById(R.id.llSelectedTags);
-        tvFilterByIngredient = (TextView) view.findViewById(R.id.tvFilterByIngredient);
-/*        tvFilterByIngredient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FilterIngredientFragment filterIngredients = new FilterIngredientFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                
-                filterIngredients.setTargetFragment(FeedFragment.this, DIALOG_REQUEST_CODE);
-                filterIngredients.show(ft, "dialog");
-            }
-        });*/
+
         tvFilterRecipes = (TextView) view.findViewById(R.id.tvFilterByTag);
 
 
