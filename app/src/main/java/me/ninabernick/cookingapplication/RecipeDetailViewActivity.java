@@ -286,7 +286,7 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
 
     private void getTopComments(Recipe recipe, int numComments) {
         List<String> commentIds = recipe.getComments();
-        if (commentIds.size() == 0) {
+        if (commentIds == null) {
             TextView view = new TextView(this);
             view.setText("No Comments Yet!");
             llComments.addView(view);

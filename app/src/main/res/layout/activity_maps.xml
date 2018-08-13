@@ -13,26 +13,7 @@
     drag:draggableContainer="@+id/card"
     drag:draggableView="@+id/close_arrow">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ProgressBar
-            android:id="@+id/pbLoading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="240dp"
-            android:gravity="center"
-            android:indeterminateTint="@color/colorPrimaryDark"
-            android:progressTint="@color/colorPrimaryDark"
-            android:visibility="invisible"
-            tools:layout_editor_absoluteX="168dp"
-            tools:layout_editor_absoluteY="259dp" />
-
-
-        <LinearLayout
+    <LinearLayout
             android:id="@+id/card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,14 +21,12 @@
             android:layout_marginStart="15dp"
             android:orientation="vertical">
 
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/close_arrow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:scaleType="center"
-                app:srcCompat="@drawable/close_down_arrow_dark" />
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/close_arrow"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:scaleType="center"
+            app:srcCompat="@drawable/close_down_arrow_dark" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -72,7 +51,22 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:paddingBottom = "30dp" android:layout_marginBottom="30dp"/>
 
-        </LinearLayout>
+    </LinearLayout>
 
-    </RelativeLayout>
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/colorPrimaryDark"
+        android:progressTint="@color/colorPrimaryDark"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="168dp"
+        tools:layout_editor_absoluteY="259dp" />
+
 </me.ninabernick.cookingapplication.Location.DragToClose>

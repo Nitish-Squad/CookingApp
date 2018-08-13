@@ -257,15 +257,12 @@ public class StoreListFragment extends Fragment implements StoreAdapter.MapListe
 
                     for (int i = 0; i < nearbyPlacesList.size(); i++) {
                         View view = rvMyStores.getChildAt(i);
-
-                        if (view != null) {
-                            TextView textView = (TextView) view.findViewById(R.id.tvStoreName);
-                            if (position == i) {
+                        TextView textView = (TextView) view.findViewById(R.id.tvStoreName);
+                        if (position == i) {
                                 Log.i("textview", "textview" + textView.toString());
                                 textView.setTextColor(ContextCompat.getColor(getContext(), R.color.lightGray));
-                            } else {
+                        } else {
                                 textView.setTextColor(ContextCompat.getColor(getContext(), R.color.darkPurple));
-                            }
                         }
                     }
                 }

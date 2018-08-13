@@ -71,7 +71,7 @@ GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             String vicinity = googlePlace.get("vicinity");
             LatLng latLng = new LatLng(lat, lng);
             markerOptions.position(latLng);
-            markerOptions.title(placeName + " : " + vicinity);
+            markerOptions.title(placeName);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(getHsvFromColor("#727A82")[0]));
             mMap.addMarker(markerOptions);
 

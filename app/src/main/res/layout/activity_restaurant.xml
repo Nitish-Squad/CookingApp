@@ -49,18 +49,18 @@
             <FrameLayout
                 android:id="@+id/textContainer"
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
-                android:paddingBottom="10dp"/>
+                android:layout_height="match_parent"
+                android:paddingBottom="30dp" />
 
             <fragment
                 android:id="@+id/map"
                 class="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="225dp"
-                android:layout_marginBottom="30dp"
-                android:paddingBottom="30dp"
+                android:layout_height="match_parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingBottom = "30dp" android:layout_marginBottom="30dp"/>
+
 
         </LinearLayout>
 

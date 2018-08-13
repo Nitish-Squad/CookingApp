@@ -140,7 +140,7 @@ public class RestaurantListFragment extends Fragment implements StoreAdapter.Map
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_storelist, parent, false);
+        return inflater.inflate(R.layout.fragment_restaurantlist, parent, false);
     }
 
     @Override

@@ -227,7 +227,7 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-                .zoom(12)                   // Sets the zoom
+                .zoom(14)                   // Sets the zoom
                 .bearing(90)                // Sets the orientation of the camera to east
                 .tilt(40)                   // Sets the tilt of the camera to 30 degrees
                 .build();                   // Creates a CameraPosition from the builder
@@ -318,25 +318,6 @@ public class RestaurantActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     public void oneStoreMap(String latitude, String longitude) {
         loadingView.setVisibility(View.VISIBLE);
-        mMap.clear();
-        showStoresLight();
-
-        MarkerOptions markerOptions = new MarkerOptions();
-        LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
-        markerOptions.position(latLng);
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(getHsvFromColor("#727A82")[0]));
-        mMap.addMarker(markerOptions);
-
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(latLng)             // Sets the center of the map to location user
-                .zoom(14)                   // Sets the zoom
-                .bearing(90)                // Sets the orientation of the camera to east
-                .tilt(40)                   // Sets the tilt of the camera to 30 degrees
-                .build();                   // Creates a CameraPosition from the builder
-
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        mMap.setOnCameraIdleListener(this);
 
     }
 
