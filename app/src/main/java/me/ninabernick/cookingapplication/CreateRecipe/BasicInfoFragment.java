@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -106,6 +107,35 @@ public class BasicInfoFragment extends Fragment {
         // adding tags
         tags = (LinearLayout) view.findViewById(R.id.tags);
         ivAddTag = (ImageButton) view.findViewById(R.id.ivAddTag);
+
+        // prepopulate data for demo
+
+        HomeActivity homeActivity = (HomeActivity) getActivity();
+        Boolean prepopulated = homeActivity.getPrepopulated();
+
+        if (prepopulated){
+            ivRecipeImage.setImageResource(R.drawable.hot_chocolate);
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.hot_chocolate);
+            File filesDir = getContext().getApplicationContext().getFilesDir();
+            photoFile = new File(filesDir, "image.jpg");
+
+            OutputStream os;
+            try {
+                os = new FileOutputStream(photoFile);
+                bm.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                os.flush();
+                os.close();
+            } catch (Exception e) {
+                Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+            }
+            etTitle.setText("Hot Chocolate");
+            etDescription.setText("A warm chocolate drink for a cold day");
+            etHours.setText("0");
+            etMinutes.setText("30");
+        }
+
+
+
 
 
 

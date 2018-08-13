@@ -25,6 +25,21 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
     public static final String RECIPE_FEED = "allRecipes";
 
 
+    /*
+     * This is where preopulated data can be turned off or on, for our demo it is set to be true
+     * and once it is set to false the create flow will function as originally intended.
+     * By default, this value is set to be false.
+     *
+     * Any area in the BasicInfoFragment, IngredientsFragment or the CreateStepsFragment that
+     * is in a conditional based on prepopulated is the inputting the data to be prepopulated.
+     */
+    private Boolean prepopulated = false;
+
+    public Boolean getPrepopulated(){
+        return prepopulated;
+    }
+
+
     // recipe to be added
     public Recipe recipe_to_add;
 

@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import me.ninabernick.cookingapplication.HomeActivity;
@@ -80,14 +81,14 @@ public class CreateStepsFragment extends Fragment {
         btnNext = (Button) view.findViewById(R.id.btnNext);
         steps = (LinearLayout) view.findViewById(R.id.steps);
         tvTitle = (TextView) view.findViewById(R.id.tvTitle);
-        etStepDescription1 = new EditText(getContext());
-        etStepTime1 = new EditText(getContext());
 
+        HomeActivity homeActivity = (HomeActivity) getActivity();
+        Boolean prepopulated = homeActivity.getPrepopulated();
 
-        // initial spinner setup
-        spinnerIcon1 = new Spinner(getContext());
+        step_description_array = new ArrayList<>();
+        icon_spinner_array = new ArrayList<>();
+        step_time_array = new ArrayList<>();
 
-        // TODO: put the images in this spinner
         CustomAdapter adapter = new CustomAdapter(getContext(),
                 new int[]{R.drawable.oven_vector,
                         R.drawable.blender_vector,
@@ -100,23 +101,89 @@ public class CreateStepsFragment extends Fragment {
                         R.drawable.roller_vector,
                         R.drawable.toaster_vector,
                         R.drawable.knife_vector});
-        spinnerIcon1.setAdapter(adapter);
-        spinnerIcon1.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        step_description_array = new ArrayList<>();
-        etStepDescription1.setHint("Enter step description");
-        step_description_array.add(etStepDescription1);
-        steps.addView(etStepDescription1);
 
 
-        icon_spinner_array = new ArrayList<>();
-        icon_spinner_array.add(spinnerIcon1);
-        steps.addView(spinnerIcon1);
+        ArrayList<String> prepopulated_data = new ArrayList<String>(
+                Arrays.asList("{\"text\":\"Heat the milk in a microwave for 80 seconds.\",\"icon\":\"microwave_vector\",\"time\":\"2 minutes\"}",
+                "{\"text\":\"Add cocoa powder and sugar and stir for 5 seconds.\",\"icon\":\"blender_vector\",\"time\":\"30 seconds\"}",
+                "{\"text\":\"Pour into a cup and add toppings as desired!\",\"icon\":\"kettle_vector\",\"time\":\"1 minute\"}"
+        ));
 
-        step_time_array = new ArrayList<>();
-        etStepTime1.setHint("Enter step time");
-        step_time_array.add(etStepTime1);
-        steps.addView(etStepTime1);
+        ArrayList<String> potential_icons = new ArrayList<String>(Arrays.asList(
+                "oven_vector",
+                "blender_vector",
+                "microwave_vector",
+                "bowl_vector",
+                "fridge_vector",
+                "kettle_vector",
+                "mixer_vector",
+                "pan_vector",
+                "roller_vector",
+                "toaster_vector",
+                "knife_vector"
+        ));
+
+        if (prepopulated){
+            for (int i = 0; i < prepopulated_data.size(); i++){
+                try {
+                    JSONObject temp_step = new JSONObject(prepopulated_data.get(i));
+
+                    etStepDescription1 = new EditText(getContext());
+                    etStepTime1 = new EditText(getContext());
+                    // initial spinner setup
+                    spinnerIcon1 = new Spinner(getContext());
+                    spinnerIcon1.setAdapter(adapter);
+                    spinnerIcon1.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                    etStepDescription1.setHint("Enter step description");
+                    step_description_array.add(etStepDescription1);
+                    steps.addView(etStepDescription1);
+                    etStepDescription1.setText(temp_step.getString("text"));
+
+
+                    // TODO: set the spinner position based on the prepopulated data
+                    icon_spinner_array.add(spinnerIcon1);
+                    steps.addView(spinnerIcon1);
+                    int index = 0;
+
+                    for (int j = 0; j < potential_icons.size(); j++){
+                        if (potential_icons.get(j).equals(temp_step.getString("icon"))){
+                            index = j;
+                        }
+                    }
+                    spinnerIcon1.setSelection(index);
+
+                    etStepTime1.setHint("Enter step time");
+                    step_time_array.add(etStepTime1);
+                    steps.addView(etStepTime1);
+                    etStepTime1.setText(temp_step.getString("time"));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
+        else{
+            etStepDescription1 = new EditText(getContext());
+            etStepTime1 = new EditText(getContext());
+            // initial spinner setup
+            spinnerIcon1 = new Spinner(getContext());
+            spinnerIcon1.setAdapter(adapter);
+            spinnerIcon1.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            etStepDescription1.setHint("Enter step description");
+            step_description_array.add(etStepDescription1);
+            steps.addView(etStepDescription1);
+
+            icon_spinner_array.add(spinnerIcon1);
+            steps.addView(spinnerIcon1);
+            etStepTime1.setHint("Enter step time");
+            step_time_array.add(etStepTime1);
+            steps.addView(etStepTime1);
+        }
+
 
 
         steps_list = new ArrayList<>();

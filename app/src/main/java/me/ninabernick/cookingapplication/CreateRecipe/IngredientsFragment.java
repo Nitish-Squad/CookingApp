@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import me.ninabernick.cookingapplication.HomeActivity;
@@ -86,8 +87,64 @@ public class IngredientsFragment extends Fragment {
 
         List<String> ingredient_holder = new ArrayList<String>();
 
+        HomeActivity homeActivity = (HomeActivity) getActivity();
+        Boolean prepopulated = homeActivity.getPrepopulated();
 
-        if (recipe_to_edit.getIngredients() == null){
+        // prepopulated date for the demo
+        List<String> prepopulated_data= new ArrayList<String>(
+                Arrays.asList("{\"name\":\"milk\",\"quantity\":\"1\",\"unit\":\"cups\"}",
+                        "{\"name\":\"cocoa powder\",\"quantity\":\"1\",\"unit\":\"tbsp\"}",
+                        "{\"name\":\"sugar\",\"quantity\":\"1\",\"unit\":\"tbsp\"}"
+                ));
+
+        if(prepopulated){
+            for (int t = 0; t < prepopulated_data.size(); t++){
+
+                // grab ingredient JSONObject
+                try {
+                    JSONObject temp_ingredient = new JSONObject(prepopulated_data.get(t));
+
+                    LinearLayout indivIngredient = new LinearLayout(getContext());
+                    indivIngredient.setOrientation(LinearLayout.HORIZONTAL);
+
+                    // logic for adding edit text boxes
+                    AutoCompleteTextView temp = new AutoCompleteTextView(getContext());
+                    temp.setThreshold(3);
+                    temp.setAdapter(adapter);
+
+
+                    indivIngredient.addView(temp);
+                    temp.setHint(" Ingredient ");
+                    temp.setText(temp_ingredient.getString("name"));
+                    ingredients_array.add(temp);
+                    // add edit text quantity
+                    EditText quantity = new EditText(getContext());
+                    quantity.setHint(" Quantity ");
+                    indivIngredient.addView(quantity);
+                    quantity.setText(temp_ingredient.getString("quantity"));
+                    ingredients_quantity_array.add(quantity);
+
+                    // add autocomplete for unit
+                    AutoCompleteTextView unit = new AutoCompleteTextView(getContext());
+                    unit.setAdapter(unitAdapter);
+
+                    indivIngredient.addView(unit);
+                    unit.setText(temp_ingredient.getString("unit"));
+                    unit.setHint(" Unit ");
+                    ingredient_unit_array.add(unit);
+
+
+                    // add horizontal layout to vertical layout
+                    ingredients.addView(indivIngredient);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }
+        else if (recipe_to_edit.getIngredients() == null){
             LinearLayout indivIngredient = new LinearLayout(getContext());
             indivIngredient.setOrientation(LinearLayout.HORIZONTAL);
             // logic for adding edit text boxes
