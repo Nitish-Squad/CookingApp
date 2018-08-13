@@ -79,3 +79,61 @@
 
 
 </android.support.constraint.ConstraintLayout>
+
+<!--<RelativeLayout-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"-->
+    <!--android:background="@drawable/rounded_corners_shape"-->
+    <!--android:layout_height="match_parent">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvFilter"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_margin="10dp"-->
+
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:text="Filter"-->
+            <!--android:textSize="24sp" />-->
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/llTags"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/tvFilter"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:orientation="vertical"></LinearLayout>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btFilter"-->
+            <!--style="?android:attr/borderlessButtonStyle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_below="@+id/llTags"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:background="@drawable/rounded_button"-->
+            <!--android:text="@string/filterbutton"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textStyle="bold" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btClear"-->
+            <!--style="?android:attr/borderlessButtonStyle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_below="@+id/btFilter"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginBottom="5dp"-->
+            <!--android:layout_marginEnd="5dp"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:layout_marginStart="5dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:background="@drawable/rounded_button"-->
+            <!--android:text="Clear Filters"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textStyle="bold" />-->
+
+
+<!--</RelativeLayout>-->
+

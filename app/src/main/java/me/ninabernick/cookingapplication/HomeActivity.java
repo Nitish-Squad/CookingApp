@@ -42,7 +42,6 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         toolbar.setOnClickListener(new View.OnClickListener() {

@@ -46,7 +46,7 @@ public class FilterDetailsFragment extends Fragment {
 
         for (int i = 0; i < tags.size(); i++) {
             CheckBox cb = new CheckBox(view.getContext());
-            cb.setText(tags.get(i));
+            cb.setText(tags.get(i).toUpperCase());
             if (FeedFragment.filters.contains(tags.get(i))) {
                 cb.setChecked(true);
                 selectedTags.add(cb.getText().toString());

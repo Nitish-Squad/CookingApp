@@ -34,8 +34,15 @@ public class FilterFragment extends DialogFragment {
     Button btClear;
     ArrayList<AutoCompleteTextView> selectedIngredients;
 
+
     FilterAdapter adapterViewPager;
     LinearLayout ingredientsLayout;
+
+
+
+
+
+
 
     public FilterFragment() {
         // Empty constructor is required for DialogFragment
@@ -61,7 +68,9 @@ public class FilterFragment extends DialogFragment {
         tags.addAll(Arrays.asList(getResources().getStringArray(R.array.tags)));
         Log.d("tags", tags.toString());
 
+
         selectedIngredients = new ArrayList<>();
+
 
     }
 
@@ -71,6 +80,7 @@ public class FilterFragment extends DialogFragment {
 
         View view = inflater.inflate(R.layout.fragment_filter, container);
 
+
         ViewPager pager = (ViewPager) view.findViewById(R.id.vpPager);
         adapterViewPager = new FilterAdapter(getChildFragmentManager(), getContext());
         pager.setAdapter(adapterViewPager);
@@ -78,6 +88,7 @@ public class FilterFragment extends DialogFragment {
 
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         tabsStrip.setViewPager(pager);
+
 
         // Not exactly sure why, but this code is required to get the dialog to have rounded corners
         if (getDialog() != null && getDialog().getWindow() != null) {
@@ -121,6 +132,36 @@ public class FilterFragment extends DialogFragment {
             }
 
         });
+//        tagsLayout = (LinearLayout) view.findViewById(R.id.llTags);
+//        // dynamically add checkboxes for each tag in string array
+//        for (int i = 0; i < tags.size(); i++) {
+//            CheckBox cb = new CheckBox(view.getContext());
+//            cb.setText(tags.get(i));
+//            if (FeedFragment.filters.contains(tags.get(i))) {
+//                cb.setChecked(true);
+//                selectedTags.add(cb.getText().toString());
+//            }
+//            else {
+//                cb.setChecked(false);
+//            }
+//            cb.setId(i);
+//            cb.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    boolean checked = ((CheckBox)view).isChecked();
+//
+//                    if (checked) {
+//                        selectedTags.add(((CheckBox)view).getText().toString());
+//                        Log.d("filter added", ((CheckBox)view).getText().toString());
+//                    }
+//                    else {
+//                        selectedTags.remove(((CheckBox)view).getText().toString());
+//                    }
+//                }
+//            });
+//            cbTags.add(cb);
+//            tagsLayout.addView(cb);
+//        }
 
         btClear = (Button) view.findViewById(R.id.btClear);
         btClear.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +190,7 @@ public class FilterFragment extends DialogFragment {
             }
         });
     }
+
 
     public void updateCBandSelectedTags(ArrayList<CheckBox> cbTags, ArrayList<String> selectedTags) {
         //this.selectedTags.clear();

@@ -10,9 +10,9 @@
 
     <string name="nutrition_api_key">9uCSn4GQdWwwUrPZgHmrFN8JvUvwL1Aea4mwFVbB</string>
 
-    <string name="DATE">Date Created (Recent to Old)</string>
-    <string name="TIME">Time (Low to High)</string>
-    <string name="RATING">Rating (High to Low)</string>
+    <string name="DATE">Date Created</string>
+    <string name="TIME">Time</string>
+    <string name="RATING">Rating</string>
 
     // transition elements
     <string name="TRANS_RECIPEIMAGE">recipeimage</string>
@@ -61,7 +61,7 @@
         <item>@string/DATE</item>
         <item>@string/TIME</item>
         <item>@string/RATING</item>
-        <item>Sort</item>
+        <item>SORT</item>
     </string-array>
 
     <string-array name="ingredients">
