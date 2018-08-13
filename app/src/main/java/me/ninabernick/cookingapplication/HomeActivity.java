@@ -33,7 +33,7 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
      * Any area in the BasicInfoFragment, IngredientsFragment or the CreateStepsFragment that
      * is in a conditional based on prepopulated is the inputting the data to be prepopulated.
      */
-    private Boolean prepopulated = false;
+    private Boolean prepopulated = true;
 
     public Boolean getPrepopulated(){
         return prepopulated;

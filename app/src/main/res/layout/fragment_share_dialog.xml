@@ -11,39 +11,28 @@
 
     <TextView
         android:id="@+id/tvShareTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-
+        android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
-        android:gravity="left"
+        android:gravity="center"
         android:paddingLeft="10dp"
-        android:text="Share on"
+        android:text="Share Directly"
         android:textSize="24sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/RecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@id/ivLogo"
         android:layout_alignStart="@+id/tvShareTitle"
+        android:layout_alignEnd="@id/tvShareTitle"
         android:layout_below="@+id/tvShareTitle"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="0dp"
         android:layout_marginTop="20dp" />
-
-    <ImageView
-        android:id="@+id/ivLogo"
-        android:layout_width="107dp"
-        android:layout_height="45dp"
-        android:layout_alignTop="@+id/tvShareTitle"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="-10dp"
-        android:layout_toEndOf="@+id/tvShareTitle"
-        android:src="@drawable/logo" />
 
 
 </RelativeLayout>

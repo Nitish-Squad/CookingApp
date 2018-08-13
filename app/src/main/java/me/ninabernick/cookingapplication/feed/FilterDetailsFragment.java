@@ -49,7 +49,7 @@ public class FilterDetailsFragment extends Fragment {
             cb.setText(tags.get(i).toUpperCase());
             if (FeedFragment.filters.contains(tags.get(i))) {
                 cb.setChecked(true);
-                selectedTags.add(cb.getText().toString());
+                selectedTags.add(cb.getText().toString().toLowerCase());
                 ((FilterFragment) getParentFragment()).updateCBandSelectedTags(cbTags, selectedTags);
             }
             else {
@@ -62,11 +62,11 @@ public class FilterDetailsFragment extends Fragment {
                     boolean checked = ((CheckBox)view).isChecked();
 
                     if (checked) {
-                        selectedTags.add(((CheckBox)view).getText().toString());
+                        selectedTags.add(((CheckBox)view).getText().toString().toLowerCase());
                         Log.d("filter added", ((CheckBox)view).getText().toString());
                     }
                     else {
-                        selectedTags.remove(((CheckBox)view).getText().toString());
+                        selectedTags.remove(((CheckBox)view).getText().toString().toLowerCase());
                         ((FilterFragment) getParentFragment()).updateCBandSelectedTags(cbTags, selectedTags);
                     }
                     ((FilterFragment) getParentFragment()).updateCBandSelectedTags(cbTags, selectedTags);

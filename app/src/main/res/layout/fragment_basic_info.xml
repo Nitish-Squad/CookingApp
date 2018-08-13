@@ -26,6 +26,7 @@
                     android:layout_marginTop="45dp"
                     android:ems="10"
                     android:hint="Title"
+                    android:gravity="center"
                     android:inputType="textPersonName" />
 
                 <EditText
@@ -35,6 +36,7 @@
                     android:layout_below="@+id/btnTakePhoto"
                     android:layout_centerHorizontal="true"
                     android:ems="10"
+                    android:gravity="center"
                     android:hint="Description"
                     android:inputType="textPersonName" />
 

@@ -285,6 +285,7 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
 
 
     private void getTopComments(Recipe recipe, int numComments) {
+
         List<String> commentIds = recipe.getComments();
         if (commentIds == null) {
             TextView view = new TextView(this);
@@ -292,6 +293,13 @@ public class RecipeDetailViewActivity extends AppCompatActivity {
             llComments.addView(view);
             return;
         }
+
+//        if (commentIds.size() == 0) {
+//            TextView view = new TextView(this);
+//            view.setText("No Comments Yet!");
+//            llComments.addView(view);
+//            return;
+//        }
         ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
         query.include("user");
         query.whereContainedIn("objectId", commentIds);
