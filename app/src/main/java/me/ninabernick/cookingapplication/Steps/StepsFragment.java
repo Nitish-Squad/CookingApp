@@ -115,6 +115,9 @@ public class StepsFragment extends Fragment {
             case("chicken_icon"):
                 temp_video_extension = "abWDuIXcggc";
                 break;
+            case("pan_vector"):
+                temp_video_extension = "CTyV3JExDT8";
+                break;
             default:
                 // icons without links will do nothing when clicked
                 valid_video_extension = false;
