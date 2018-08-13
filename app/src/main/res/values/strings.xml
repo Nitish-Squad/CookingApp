@@ -10,9 +10,9 @@
 
     <string name="nutrition_api_key">9uCSn4GQdWwwUrPZgHmrFN8JvUvwL1Aea4mwFVbB</string>
 
-    <string name="DATE">Date Created</string>
-    <string name="TIME">Time</string>
-    <string name="RATING">Rating</string>
+    <string name="DATE">DATE CREATED</string>
+    <string name="TIME">TIME</string>
+    <string name="RATING">RATING</string>
 
     // transition elements
     <string name="TRANS_RECIPEIMAGE">recipeimage</string>

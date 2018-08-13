@@ -67,6 +67,7 @@ public class FilterDetailsFragment extends Fragment {
                     }
                     else {
                         selectedTags.remove(((CheckBox)view).getText().toString());
+                        ((FilterFragment) getParentFragment()).updateCBandSelectedTags(cbTags, selectedTags);
                     }
                     ((FilterFragment) getParentFragment()).updateCBandSelectedTags(cbTags, selectedTags);
 
