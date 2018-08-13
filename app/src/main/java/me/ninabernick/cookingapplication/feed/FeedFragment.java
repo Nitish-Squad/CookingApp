@@ -51,7 +51,6 @@ public class FeedFragment extends Fragment {
     RecipeAdapter adapter;
     RecyclerView rvFeed;
     TextView tvFilterRecipes;
-    TextView tvFilterByIngredient;
     ParseUser user;
 
 
@@ -190,9 +189,6 @@ public class FeedFragment extends Fragment {
                 }
             });
 
-
-
-
         }
     }
 
@@ -308,7 +304,6 @@ public class FeedFragment extends Fragment {
         loadingView = (ProgressBar) view.findViewById(R.id.pbLoading);
         llTitle = (LinearLayout) view.findViewById(R.id.llTitle);
         llSelectedFilters = (LinearLayout) view.findViewById(R.id.llSelectedTags);
-
         tvFilterRecipes = (TextView) view.findViewById(R.id.tvFilterByTag);
 
 

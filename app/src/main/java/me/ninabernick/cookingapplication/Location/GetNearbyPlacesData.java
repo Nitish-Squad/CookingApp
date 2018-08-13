@@ -79,6 +79,7 @@ GetNearbyPlacesData extends AsyncTask<Object, String, String> {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     LatLng position = marker.getPosition();
+                    marker.showInfoWindow();
                     fragment.findLocationClicked(position.latitude, position.longitude);
                     return true;
                 }

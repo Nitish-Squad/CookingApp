@@ -73,11 +73,9 @@ public class FilterDetailsFragment extends Fragment {
                 }
             });
             cbTags.add(cb);
-            ((FilterFragment) getParentFragment()).updateCBandSelectedTags(cbTags, selectedTags);
             tagsLayout.addView(cb);
         }
 
-        ((FilterFragment) getParentFragment()).updateCBandSelectedTags(cbTags, selectedTags);
         return view;
     }
 
